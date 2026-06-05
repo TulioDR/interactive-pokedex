@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PokemonCard from "./PokemonCard";
 import Loader from "@/layout/loader/components/Loader";
 import { usePokeSync } from "@/layout/loader/hooks/usePokeSync";
-import PokemonPreview from "./PokemonPreview";
 import Filters from "./Filters";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import CardType from "../_types/CardType";
+import CustomPagination from "./CustomPagination";
+import Pokedex from "./Pokedex";
 
 type Props = {};
 
@@ -16,8 +17,12 @@ export default function HomePageContent({}: Props) {
 
    const { syncedData, syncProgress, isSyncing } = usePokeSync();
 
+   const router = useRouter();
+   const pathname = usePathname();
    const searchParams = useSearchParams();
+
    const searchQuery = searchParams.get("search_query")?.toLowerCase() || "";
+   const currentPage = Number(searchParams.get("page")) || 1;
 
    const filteredPokemons = searchQuery
       ? syncedData.filter(
@@ -27,19 +32,33 @@ export default function HomePageContent({}: Props) {
         )
       : syncedData;
 
-   // 3. PAGINATION MATH (Ready for the future!)
-   // Right now, we hardcode page 1, showing the first 30 items that pass the filter.
-   // Later on, this 'currentPage' number will also live safely in your URL params!
-   const currentPage = 1;
+   useEffect(() => {
+      if (searchParams.get("page") && searchParams.get("page") !== "1") {
+         const params = new URLSearchParams(searchParams.toString());
+         params.set("page", "1");
+         router.replace(`${pathname}?${params.toString()}`);
+      }
+   }, [searchQuery, pathname, router]); // Tracking search change boundaries
+
    const itemsPerPage = 30;
+   const totalPages = Math.max(
+      Math.ceil(filteredPokemons.length / itemsPerPage),
+      1,
+   );
+
    const indexOfLastItem = currentPage * itemsPerPage;
    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-   // Slice the filtered results down to the active batch of 30
    const displayedPokemons = filteredPokemons.slice(
       indexOfFirstItem,
       indexOfLastItem,
    );
+
+   const handlePageChange = (newPage: number) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("page", newPage.toString());
+      router.push(`${pathname}?${params.toString()}`);
+   };
 
    return (
       <div className="w-full flex px-20 gap-5">
@@ -53,7 +72,7 @@ export default function HomePageContent({}: Props) {
                </p>
             )}
             <div
-               className={`flex-1 grid grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 `}
+               className={`flex-1 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 `}
             >
                {displayedPokemons.map((card, index) => (
                   <PokemonCard
@@ -63,10 +82,13 @@ export default function HomePageContent({}: Props) {
                   />
                ))}
             </div>
+            <CustomPagination
+               total={totalPages}
+               page={currentPage}
+               onChange={handlePageChange}
+            />
          </div>
-         {/* Live Counter Asset */}
-
-         <PokemonPreview draggedId={draggedId} />
+         <Pokedex draggedId={draggedId} syncedData={syncedData} />
       </div>
    );
 }
