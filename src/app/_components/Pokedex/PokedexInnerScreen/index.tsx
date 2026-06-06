@@ -4,7 +4,7 @@ type Props = {
 
 export default function PokedexInnerScreen({ children }: Props) {
    return (
-      <div className="scan-target-zone flex flex-col w-full flex-1 rounded-bl-[64px] rounded-tr-lg bg-gray-200 p-4 pb-0 relative overflow-hidden border-2 border-white">
+      <div className="scan-target-zone flex flex-col w-full flex-1 rounded-bl-[64px] rounded-tr-lg bg-slate-200 p-4 pb-0 relative overflow-hidden border-2 border-white">
          <div className="bg-linear-to-br from-cyan-400 to-blue-600 border-4 relative border-black rounded-lg flex-1 w-full overflow-hidden">
             {children}
          </div>

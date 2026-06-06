@@ -77,6 +77,7 @@ export default function HomePageContent({}: Props) {
    return (
       <div className="w-full flex px-20 gap-5">
          <Loader isSyncing={isSyncing} syncProgress={syncProgress} />
+         <Pokedex draggedId={draggedId} syncedData={syncedData} />
 
          <motion.div
             animate={{
@@ -108,7 +109,6 @@ export default function HomePageContent({}: Props) {
                onChange={handlePageChange}
             />
          </motion.div>
-         <Pokedex draggedId={draggedId} syncedData={syncedData} />
          <AnimatePresence>
             {isFilterOpen && <MainFilterModal closeFilter={closeFilter} />}
          </AnimatePresence>
