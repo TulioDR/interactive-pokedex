@@ -22,7 +22,7 @@ export default function FilterButton({
             ${
                favorite
                   ? "text-[#E60012] hover:bg-[#E60012] hover:text-white active:bg-[#E60012] active:text-white"
-                  : "text-black/60 hover:bg-slate-800 hover:text-white active:bg-slate-800 active:text-white"
+                  : "text-black/60 hover:bg-hover hover:text-white active:bg-hover active:text-white"
             }   
             ${square ? "aspect-square" : "px-5 gap-1"}
          `}

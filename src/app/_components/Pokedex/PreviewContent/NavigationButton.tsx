@@ -30,7 +30,7 @@ export default function NavigationButton({
          onClick={onClick}
          className={`flex-1 h-full cursor-pointer flex px-2 justify-between items-center text-black/50  
             ${reverse ? "flex-row-reverse rounded-l-full " : " rounded-r-full"}
-            ${isActive ? "bg-slate-800 text-white" : ""}
+            ${isActive ? "bg-hover text-white" : ""}
          `}
       >
          <div

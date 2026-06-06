@@ -16,7 +16,7 @@ export default function MainFilterModal({ closeFilter }: Props) {
             <div className="h-12 w-full overflow-hidden flex items-center justify-between">
                <div className="flex gap-5 items-center">
                   <CircularLens />
-                  <h2 className="text-4xl font-black text-slate-800">
+                  <h2 className="text-4xl font-black text-hover">
                      Pokemon Filters
                   </h2>
                </div>

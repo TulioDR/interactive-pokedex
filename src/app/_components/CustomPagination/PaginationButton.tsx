@@ -18,7 +18,7 @@ export default function PaginationButton({
          onClick={onClick}
          disabled={disabled}
          className={`h-full aspect-square cursor-pointer relative disabled:pointer-events-none disabled:opacity-50 flex items-center justify-center 
-            hover:bg-slate-800 active:bg-slate-800 active:text-white hover:text-white rounded-md
+            hover:bg-hover active:bg-hover active:text-white hover:text-white rounded-md
             ${isActive ? "text-white" : ""}   
          `}
       >

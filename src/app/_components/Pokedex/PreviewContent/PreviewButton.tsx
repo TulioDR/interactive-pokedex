@@ -22,7 +22,7 @@ export default function PreviewButton({
          onPointerLeave={() => changeActivePad(null)}
          className={`flex-1 cursor-pointer rounded-lg flex flex-col items-center justify-center font-medium border-2 border-white
             ${favorite ? "text-[#E60012]" : "text-black/50"}
-            ${isActive ? (favorite ? "bg-[#E60012]" : "bg-slate-800") : ""}   
+            ${isActive ? (favorite ? "bg-[#E60012]" : "bg-hover") : ""}   
             ${isActive ? "text-white" : "bg-white"}
          `}
       >

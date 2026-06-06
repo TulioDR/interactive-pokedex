@@ -20,8 +20,9 @@
 } */
 
 @theme {
-   --color-outline: #e2e8f0;
-   /* --color-outline: #cad5e2; */
+   /* --color-outline: #e2e8f0; */
+   --color-outline: #cad5e2;
+   --color-hover: #1d293d;
 }
 
 body {
