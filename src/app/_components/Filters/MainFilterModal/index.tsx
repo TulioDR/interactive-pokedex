@@ -1,3 +1,4 @@
+import CircularLens from "@/components/CircularLens";
 import Filters from "./Filters";
 import ModalButton from "./ModalButton";
 import ModalContainer from "./ModalContainer";
@@ -13,9 +14,12 @@ export default function MainFilterModal({ closeFilter }: Props) {
          <div className="w-0.5 h-full bg-outline" />
          <div className="h-full flex-1 flex flex-col gap-5 overflow-hidden text-slate-500">
             <div className="h-12 w-full overflow-hidden flex items-center justify-between">
-               <h2 className="text-4xl font-black text-slate-800">
-                  Pokemon Filters
-               </h2>
+               <div className="flex gap-5 items-center">
+                  <CircularLens />
+                  <h2 className="text-4xl font-black text-slate-800">
+                     Pokemon Filters
+                  </h2>
+               </div>
                <ModalButton onClick={closeFilter} text="Close" icon="close" />
             </div>
             <Filters />
