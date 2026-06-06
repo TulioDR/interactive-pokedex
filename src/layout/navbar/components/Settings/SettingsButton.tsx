@@ -1,10 +1,12 @@
 type Props = {
    isOpen: boolean;
+   onClick: () => void;
 };
 
-export default function SettingsButton({ isOpen }: Props) {
+export default function SettingsButton({ isOpen, onClick }: Props) {
    return (
       <button
+         onClick={onClick}
          className={`rounded-full h-full aspect-square flex items-center justify-center cursor-pointer 
                ${isOpen ? "bg-white text-black" : "text-white hover:bg-white hover:text-black"}
             `}

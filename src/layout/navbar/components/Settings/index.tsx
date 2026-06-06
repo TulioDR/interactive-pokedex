@@ -11,10 +11,9 @@ export default function Settings({}: Props) {
       <div
          tabIndex={0}
          onBlur={() => setIsOpen(false)}
-         onClick={() => setIsOpen(!isOpen)}
          className="h-full aspect-square relative"
       >
-         <SettingsButton isOpen={isOpen} />
+         <SettingsButton onClick={() => setIsOpen(!isOpen)} isOpen={isOpen} />
          {isOpen && <SettingsMenu />}
       </div>
    );
