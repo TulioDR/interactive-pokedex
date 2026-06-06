@@ -2,6 +2,7 @@
 
 import CircularLens from "@/components/CircularLens";
 import useThemeContext from "@/context/ThemeContext";
+import Settings from "./Settings";
 
 type Props = {};
 
@@ -28,11 +29,7 @@ export default function Navbar({}: Props) {
                </div>
             </div>
 
-            <button className="rounded-full h-full aspect-square flex items-center justify-center text-white hover:bg-white hover:text-black">
-               <span className="material-symbols-rounded text-3xl! ">
-                  settings
-               </span>
-            </button>
+            <Settings />
          </div>
       </div>
    );
