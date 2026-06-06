@@ -1,3 +1,4 @@
+import useThemeContext from "@/context/ThemeContext";
 import { motion } from "framer-motion";
 
 type Props = {
@@ -5,6 +6,7 @@ type Props = {
 };
 
 export default function ModalContainer({ children }: Props) {
+   const { themeColor } = useThemeContext();
    return (
       <motion.div
          initial={{ opacity: 0, scale: 1.5 }}
@@ -13,7 +15,10 @@ export default function ModalContainer({ children }: Props) {
          transition={{ duration: 0.4, ease: "easeInOut" }}
          className="px-20 pb-5 pt-30 fixed inset-0 z-40"
       >
-         <div className="w-full h-full rounded-4xl bg-[#D31027] p-5 shadow-xl border-2 border-white outline outline-outline overflow-hidden">
+         <div
+            style={{ backgroundColor: themeColor }}
+            className="w-full h-full rounded-4xl p-5 shadow-xl border-2 border-white outline outline-outline overflow-hidden"
+         >
             <div className="w-full h-full bg-slate-100 rounded-2xl border-4 border-black flex overflow-hidden p-5 gap-5">
                {children}
             </div>

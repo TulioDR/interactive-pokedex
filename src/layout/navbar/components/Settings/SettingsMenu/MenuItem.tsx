@@ -1,13 +1,22 @@
 type Props = {
    onClick: () => void;
    children: React.ReactNode;
+   onPointerEnter?: () => void;
+   onPointerLeave?: () => void;
 };
 
-export default function MenuItem({ onClick, children }: Props) {
+export default function MenuItem({
+   onClick,
+   children,
+   onPointerEnter,
+   onPointerLeave,
+}: Props) {
    return (
       <button
          onClick={onClick}
-         className="w-full h-14 cursor-pointer bg-white hover:bg-hover hover:text-white text-hover px-2 text-sm"
+         onPointerEnter={onPointerEnter}
+         onPointerLeave={onPointerLeave}
+         className="w-full h-14 cursor-pointer bg-white hover:bg-hover hover:text-white text-hover px-2 text-sm rounded-lg overflow-hidden"
       >
          {children}
       </button>
