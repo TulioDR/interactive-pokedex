@@ -12,10 +12,12 @@ export default function MainFilterModal({ closeFilter }: Props) {
       <ModalContainer>
          <div className="w-96 h-full overflow-y-auto bg-red-200"></div>
          <div className="w-0.5 h-full bg-outline" />
-         <div className="h-full flex-1 flex flex-col gap-5 overflow-hidden text-slate-500">
-            <div className="h-12 w-full overflow-hidden flex items-center justify-between">
-               <div className="flex gap-5 items-center">
-                  <CircularLens />
+         <div className="h-full flex-1 flex flex-col gap-5 text-slate-500">
+            <div className="h-14 w-full flex items-center justify-between">
+               <div className="flex gap-5 items-center h-full">
+                  <div className="outline-2 outline-outline aspect-square rounded-full flex items-center justify-center">
+                     <CircularLens status={false} />
+                  </div>
                   <h2 className="text-4xl font-black text-hover">
                      Pokemon Filters
                   </h2>
@@ -23,7 +25,7 @@ export default function MainFilterModal({ closeFilter }: Props) {
                <ModalButton onClick={closeFilter} text="Close" icon="close" />
             </div>
             <Filters />
-            <div className="h-12 w-full  overflow-hidden flex justify-end gap-5">
+            <div className="h-14 w-full  flex justify-end gap-5">
                <ModalButton onClick={() => {}} text="Reset" icon="refresh" />
                <ModalButton
                   onClick={() => {}}

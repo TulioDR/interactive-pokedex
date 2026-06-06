@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/layout/navbar/components/Navbar";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const geistSans = Geist({
    variable: "--font-geist-sans",
@@ -40,11 +41,12 @@ export default function RootLayout({
                href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
             />
          </head>
-         <body>
-            <Navbar />
-
-            {children}
-         </body>
+         <ThemeProvider>
+            <body>
+               <Navbar />
+               {children}
+            </body>
+         </ThemeProvider>
       </html>
    );
 }

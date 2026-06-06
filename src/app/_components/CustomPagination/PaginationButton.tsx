@@ -1,3 +1,4 @@
+import useThemeContext from "@/context/ThemeContext";
 import { motion } from "framer-motion";
 
 type Props = {
@@ -13,6 +14,7 @@ export default function PaginationButton({
    children,
    isActive,
 }: Props) {
+   const { themeColor } = useThemeContext();
    return (
       <button
          onClick={onClick}
@@ -26,7 +28,8 @@ export default function PaginationButton({
             <motion.div
                layoutId="active-pagination-button"
                transition={{ duration: 0.6, type: "spring" }}
-               className="absolute inset-1 bg-[#E60012] rounded-sm shadow-md"
+               style={{ backgroundColor: themeColor }}
+               className="absolute inset-1 rounded-sm shadow-md"
             />
          )}
          <span className="relative text-sm font-black">{children}</span>

@@ -1,6 +1,8 @@
-type Props = {};
+type Props = {
+   status?: boolean;
+};
 
-export default function CircularLens({}: Props) {
+export default function CircularLens({ status = true }: Props) {
    return (
       <div className=" h-12 aspect-square relative group/lens">
          <div className="w-12 h-12 rounded-full bg-slate-900 border-4 border-slate-200 flex items-center justify-center overflow-hidden">
@@ -10,10 +12,12 @@ export default function CircularLens({}: Props) {
             </div>
          </div>
          {/* Secondary status lights next to lens */}
-         <div className="absolute -right-2 top-0 flex flex-col gap-1">
-            <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 shadow-[0_0_8px_#facc15]" />
-            <div className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_8px_#4ade80]" />
-         </div>
+         {status && (
+            <div className="absolute -right-2 top-0 flex flex-col gap-1">
+               <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 shadow-[0_0_8px_#facc15]" />
+               <div className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_8px_#4ade80]" />
+            </div>
+         )}
       </div>
    );
 }

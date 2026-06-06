@@ -1,3 +1,4 @@
+import useThemeContext from "@/context/ThemeContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -33,9 +34,16 @@ export default function FilterInput({}: Props) {
       window.scrollTo({ top: 0, behavior: "instant" });
    };
 
+   const { themeColor } = useThemeContext();
+
+   const [isHovered, setIsHovered] = useState(false);
+
    return (
       <div
-         className={`flex-1 flex h-full outline outline-outline bg-white rounded-lg shadow-md border-2 px-2 hover:border-[#E60012] ${isFocused ? "border-[#E60012]" : "border-white"}`}
+         onPointerEnter={() => setIsHovered(true)}
+         onPointerLeave={() => setIsHovered(false)}
+         style={{ borderColor: isHovered || isFocused ? themeColor : "white" }}
+         className={`flex-1 flex h-full outline outline-outline bg-white rounded-lg shadow-md border-2 px-2`}
       >
          <div className="h-full aspect-square flex items-center justify-center">
             <span className="material-symbols-rounded text-3xl! text-black/50">
