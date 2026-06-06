@@ -4,6 +4,7 @@ type Props = {
    isSelected?: boolean;
    favorite?: true;
    square?: true;
+   onClick: () => void;
 };
 
 export default function FilterButton({
@@ -12,10 +13,12 @@ export default function FilterButton({
    isSelected,
    favorite,
    square,
+   onClick,
 }: Props) {
    return (
       <button
-         className={`h-full rounded-lg flex justify-center items-center relative cursor-pointer bg-white shadow-md
+         onClick={onClick}
+         className={`h-full rounded-lg flex justify-center items-center relative cursor-pointer bg-white shadow-md outline outline-outline
             ${
                favorite
                   ? "text-[#E60012] hover:bg-[#E60012] hover:text-white active:bg-[#E60012] active:text-white"

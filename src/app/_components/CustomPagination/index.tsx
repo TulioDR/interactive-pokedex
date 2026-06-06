@@ -19,7 +19,7 @@ export default function CustomPagination({ total, page, onChange }: Props) {
    });
 
    return (
-      <div className="h-14 sticky bottom-5 z-10 rounded-lg flex shadow-md border-gray-200 border bg-white w-max p-1 overflow-hidden text-black/50">
+      <div className="h-14 sticky bottom-5 z-10 rounded-lg flex shadow-md outline outline-outline border-white border-2 bg-white w-max overflow-hidden text-black/50">
          <PaginationButton
             onClick={() => pagination.previous()}
             disabled={page === 1}

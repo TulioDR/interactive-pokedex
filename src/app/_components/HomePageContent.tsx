@@ -9,6 +9,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import CardType from "../_types/CardType";
 import CustomPagination from "./CustomPagination";
 import Pokedex from "./Pokedex";
+import { AnimatePresence } from "framer-motion";
+import MainFilterModal from "./Filters/MainFilterModal";
+
+import { motion } from "framer-motion";
 
 type Props = {};
 
@@ -60,12 +64,28 @@ export default function HomePageContent({}: Props) {
       router.push(`${pathname}?${params.toString()}`);
    };
 
+   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+   const openFilter = () => {
+      setIsFilterOpen(true);
+   };
+
+   const closeFilter = () => {
+      setIsFilterOpen(false);
+   };
+
    return (
       <div className="w-full flex px-20 gap-5">
          <Loader isSyncing={isSyncing} syncProgress={syncProgress} />
 
-         <div className="w-full flex flex-col gap-5 pb-5">
-            <Filters />
+         <motion.div
+            animate={{
+               opacity: isFilterOpen ? 0 : 1,
+            }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="w-full flex flex-col gap-5 pb-5"
+         >
+            <Filters openFilter={openFilter} />
             {searchQuery && (
                <p className="text-xs font-mono text-slate-400">
                   Found {filteredPokemons.length} matching entries
@@ -87,8 +107,11 @@ export default function HomePageContent({}: Props) {
                page={currentPage}
                onChange={handlePageChange}
             />
-         </div>
+         </motion.div>
          <Pokedex draggedId={draggedId} syncedData={syncedData} />
+         <AnimatePresence>
+            {isFilterOpen && <MainFilterModal closeFilter={closeFilter} />}
+         </AnimatePresence>
       </div>
    );
 }

@@ -3,7 +3,7 @@ type Props = {};
 export default function Navbar({}: Props) {
    return (
       <div className="fixed top-0 left-0 pt-5 pl-20 pr-20 w-full z-50">
-         <div className="bg-linear-to-r from-[#D31027] via-[#EA384D] to-[#D31027] border-2 border-white w-full h-20 shadow-xl rounded-4xl flex justify-between px-5 py-3 relative ">
+         <div className="bg-linear-to-r from-[#D31027] via-[#EA384D] to-[#D31027] outline outline-outline border-2 border-white w-full h-20 shadow-xl rounded-4xl flex justify-between px-5 py-3 relative ">
             <div className="flex gap-5 items-center">
                <div className="relative group/lens">
                   <div className="w-12 h-12 rounded-full bg-slate-900 border-4 border-slate-200 flex items-center justify-center overflow-hidden">

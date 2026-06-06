@@ -35,7 +35,7 @@ export default function FilterInput({}: Props) {
 
    return (
       <div
-         className={`flex-1 flex h-full bg-white rounded-lg shadow-md border-2 px-2 hover:border-[#E60012] ${isFocused ? "border-[#E60012]" : "border-white"}`}
+         className={`flex-1 flex h-full outline outline-outline bg-white rounded-lg shadow-md border-2 px-2 hover:border-[#E60012] ${isFocused ? "border-[#E60012]" : "border-white"}`}
       >
          <div className="h-full aspect-square flex items-center justify-center">
             <span className="material-symbols-rounded text-3xl! text-black/50">
