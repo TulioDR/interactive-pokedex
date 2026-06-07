@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/layout/navbar/components/Navbar";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { PokeDbProvider } from "@/layout/poke-db/context/PokeDbContext";
+import PokeDbLoader from "@/layout/poke-db/components/PokeDbLoader";
 
 const geistSans = Geist({
    variable: "--font-geist-sans",
@@ -42,10 +44,13 @@ export default function RootLayout({
             />
          </head>
          <ThemeProvider>
-            <body>
-               <Navbar />
-               {children}
-            </body>
+            <PokeDbProvider>
+               <PokeDbLoader />
+               <body>
+                  <Navbar />
+                  {children}
+               </body>
+            </PokeDbProvider>
          </ThemeProvider>
       </html>
    );

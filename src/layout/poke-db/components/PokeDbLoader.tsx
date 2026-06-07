@@ -1,9 +1,12 @@
-type Props = {
-   isSyncing: boolean;
-   syncProgress: number;
-};
+"use client";
 
-export default function Loader({ isSyncing, syncProgress }: Props) {
+import usePokeDbContext from "../context/PokeDbContext";
+
+type Props = {};
+
+export default function PokeDbLoader({}: Props) {
+   const { isSyncing, syncProgress } = usePokeDbContext();
+
    if (!isSyncing) return <></>;
    return (
       <div className="fixed inset-0 bg-slate-950 flex flex-col items-center justify-center z-50 p-6">
@@ -14,7 +17,7 @@ export default function Loader({ isSyncing, syncProgress }: Props) {
             </h2>
 
             {/* Progress Bar Container */}
-            <div className="w-full h-4 bg-slate-900 rounded-full overflow-hidden border border-slate-800 p-[2px]">
+            <div className="w-full h-4 bg-slate-900 rounded-full overflow-hidden border border-slate-800 p-0.5">
                <div
                   className="h-full bg-red-600 rounded-full transition-all duration-300 ease-out"
                   style={{ width: `${syncProgress}%` }}

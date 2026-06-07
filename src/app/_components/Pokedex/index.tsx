@@ -42,6 +42,8 @@ export default function Pokedex({ draggedId, syncedData }: Props) {
    const getNextPokemon = () => changeSelectedId(nextPokemon?.id || null);
    const getPrevPokemon = () => changeSelectedId(prevPokemon?.id || null);
 
+   const [isPowerOn, setIsPowerOn] = useState(true);
+
    return (
       <PokedexContainer>
          <PokedexTop />

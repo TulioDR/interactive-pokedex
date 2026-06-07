@@ -1,43 +1,60 @@
-import { useState, useEffect } from "react";
+"use client";
 
-export function usePokeSync() {
-   const [syncedData, setSyncedData] = useState<any[]>([]);
+import {
+   createContext,
+   useContext,
+   useState,
+   useEffect,
+   ReactNode,
+} from "react";
+import { PokemonCardType } from "../types/PokemonCardType";
+
+interface PokeContextType {
+   allPokemon: PokemonCardType[];
+   syncProgress: number;
+   isSyncing: boolean;
+}
+
+const PokeDbContext = createContext({} as PokeContextType);
+export default function usePokeDbContext() {
+   return useContext(PokeDbContext);
+}
+
+export function PokeDbProvider({ children }: { children: ReactNode }) {
+   const [allPokemon, setAllPokemon] = useState<PokemonCardType[]>([]);
    const [syncProgress, setSyncProgress] = useState(0);
    const [isSyncing, setIsSyncing] = useState(false);
 
    useEffect(() => {
-      async function syncDatabase() {
-         // 1. Check if we already did this heavy lifting in a previous session
+      async function initializeDatabase() {
+         // 1. Check for cached data to ensure instant "Time to Interactive"
          const cached = localStorage.getItem("poke_sandbox_db");
          if (cached) {
-            setSyncedData(JSON.parse(cached));
+            setAllPokemon(JSON.parse(cached));
             return;
          }
 
-         // 2. If no cache exists, begin the one-time master synchronization
+         // 2. Initial Sync Logic
          setIsSyncing(true);
          try {
-            // Fetch the lean master list containing the total count (up to Generation 9)
+            // Fetch total count up to Gen 9
             const res = await fetch(
                "https://pokeapi.co/api/v2/pokemon?limit=1025",
             );
             const masterList = await res.json();
 
-            const fullDatabase: any[] = [];
-            const batchSize = 50; // Fetch 50 at a time so we don't trip the API rate-limits
+            const fullDatabase: PokemonCardType[] = [];
+            const batchSize = 50;
 
             for (let i = 0; i < masterList.results.length; i += batchSize) {
                const chunk = masterList.results.slice(i, i + batchSize);
 
-               // Download this specific batch in parallel
                const chunkDetails = await Promise.all(
                   chunk.map(async (item: any) => {
                      try {
-                        // Fetch Core Data (Image, Types, ID)
                         const dRes = await fetch(item.url);
                         const d = await dRes.json();
 
-                        // Fetch Species Data (Original Japanese Name)
                         const speciesRes = await fetch(d.species.url);
                         const speciesData = await speciesRes.json();
 
@@ -45,7 +62,6 @@ export function usePokeSync() {
                            (n: any) => n.language.name === "ja-hrkt",
                         );
 
-                        // Construct our clean, ultra-light local object representation
                         return {
                            id: d.id,
                            name: d.name,
@@ -55,36 +71,42 @@ export function usePokeSync() {
                            types: d.types.map((t: any) => t.type.name),
                         };
                      } catch (e) {
-                        return null; // Safeguard if a single network request fails
+                        return null;
                      }
                   }),
                );
 
-               // Append successfully fetched data to our database array
                fullDatabase.push(...chunkDetails.filter(Boolean));
 
-               // Update the UI progress bar percentage
                const progress = Math.round(
                   (fullDatabase.length / masterList.results.length) * 100,
                );
                setSyncProgress(progress);
             }
 
-            // 3. Save the full database to LocalStorage for instant future loads
+            // 3. Persist and Update State
             localStorage.setItem(
                "poke_sandbox_db",
                JSON.stringify(fullDatabase),
             );
-            setSyncedData(fullDatabase);
+            setAllPokemon(fullDatabase);
          } catch (error) {
-            console.error("Local database sync crashed:", error);
+            console.error("Error during Pokemon database sync:", error);
          } finally {
             setIsSyncing(false);
          }
       }
 
-      syncDatabase();
+      initializeDatabase();
    }, []);
 
-   return { syncedData, syncProgress, isSyncing };
+   const value: PokeContextType = {
+      allPokemon,
+      syncProgress,
+      isSyncing,
+   };
+
+   return (
+      <PokeDbContext.Provider value={value}>{children}</PokeDbContext.Provider>
+   );
 }

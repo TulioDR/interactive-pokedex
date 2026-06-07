@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import PokemonCard from "./PokemonCard";
-import Loader from "@/layout/loader/components/Loader";
-import { usePokeSync } from "@/layout/loader/hooks/usePokeSync";
 import Filters from "./Filters";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import CardType from "../_types/CardType";
@@ -13,13 +11,15 @@ import { AnimatePresence } from "framer-motion";
 import MainFilterModal from "./Filters/MainFilterModal";
 
 import { motion } from "framer-motion";
+import TotalPokemons from "./TotalPokemons";
+import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
 
 type Props = {};
 
 export default function HomePageContent({}: Props) {
    const [draggedId, setDraggedId] = useState<number | null>(null);
 
-   const { syncedData, syncProgress, isSyncing } = usePokeSync();
+   const { allPokemon } = usePokeDbContext();
 
    const router = useRouter();
    const pathname = usePathname();
@@ -29,12 +29,12 @@ export default function HomePageContent({}: Props) {
    const currentPage = Number(searchParams.get("page")) || 1;
 
    const filteredPokemons = searchQuery
-      ? syncedData.filter(
+      ? allPokemon.filter(
            (pokemon: CardType) =>
               pokemon.name.toLowerCase().includes(searchQuery) ||
               pokemon.id.toString() === searchQuery,
         )
-      : syncedData;
+      : allPokemon;
 
    useEffect(() => {
       if (searchParams.get("page") && searchParams.get("page") !== "1") {
@@ -76,25 +76,16 @@ export default function HomePageContent({}: Props) {
 
    return (
       <div className="w-full flex px-20 gap-5">
-         <Loader isSyncing={isSyncing} syncProgress={syncProgress} />
-         <Pokedex draggedId={draggedId} syncedData={syncedData} />
+         <Pokedex draggedId={draggedId} syncedData={allPokemon} />
 
          <motion.div
-            animate={{
-               opacity: isFilterOpen ? 0 : 1,
-            }}
+            animate={{ opacity: isFilterOpen ? 0 : 1 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
             className="w-full flex flex-col gap-5 pb-5"
          >
             <Filters openFilter={openFilter} />
-            {searchQuery && (
-               <p className="text-xs font-mono text-slate-400">
-                  Found {filteredPokemons.length} matching entries
-               </p>
-            )}
-            <div
-               className={`flex-1 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2 `}
-            >
+            {searchQuery && <TotalPokemons total={filteredPokemons.length} />}
+            <div className="flex-1 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
                {displayedPokemons.map((card, index) => (
                   <PokemonCard
                      key={card.id + "-" + index}

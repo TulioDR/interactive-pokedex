@@ -1,7 +1,6 @@
 import CompletePokemonType from "@/app/_types/CompletePokemonType";
 import CircularButton from "./CircularButton";
 import Image from "next/image";
-import getTypeColor from "@/utils/getTypeColor";
 import ActivePadType from "@/app/_types/ActivePadType";
 
 type Props = {
@@ -64,24 +63,15 @@ export default function PokedexControlDeck({
             <div className="w-1/3 absolute h-[50%] bg-black left-0 top-0 rotate-45 origin-bottom flex flex-col justify-between" />
             <div className="w-1/3 absolute h-[50%] bg-black right-0 bottom-0 rotate-45 origin-top flex flex-col justify-between" />
          </div>
-         <div className="border-4 border-black bg-slate-800 aspect-square flex-2 relative">
+         <div className="border-4 border-black bg-[#51AD60] aspect-square flex-2 relative">
             {pokemon && (
-               <div
-                  style={{
-                     backgroundColor: getTypeColor(
-                        pokemon.base.types[0].type.name,
-                     ),
-                  }}
-                  className="h-full w-full relative"
-               >
-                  <Image
-                     src={pokemon.base.sprites.front_default}
-                     alt="sprite"
-                     fill
-                     sizes="100%"
-                     className="object-cover"
-                  />
-               </div>
+               <Image
+                  src={pokemon.base.sprites.front_default}
+                  alt="sprite"
+                  fill
+                  sizes="100%"
+                  className="object-cover"
+               />
             )}
          </div>
       </div>

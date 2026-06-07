@@ -1,4 +1,4 @@
-export default interface CardType {
+export interface PokemonCardType {
    id: number;
    name: string;
    original_name: string;
