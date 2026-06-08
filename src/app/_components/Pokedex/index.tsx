@@ -8,13 +8,15 @@ import PokedexControlDeck from "./PokedexControlDeck";
 import PokedexInnerScreen from "./PokedexInnerScreen";
 import LoadingSpinner from "./LoadingSpinner";
 import usePokedexContext from "@/app/_context/PokedexContext";
+import CRTAnimation from "./CRTAnimation";
 
 type Props = {
    draggedId: number | null;
 };
 
 export default function Pokedex({ draggedId }: Props) {
-   const { selectedId, pokemon, loading, error } = usePokedexContext();
+   const { selectedId, pokemon, loading, error, isPowerOn } =
+      usePokedexContext();
 
    const showScan = draggedId && draggedId !== selectedId;
    return (
@@ -22,11 +24,24 @@ export default function Pokedex({ draggedId }: Props) {
          <PokedexTop />
          <PokedexInnerScreen>
             <AnimatePresence>
-               {loading && <LoadingSpinner key="loading" />}
-               {showScan && <ScanAnimation key="scan" draggedId={draggedId} />}
-               {!pokemon && <PreviewMessage key="message" error={error} />}
-               {selectedId && (
-                  <PokedexData key={selectedId} selectedId={selectedId} />
+               {isPowerOn && (
+                  <CRTAnimation>
+                     <AnimatePresence>
+                        {loading && <LoadingSpinner key="loading" />}
+                        {showScan && (
+                           <ScanAnimation key="scan" draggedId={draggedId} />
+                        )}
+                        {!pokemon && (
+                           <PreviewMessage key="message" error={error} />
+                        )}
+                        {selectedId && (
+                           <PokedexData
+                              key={selectedId}
+                              selectedId={selectedId}
+                           />
+                        )}
+                     </AnimatePresence>
+                  </CRTAnimation>
                )}
             </AnimatePresence>
          </PokedexInnerScreen>

@@ -11,13 +11,12 @@ export default function SubScreen({}: Props) {
    return (
       <div
          className={`border-4 border-black bg-[#51AD60] duration-200 aspect-square flex-2 relative overflow-hidden ${
-            pokemon ? "brightness-100" : "brightness-50"
+            !!pokemon ? "brightness-100" : "brightness-50"
          }`}
       >
          <AnimatePresence>
-            {pokemon ? (
-               /* 🌟 FIX: Fallback to a hardcoded string if id is missing during unmount so Framer never loses track! */
-               <SubScreenAnimation key={pokemon.base?.id || "empty-slate"}>
+            {pokemon && (
+               <SubScreenAnimation key={pokemon.base.id}>
                   <Image
                      src={pokemon.base.sprites.front_default}
                      alt="sprite"
@@ -26,7 +25,7 @@ export default function SubScreen({}: Props) {
                      className="object-cover"
                   />
                </SubScreenAnimation>
-            ) : null}
+            )}
          </AnimatePresence>
       </div>
    );
