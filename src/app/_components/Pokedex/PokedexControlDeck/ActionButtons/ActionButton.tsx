@@ -8,7 +8,7 @@ type Props = {
    changeActivePad: (pad: ActivePadType) => void;
 };
 
-export default function CircularButton({
+export default function ActionButton({
    position,
    isActive,
    changeActivePad,

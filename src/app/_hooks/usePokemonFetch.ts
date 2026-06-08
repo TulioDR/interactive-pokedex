@@ -1,23 +1,21 @@
 import { useEffect, useState } from "react";
 import CompletePokemonType from "../_types/CompletePokemonType";
 
-export default function usePreview() {
+export default function usePokemonFetch() {
    const [selectedId, setSelectedId] = useState<number | null>(null);
    const [pokemon, setPokemon] = useState<CompletePokemonType | null>(null);
    const [loading, setLoading] = useState(false);
    const [error, setError] = useState(false);
 
-   const changeSelectedId = (id: number | null) => setSelectedId(id);
-
    useEffect(() => {
+      setPokemon(null);
       if (!selectedId) return;
-
       async function fetchAllPokemonDetails() {
          try {
             setLoading(true);
             setError(false);
 
-            // 1. STEP ONE: Fetch the first two pools in parallel
+            // 1. STEP ONE: Fetch base and species registries in parallel for speed
             const [baseRes, speciesRes] = await Promise.all([
                fetch(`https://pokeapi.co/api/v2/pokemon/${selectedId}`),
                fetch(`https://pokeapi.co/api/v2/pokemon-species/${selectedId}`),
@@ -27,29 +25,28 @@ export default function usePreview() {
                throw new Error("Failed to capture core registry profiles.");
             }
 
-            const baseData = await baseRes.json();
-            const speciesData = await speciesRes.json();
+            const base = await baseRes.json();
+            const species = await speciesRes.json();
 
-            // 2. STEP TWO: Grab the raw URL pointing to Folder 3 from the species file
-            const evolutionChainUrl = speciesData.evolution_chain?.url;
+            // 2. STEP TWO: Extract the custom evolution node link map
+            const evolutionChainUrl = species.evolution_chain?.url;
+            let evolution = null;
 
-            let evolutionData = null;
             if (evolutionChainUrl) {
-               // 3. STEP THREE: Execute the third fetch to grab the raw tree structure
+               // 3. STEP THREE: Resolve the full structural branching evolution tree
                const evolutionRes = await fetch(evolutionChainUrl);
                if (evolutionRes.ok) {
-                  evolutionData = await evolutionRes.json();
+                  evolution = await evolutionRes.json();
                }
             }
 
-            // 4. STEP FOUR: Save EVERYTHING raw and untamed directly to state
-            setPokemon({
-               base: baseData,
-               species: speciesData,
-               evolution: evolutionData, // Complete, raw API tree payload
-            });
+            // 4. STEP FOUR: Commit fully mapped payload to app state
+            setPokemon({ base, species, evolution });
          } catch (err) {
-            console.error("Scanning decryption malfunction:", err);
+            console.error(
+               `Error resolving Pokedex profile for ID ${selectedId}:`,
+               err,
+            );
             setError(true);
          } finally {
             setLoading(false);
@@ -59,5 +56,5 @@ export default function usePreview() {
       fetchAllPokemonDetails();
    }, [selectedId]);
 
-   return { pokemon, loading, error, changeSelectedId, selectedId };
+   return { selectedId, setSelectedId, pokemon, loading, error };
 }

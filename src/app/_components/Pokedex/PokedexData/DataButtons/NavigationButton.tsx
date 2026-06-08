@@ -1,11 +1,10 @@
 import getPokemonId from "@/utils/getPokemonId";
-import CircularInstruction from "../CircularInstruction";
-import ActivePadType from "@/app/_types/ActivePadType";
+import CircularInstruction from "./CircularInstruction";
+import usePokedexContext from "@/app/_context/PokedexContext";
 
 type Props = {
    reverse?: true;
    pokemon: { name: string; id: number } | null;
-   changeActivePad: (pad: ActivePadType) => void;
    isActive: boolean;
    onClick: () => void;
 };
@@ -13,10 +12,11 @@ type Props = {
 export default function NavigationButton({
    reverse,
    pokemon,
-   changeActivePad,
    isActive,
    onClick,
 }: Props) {
+   const { setActivePad } = usePokedexContext();
+
    if (!pokemon)
       return (
          <div className="flex-1 h-full flex items-center justify-center text-center text-xs text-black/50">
@@ -25,8 +25,8 @@ export default function NavigationButton({
       );
    return (
       <button
-         onPointerEnter={() => changeActivePad(reverse ? "prev" : "next")}
-         onPointerLeave={() => changeActivePad(null)}
+         onPointerEnter={() => setActivePad(reverse ? "prev" : "next")}
+         onPointerLeave={() => setActivePad(null)}
          onClick={onClick}
          className={`flex-1 h-full cursor-pointer flex px-2 justify-between items-center text-black/50  
             ${reverse ? "flex-row-reverse rounded-l-full " : " rounded-r-full"}

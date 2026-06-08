@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PokemonCard from "./PokemonCard";
 import Filters from "./Filters";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import CardType from "../_types/CardType";
 import CustomPagination from "./CustomPagination";
 import Pokedex from "./Pokedex";
@@ -13,17 +13,15 @@ import MainFilterModal from "./Filters/MainFilterModal";
 import { motion } from "framer-motion";
 import TotalPokemons from "./TotalPokemons";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
+import { PokedexProvider } from "../_context/PokedexContext";
 
 type Props = {};
 
 export default function HomePageContent({}: Props) {
-   const [draggedId, setDraggedId] = useState<number | null>(null);
+   const searchParams = useSearchParams();
 
    const { allPokemon } = usePokeDbContext();
-
-   const router = useRouter();
-   const pathname = usePathname();
-   const searchParams = useSearchParams();
+   const [draggedId, setDraggedId] = useState<number | null>(null);
 
    const searchQuery = searchParams.get("search_query")?.toLowerCase() || "";
    const currentPage = Number(searchParams.get("page")) || 1;
@@ -35,14 +33,6 @@ export default function HomePageContent({}: Props) {
               pokemon.id.toString() === searchQuery,
         )
       : allPokemon;
-
-   useEffect(() => {
-      if (searchParams.get("page") && searchParams.get("page") !== "1") {
-         const params = new URLSearchParams(searchParams.toString());
-         params.set("page", "1");
-         router.replace(`${pathname}?${params.toString()}`);
-      }
-   }, [searchQuery, pathname, router]); // Tracking search change boundaries
 
    const itemsPerPage = 30;
    const totalPages = Math.max(
@@ -58,25 +48,15 @@ export default function HomePageContent({}: Props) {
       indexOfLastItem,
    );
 
-   const handlePageChange = (newPage: number) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set("page", newPage.toString());
-      router.push(`${pathname}?${params.toString()}`);
-   };
-
    const [isFilterOpen, setIsFilterOpen] = useState(false);
-
-   const openFilter = () => {
-      setIsFilterOpen(true);
-   };
-
-   const closeFilter = () => {
-      setIsFilterOpen(false);
-   };
+   const openFilter = () => setIsFilterOpen(true);
+   const closeFilter = () => setIsFilterOpen(false);
 
    return (
       <div className="w-full flex px-20 gap-5">
-         <Pokedex draggedId={draggedId} syncedData={allPokemon} />
+         <PokedexProvider>
+            <Pokedex draggedId={draggedId} />
+         </PokedexProvider>
 
          <motion.div
             animate={{ opacity: isFilterOpen ? 0 : 1 }}
@@ -94,11 +74,7 @@ export default function HomePageContent({}: Props) {
                   />
                ))}
             </div>
-            <CustomPagination
-               total={totalPages}
-               page={currentPage}
-               onChange={handlePageChange}
-            />
+            <CustomPagination total={totalPages} page={currentPage} />
          </motion.div>
          <AnimatePresence>
             {isFilterOpen && <MainFilterModal closeFilter={closeFilter} />}

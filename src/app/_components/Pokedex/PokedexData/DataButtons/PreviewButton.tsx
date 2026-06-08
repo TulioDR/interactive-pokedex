@@ -1,12 +1,11 @@
-import ActivePadType from "@/app/_types/ActivePadType";
-import CircularInstruction from "../CircularInstruction";
+import CircularInstruction from "./CircularInstruction";
+import usePokedexContext from "@/app/_context/PokedexContext";
 
 type Props = {
    favorite?: true;
    icon: string;
    text: string;
    isActive: boolean;
-   changeActivePad: (pad: ActivePadType) => void;
 };
 
 export default function PreviewButton({
@@ -14,12 +13,13 @@ export default function PreviewButton({
    icon,
    text,
    isActive,
-   changeActivePad,
 }: Props) {
+   const { setActivePad } = usePokedexContext();
+
    return (
       <button
-         onPointerEnter={() => changeActivePad(favorite ? "favorite" : "open")}
-         onPointerLeave={() => changeActivePad(null)}
+         onPointerEnter={() => setActivePad(favorite ? "favorite" : "open")}
+         onPointerLeave={() => setActivePad(null)}
          className={`flex-1 cursor-pointer rounded-lg flex flex-col items-center justify-center font-medium border-2 border-white
             ${favorite ? "text-[#E60012]" : "text-black/50"}
             ${isActive ? (favorite ? "bg-[#E60012]" : "bg-hover") : ""}   

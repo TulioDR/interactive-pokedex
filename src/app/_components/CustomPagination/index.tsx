@@ -1,14 +1,34 @@
 import { usePagination } from "@mantine/hooks";
 import PaginationButton from "./PaginationButton";
 import PaginationDots from "./PaginationDots";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 type Props = {
-   total: number; // Total number of pages
-   page: number; // Active page state
-   onChange: (page: number) => void;
+   total: number;
+   page: number;
 };
 
-export default function CustomPagination({ total, page, onChange }: Props) {
+export default function CustomPagination({ total, page }: Props) {
+   const router = useRouter();
+   const pathname = usePathname();
+   const searchParams = useSearchParams();
+   const searchQuery = searchParams.get("search_query")?.toLowerCase() || "";
+
+   const onChange = (page: number) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("page", page.toString());
+      router.push(`${pathname}?${params.toString()}`);
+   };
+
+   useEffect(() => {
+      if (searchParams.get("page") && searchParams.get("page") !== "1") {
+         const params = new URLSearchParams(searchParams.toString());
+         params.set("page", "1");
+         router.replace(`${pathname}?${params.toString()}`);
+      }
+   }, [searchQuery, pathname, router]); // Tracking search change boundaries
+
    const pagination = usePagination({
       total,
       page,
