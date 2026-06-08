@@ -1,15 +1,25 @@
 import { useEffect, useState } from "react";
 import CompletePokemonType from "../_types/CompletePokemonType";
 
-export default function usePokemonFetch() {
+export default function usePokemonFetch(isPowerOn: boolean) {
    const [selectedId, setSelectedId] = useState<number | null>(null);
    const [pokemon, setPokemon] = useState<CompletePokemonType | null>(null);
    const [loading, setLoading] = useState(false);
    const [error, setError] = useState(false);
 
    useEffect(() => {
-      setPokemon(null);
-      if (!selectedId) return;
+      if (!isPowerOn) {
+         setSelectedId(null);
+         setPokemon(null);
+         setError(false);
+         return;
+      }
+
+      if (!selectedId) {
+         setPokemon(null);
+         return;
+      }
+
       async function fetchAllPokemonDetails() {
          try {
             setLoading(true);
@@ -54,7 +64,7 @@ export default function usePokemonFetch() {
       }
 
       fetchAllPokemonDetails();
-   }, [selectedId]);
+   }, [selectedId, isPowerOn]);
 
    return { selectedId, setSelectedId, pokemon, loading, error };
 }

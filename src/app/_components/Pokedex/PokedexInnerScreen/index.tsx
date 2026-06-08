@@ -42,7 +42,7 @@ export default function PokedexInnerScreen({ children }: Props) {
       <div className="scan-target-zone flex flex-col w-full flex-1 rounded-bl-[64px] rounded-tr-lg bg-slate-200 p-4 pb-0 relative overflow-hidden border-2 border-white">
          <div className="bg-gray-900 border-4 relative border-black rounded-lg flex-1 w-full overflow-hidden">
             <AnimatePresence>
-               {!isPowerOn && (
+               {isPowerOn && (
                   <motion.div
                      variants={crtScreenVariants}
                      initial="off"

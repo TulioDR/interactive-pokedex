@@ -1,12 +1,6 @@
 "use client";
 
-import {
-   createContext,
-   useContext,
-   useState,
-   useEffect,
-   ReactNode,
-} from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 import CompletePokemonType from "../_types/CompletePokemonType";
 import usePokemonFetch from "../_hooks/usePokemonFetch";
 import ActivePadType from "../_types/ActivePadType";
@@ -35,16 +29,13 @@ export default function usePokedexContext() {
 }
 
 export function PokedexProvider({ children }: { children: ReactNode }) {
+   const [isPowerOn, setIsPowerOn] = useState(true);
    const [activePad, setActivePad] = useState<ActivePadType>(null);
 
    const { selectedId, setSelectedId, pokemon, loading, error } =
-      usePokemonFetch();
+      usePokemonFetch(isPowerOn);
 
-   const [isPowerOn, setIsPowerOn] = useState(true);
    const togglePower = () => setIsPowerOn((prev) => !prev);
-   useEffect(() => {
-      if (!isPowerOn || error) setSelectedId(null);
-   }, [isPowerOn, error]);
 
    const { allPokemon } = usePokeDbContext();
    const currentIndex = allPokemon.findIndex(
