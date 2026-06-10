@@ -1,4 +1,4 @@
-import usePokedexContext from "@/app/_context/PokedexContext";
+import usePokedexContext from "../../../context/PokedexContext";
 import ActionButton from "./ActionButton";
 import ActivePadType from "@/app/_types/ActivePadType";
 

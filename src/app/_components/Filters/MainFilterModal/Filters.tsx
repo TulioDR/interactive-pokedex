@@ -1,31 +1,62 @@
+import { FilterState } from "@/app/_utils/filterPokemon";
 import FilterCard from "./FilterCard";
 import FilterContainer from "./FilterContainer";
 import POKEMON_GENERATIONS from "@/constants/POKEMON_GENERATIONS";
 import POKEMON_SHAPES from "@/constants/POKEMON_SHAPES";
 import POKEMON_TYPES from "@/constants/POKEMON_TYPES";
-type Props = {};
+import SORT_OPTIONS from "@/constants/SORT_OPTIONS";
+type Props = {
+   toggleType: (typeName: string) => void;
+   toggleShape: (shapeValue: string) => void;
+   draft: FilterState;
+   toggleGeneration: (generation: string) => void;
+   setSortBy: (sortValue: string) => void;
+   toggleSpecial: (status: "legendary" | "mythical") => void;
+};
 
-export default function Filters({}: Props) {
+interface InterfaceOptions {
+   value: "legendary" | "mythical";
+   label: string;
+   icon: string;
+}
+
+const SPECIAL_OPTIONS: InterfaceOptions[] = [
+   { value: "legendary", label: "Legendary", icon: "workspace_premium" },
+   { value: "mythical", label: "Mythical", icon: "magic_button" },
+];
+
+export default function Filters({
+   toggleType,
+   draft,
+   toggleShape,
+   toggleGeneration,
+   setSortBy,
+   toggleSpecial,
+}: Props) {
    return (
-      <div className="flex flex-col gap-5 flex-1 w-full overflow-y-auto py-5 border-y-2 border-outline">
-         <FilterContainer icon="filter_alt" name="Type">
+      <div className="flex flex-col gap-5 flex-1 w-full overflow-y-scroll overscroll-none py-5 pr-2 border-y-2 border-outline">
+         <FilterContainer icon="category" name="Type">
             <div className="grid grid-cols-6 gap-2">
                {POKEMON_TYPES.map((type) => (
                   <FilterCard
                      key={type.name}
                      icon={type.icon}
                      text={type.name}
+                     onClick={() => toggleType(type.name)}
+                     isActive={draft.types.includes(type.name)}
                      fixedHeight
                   />
                ))}
             </div>
          </FilterContainer>
-         <FilterContainer icon="filter_alt" name="Body">
+         <FilterContainer icon="token" name="Body">
             <div className="grid grid-cols-6 gap-2">
                {POKEMON_SHAPES.map((shape) => (
                   <FilterCard
                      key={shape.value}
                      text={shape.value}
+                     isActive={draft.shapes.includes(shape.value)}
+                     onClick={() => toggleShape(shape.value)}
                      fixedHeight
                   />
                ))}
@@ -34,36 +65,53 @@ export default function Filters({}: Props) {
 
          <div className="grid grid-cols-2 gap-5 w-full grid-rows-5 shrink-0">
             <FilterContainer
-               icon="filter_alt"
+               icon="timeline"
                name="Generation"
                className="row-span-5"
             >
                <div className="grid grid-cols-3 gap-2 grid-rows-3 h-full w-full">
                   {POKEMON_GENERATIONS.map((gen) => (
-                     <FilterCard key={gen.id} text={gen.label} />
+                     <FilterCard
+                        onClick={() => toggleGeneration(gen.id)}
+                        isActive={draft.generations.includes(gen.id)}
+                        key={gen.id}
+                        text={gen.label}
+                     />
                   ))}
                </div>
             </FilterContainer>
 
             <FilterContainer
-               icon="filter_alt"
+               icon="swap_vert"
                name="Sort by"
                className="row-span-3"
             >
                <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full w-full">
-                  {Array.from({ length: 4 }).map((_, index) => (
-                     <FilterCard key={index} text={"FEfef"} fixedHeight />
+                  {SORT_OPTIONS.map((option, index) => (
+                     <FilterCard
+                        onClick={() => setSortBy(option.value)}
+                        key={index}
+                        text={option.label}
+                        fixedHeight
+                        isActive={draft.sortBy === option.value}
+                     />
                   ))}
                </div>
             </FilterContainer>
             <FilterContainer
-               icon="filter_alt"
+               icon="star"
                name="Special pokemons"
                className="row-span-2"
             >
                <div className="grid grid-cols-2 grid-rows-1 gap-2 h-full w-full">
-                  {Array.from({ length: 2 }).map((_, index) => (
-                     <FilterCard key={index} text={"FEfef"} fixedHeight />
+                  {SPECIAL_OPTIONS.map((option, index) => (
+                     <FilterCard
+                        onClick={() => toggleSpecial(option.value)}
+                        key={index}
+                        text={"FEfef"}
+                        fixedHeight
+                        isActive={draft.special.includes(option.value)}
+                     />
                   ))}
                </div>
             </FilterContainer>

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { AnimatePresence } from "framer-motion";
 import SubScreenAnimation from "./SubScreenAnimation";
-import usePokedexContext from "@/app/_context/PokedexContext";
+import usePokedexContext from "../../../context/PokedexContext";
 
 type Props = {};
 

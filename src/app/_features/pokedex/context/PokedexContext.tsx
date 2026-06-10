@@ -1,9 +1,15 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
-import CompletePokemonType from "../_types/CompletePokemonType";
-import usePokemonFetch from "../_hooks/usePokemonFetch";
-import ActivePadType from "../_types/ActivePadType";
+import {
+   createContext,
+   useContext,
+   useState,
+   ReactNode,
+   useEffect,
+} from "react";
+import { CompletePokemonType } from "../types/CompletePokemonType";
+import usePokemonFetch from "../hooks/usePokemonFetch";
+import { PadType } from "../types/PadType";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
 import { PokemonCardType } from "@/layout/poke-db/types/PokemonCardType";
 
@@ -17,8 +23,8 @@ interface PokedexContextInterface {
    togglePower: () => void;
    getPrevPokemon: () => void;
    getNextPokemon: () => void;
-   activePad: ActivePadType | null;
-   setActivePad: React.Dispatch<React.SetStateAction<ActivePadType>>;
+   activePad: PadType | null;
+   setActivePad: React.Dispatch<React.SetStateAction<PadType>>;
    prevPokemon: PokemonCardType | null;
    nextPokemon: PokemonCardType | null;
 }
@@ -30,7 +36,12 @@ export default function usePokedexContext() {
 
 export function PokedexProvider({ children }: { children: ReactNode }) {
    const [isPowerOn, setIsPowerOn] = useState(true);
-   const [activePad, setActivePad] = useState<ActivePadType>(null);
+   const [activePad, setActivePad] = useState<PadType>(null);
+
+   useEffect(() => {
+      console.log("the power is");
+      console.log(isPowerOn);
+   }, [isPowerOn]);
 
    const { selectedId, setSelectedId, pokemon, loading, error } =
       usePokemonFetch(isPowerOn);

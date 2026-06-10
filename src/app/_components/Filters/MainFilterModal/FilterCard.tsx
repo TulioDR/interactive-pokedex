@@ -1,14 +1,29 @@
+import useThemeContext from "@/context/ThemeContext";
+
 type Props = {
    fixedHeight?: true;
    text: string;
    icon?: string;
+   onClick: () => void;
+   isActive: boolean;
 };
 
-export default function FilterCard({ fixedHeight, text, icon }: Props) {
+export default function FilterCard({
+   fixedHeight,
+   text,
+   icon,
+   onClick,
+   isActive,
+}: Props) {
+   const { themeColor } = useThemeContext();
+
    return (
       <div
-         className={`w-full rounded-lg outline outline-outline border-2 hover:bg-slate-600 hover:text-white border-white bg-white flex flex-col items-center justify-center
+         style={{ backgroundColor: isActive ? themeColor : undefined }}
+         onClick={onClick}
+         className={`w-full rounded-lg outline outline-outline border-2 hover:bg-slate-600 hover:text-white bg-white border-white flex flex-col items-center justify-center
          ${fixedHeight ? "h-14" : ""}
+         ${isActive ? "text-white" : ""}
       `}
       >
          {icon && <span className="material-symbols-rounded">{icon}</span>}

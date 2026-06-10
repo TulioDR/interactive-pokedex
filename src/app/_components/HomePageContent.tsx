@@ -6,14 +6,15 @@ import Filters from "./Filters";
 import { useSearchParams } from "next/navigation";
 import CardType from "../_types/CardType";
 import CustomPagination from "./CustomPagination";
-import Pokedex from "./Pokedex";
 import { AnimatePresence } from "framer-motion";
 import MainFilterModal from "./Filters/MainFilterModal";
 
 import { motion } from "framer-motion";
 import TotalPokemons from "./TotalPokemons";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
-import { PokedexProvider } from "../_context/PokedexContext";
+import Pokedex from "../_features/pokedex/components/Pokedex";
+// import Pokedex from "./Pokedex";
+// import { PokedexProvider } from "../_context/PokedexContext";
 
 type Props = {};
 
@@ -54,9 +55,7 @@ export default function HomePageContent({}: Props) {
 
    return (
       <div className="w-full flex px-20 gap-5">
-         <PokedexProvider>
-            <Pokedex draggedId={draggedId} />
-         </PokedexProvider>
+         <Pokedex draggedId={draggedId} />
 
          <motion.div
             animate={{ opacity: isFilterOpen ? 0 : 1 }}

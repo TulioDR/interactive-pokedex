@@ -2,8 +2,8 @@ import ColorContainer from "./ColorContainer";
 import DataHeader from "./DataHeader";
 import DataTabs from "./DataTabs";
 import DataButtons from "./DataButtons";
-import usePokedexContext from "@/app/_context/PokedexContext";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
+import usePokedexContext from "../../context/PokedexContext";
 
 type Props = {
    selectedId: number;

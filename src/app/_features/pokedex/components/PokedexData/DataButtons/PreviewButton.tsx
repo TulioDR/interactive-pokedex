@@ -1,5 +1,5 @@
+import usePokedexContext from "../../../context/PokedexContext";
 import CircularInstruction from "./CircularInstruction";
-import usePokedexContext from "@/app/_context/PokedexContext";
 
 type Props = {
    favorite?: true;

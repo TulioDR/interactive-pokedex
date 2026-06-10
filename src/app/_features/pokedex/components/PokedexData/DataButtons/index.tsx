@@ -1,6 +1,6 @@
+import usePokedexContext from "../../../context/PokedexContext";
 import NavigationButton from "./NavigationButton";
 import PreviewButton from "./PreviewButton";
-import usePokedexContext from "@/app/_context/PokedexContext";
 
 type Props = {};
 

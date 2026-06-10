@@ -9,9 +9,9 @@ export default function ModalContainer({ children }: Props) {
    const { themeColor } = useThemeContext();
    return (
       <motion.div
-         initial={{ opacity: 0, scale: 1.5 }}
-         animate={{ opacity: 1, scale: 1 }}
-         exit={{ opacity: 0, scale: 1.5 }}
+         initial={{ opacity: 0, x: "100%" }}
+         animate={{ opacity: 1, x: "0%" }}
+         exit={{ opacity: 0, x: "100%" }}
          transition={{ duration: 0.4, ease: "easeInOut" }}
          className="px-20 pb-5 pt-30 fixed inset-0 z-40"
       >

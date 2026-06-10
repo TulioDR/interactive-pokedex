@@ -1,6 +1,6 @@
 import getPokemonId from "@/utils/getPokemonId";
 import CircularInstruction from "./CircularInstruction";
-import usePokedexContext from "@/app/_context/PokedexContext";
+import usePokedexContext from "../../../context/PokedexContext";
 
 type Props = {
    reverse?: true;

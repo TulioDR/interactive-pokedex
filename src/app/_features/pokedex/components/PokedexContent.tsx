@@ -7,18 +7,27 @@ import PokedexTop from "./PokedexTop";
 import PokedexControlDeck from "./PokedexControlDeck";
 import PokedexInnerScreen from "./PokedexInnerScreen";
 import LoadingSpinner from "./LoadingSpinner";
-import usePokedexContext from "@/app/_context/PokedexContext";
 import CRTAnimation from "./CRTAnimation";
+import { useEffect } from "react";
+import usePokedexContext from "../context/PokedexContext";
 
 type Props = {
    draggedId: number | null;
 };
 
-export default function Pokedex({ draggedId }: Props) {
+export default function PokedexContent({ draggedId }: Props) {
    const { selectedId, pokemon, loading, error, isPowerOn } =
       usePokedexContext();
 
    const showScan = draggedId && draggedId !== selectedId;
+
+   useEffect(() => {
+      console.log(isPowerOn);
+   }, [isPowerOn]);
+
+   useEffect(() => {
+      console.log(draggedId);
+   }, [draggedId]);
    return (
       <PokedexContainer>
          <PokedexTop />

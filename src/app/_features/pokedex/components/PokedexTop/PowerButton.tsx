@@ -1,5 +1,5 @@
-import usePokedexContext from "@/app/_context/PokedexContext";
 import { motion } from "framer-motion";
+import usePokedexContext from "../../context/PokedexContext";
 
 type Props = {};
 
