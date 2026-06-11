@@ -1,11 +1,11 @@
-import ActivePadType from "@/app/_types/ActivePadType";
+import { PadType } from "../../../types/PadType";
 
 type Props = {
    position: "top" | "right" | "bottom" | "left";
-   onClick: () => void;
    isActive: boolean;
-   pad: ActivePadType;
-   changeActivePad: (pad: ActivePadType) => void;
+   pad: PadType;
+   changeActivePad: (pad: PadType) => void;
+   onClick: () => void;
 };
 
 export default function ActionButton({

@@ -8,7 +8,6 @@ import PokedexControlDeck from "./PokedexControlDeck";
 import PokedexInnerScreen from "./PokedexInnerScreen";
 import LoadingSpinner from "./LoadingSpinner";
 import CRTAnimation from "./CRTAnimation";
-import { useEffect } from "react";
 import usePokedexContext from "../context/PokedexContext";
 
 type Props = {
@@ -21,13 +20,6 @@ export default function PokedexContent({ draggedId }: Props) {
 
    const showScan = draggedId && draggedId !== selectedId;
 
-   useEffect(() => {
-      console.log(isPowerOn);
-   }, [isPowerOn]);
-
-   useEffect(() => {
-      console.log(draggedId);
-   }, [draggedId]);
    return (
       <PokedexContainer>
          <PokedexTop />

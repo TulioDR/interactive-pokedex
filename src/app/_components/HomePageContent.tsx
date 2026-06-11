@@ -4,7 +4,7 @@ import { useState } from "react";
 import PokemonCard from "./PokemonCard";
 import Filters from "./Filters";
 import { useSearchParams } from "next/navigation";
-import CardType from "../_types/CardType";
+import { PokemonCardType } from "../_types/PokemonCardType";
 import CustomPagination from "./CustomPagination";
 import { AnimatePresence } from "framer-motion";
 import MainFilterModal from "./Filters/MainFilterModal";
@@ -29,7 +29,7 @@ export default function HomePageContent({}: Props) {
 
    const filteredPokemons = searchQuery
       ? allPokemon.filter(
-           (pokemon: CardType) =>
+           (pokemon: PokemonCardType) =>
               pokemon.name.toLowerCase().includes(searchQuery) ||
               pokemon.id.toString() === searchQuery,
         )

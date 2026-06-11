@@ -1,5 +1,6 @@
 "use client";
 
+import { PokemonCardType } from "@/app/_types/PokemonCardType";
 import {
    createContext,
    useContext,
@@ -7,7 +8,6 @@ import {
    useEffect,
    ReactNode,
 } from "react";
-import { PokemonCardType } from "../types/PokemonCardType";
 
 interface PokeContextType {
    allPokemon: PokemonCardType[];

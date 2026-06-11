@@ -1,5 +1,5 @@
 import { POKEMON_SHAPES_MAP } from "@/constants/POKEMON_SHAPES_MAP";
-import { PokemonCardType } from "@/layout/poke-db/types/PokemonCardType";
+import { PokemonCardType } from "../_types/PokemonCardType";
 // 🎯 Import the hardcoded shape map
 
 export interface FilterState {

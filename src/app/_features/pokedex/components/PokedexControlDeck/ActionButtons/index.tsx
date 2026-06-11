@@ -1,13 +1,13 @@
 import usePokedexContext from "../../../context/PokedexContext";
+import { PadType } from "../../../types/PadType";
 import ActionButton from "./ActionButton";
-import ActivePadType from "@/app/_types/ActivePadType";
 
 type Props = {};
 
 export default function ActionButtons({}: Props) {
    type CircularButtonProps = {
       position: "top" | "right" | "bottom" | "left";
-      pad: ActivePadType;
+      pad: PadType;
       onClick: () => void;
    };
 

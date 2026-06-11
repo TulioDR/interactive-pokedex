@@ -1,6 +1,6 @@
 import { ResolvedValues } from "framer-motion";
 import { useState } from "react";
-import CardType from "@/app/_types/CardType";
+import { PokemonCardType } from "@/app/_types/PokemonCardType";
 import CardContainer from "./CardContainer";
 import JapaneseName from "./JapaneseName";
 import PokemonTypes from "./PokemonTypes";
@@ -10,7 +10,7 @@ import CardName from "./CardName";
 import getTypeColor from "@/utils/getTypeColor";
 
 type Props = {
-   card: CardType;
+   card: PokemonCardType;
    setDraggedId: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
