@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
-import { filterPokemon, FilterState } from "../_utils/filterPokemon";
+import { filterPokemon, FilterState } from "@/app/_utils/filterPokemon";
 
 // interface UseFilterDrawerProps {
 // onClose: () => void; // Callback to close modal/drawer

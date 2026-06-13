@@ -25,7 +25,7 @@ const SPECIAL_OPTIONS: InterfaceOptions[] = [
    { value: "mythical", label: "Mythical", icon: "magic_button" },
 ];
 
-export default function Filters({
+export default function FiltersBody({
    toggleType,
    draft,
    toggleShape,
@@ -108,7 +108,7 @@ export default function Filters({
                      <FilterCard
                         onClick={() => toggleSpecial(option.value)}
                         key={index}
-                        text={"FEfef"}
+                        text={option.label}
                         fixedHeight
                         isActive={draft.special.includes(option.value)}
                      />
