@@ -1,6 +1,7 @@
 import useThemeContext from "@/context/ThemeContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import useFiltersContext from "../context/FiltersContext";
 
 type Props = {};
 
@@ -9,9 +10,10 @@ export default function FilterInput({}: Props) {
 
    const searchParams = useSearchParams();
    const currentQuery = searchParams.get("search_query") || "";
-   const [inputValue, setInputValue] = useState("");
 
    const router = useRouter();
+
+   const { inputValue, setInputValue } = useFiltersContext();
 
    useEffect(() => {
       // If the input value matches what's already in the URL, don't do anything

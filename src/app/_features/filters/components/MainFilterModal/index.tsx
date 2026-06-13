@@ -1,9 +1,7 @@
-import ModalContainer from "./ModalContainer";
-import useFilterDrawer from "../../hooks/useFilterDrawer";
 import ModalPreview from "./ModalPreview";
-import FiltersHeader from "./FiltersHeader";
 import FiltersBody from "./FiltersBody";
 import FiltersFooter from "./FiltersFooter";
+import FiltersContainer from "./FiltersContainer";
 
 type Props = {
    closeFilter: () => void;
@@ -11,35 +9,14 @@ type Props = {
 };
 
 export default function MainFilterModal({ closeFilter, isFilterOpen }: Props) {
-   const {
-      draft,
-      previewPokemonPool,
-      hasActiveDraftFilters,
-      toggleType,
-      toggleShape,
-      toggleGeneration,
-      setSortBy,
-      toggleSpecial,
-      clearAllFilters,
-      applyFilters,
-   } = useFilterDrawer();
-
    return (
-      <ModalContainer isFilterOpen={isFilterOpen}>
-         <ModalPreview previewPokemonPool={previewPokemonPool} />
+      <FiltersContainer closeFilter={closeFilter} isFilterOpen={isFilterOpen}>
+         <ModalPreview />
          <div className="w-0.5 h-full bg-outline" />
-         <div className="h-full flex-1 flex flex-col gap-5 text-slate-500">
-            <FiltersHeader closeFilter={closeFilter} />
-            <FiltersBody
-               draft={draft}
-               toggleType={toggleType}
-               toggleShape={toggleShape}
-               toggleGeneration={toggleGeneration}
-               setSortBy={setSortBy}
-               toggleSpecial={toggleSpecial}
-            />
-            <FiltersFooter />
+         <div className="h-full flex-1 flex flex-col gap-5 ">
+            <FiltersBody />
+            <FiltersFooter closeFilter={closeFilter} />
          </div>
-      </ModalContainer>
+      </FiltersContainer>
    );
 }

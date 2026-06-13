@@ -5,14 +5,8 @@ import POKEMON_GENERATIONS from "@/constants/POKEMON_GENERATIONS";
 import POKEMON_SHAPES from "@/constants/POKEMON_SHAPES";
 import POKEMON_TYPES from "@/constants/POKEMON_TYPES";
 import SORT_OPTIONS from "@/constants/SORT_OPTIONS";
-type Props = {
-   toggleType: (typeName: string) => void;
-   toggleShape: (shapeValue: string) => void;
-   draft: FilterState;
-   toggleGeneration: (generation: string) => void;
-   setSortBy: (sortValue: string) => void;
-   toggleSpecial: (status: "legendary" | "mythical") => void;
-};
+import useFiltersContext from "../../../context/FiltersContext";
+type Props = {};
 
 interface InterfaceOptions {
    value: "legendary" | "mythical";
@@ -25,16 +19,18 @@ const SPECIAL_OPTIONS: InterfaceOptions[] = [
    { value: "mythical", label: "Mythical", icon: "magic_button" },
 ];
 
-export default function FiltersBody({
-   toggleType,
-   draft,
-   toggleShape,
-   toggleGeneration,
-   setSortBy,
-   toggleSpecial,
-}: Props) {
+export default function FiltersBody({}: Props) {
+   const {
+      toggleSpecial,
+      setSortBy,
+      toggleGeneration,
+      toggleShape,
+      draft,
+      toggleType,
+   } = useFiltersContext();
+
    return (
-      <div className="flex flex-col gap-5 flex-1 w-full overflow-y-scroll overscroll-none py-5 pr-2 border-y-2 border-outline">
+      <div className="flex flex-col gap-5 flex-1 w-full overflow-y-scroll overscroll-none py-5 pr-2 border-y-2 border-outline text-slate-500">
          <FilterContainer icon="category" name="Type">
             <div className="grid grid-cols-6 gap-2">
                {POKEMON_TYPES.map((type) => (
@@ -49,6 +45,7 @@ export default function FiltersBody({
                ))}
             </div>
          </FilterContainer>
+
          <FilterContainer icon="token" name="Body">
             <div className="grid grid-cols-6 gap-2">
                {POKEMON_SHAPES.map((shape) => (
@@ -64,12 +61,8 @@ export default function FiltersBody({
          </FilterContainer>
 
          <div className="grid grid-cols-2 gap-5 w-full grid-rows-5 shrink-0">
-            <FilterContainer
-               icon="timeline"
-               name="Generation"
-               className="row-span-5"
-            >
-               <div className="grid grid-cols-3 gap-2 grid-rows-3 h-full w-full">
+            <FilterContainer icon="timeline" name="Generation" rowSpan={5}>
+               <div className="grid grid-cols-3 gap-2 grid-rows-3">
                   {POKEMON_GENERATIONS.map((gen) => (
                      <FilterCard
                         onClick={() => toggleGeneration(gen.id)}
@@ -81,12 +74,8 @@ export default function FiltersBody({
                </div>
             </FilterContainer>
 
-            <FilterContainer
-               icon="swap_vert"
-               name="Sort by"
-               className="row-span-3"
-            >
-               <div className="grid grid-cols-2 grid-rows-2 gap-2 h-full w-full">
+            <FilterContainer icon="swap_vert" name="Sort by" rowSpan={3}>
+               <div className="grid grid-cols-2 grid-rows-2 gap-2">
                   {SORT_OPTIONS.map((option, index) => (
                      <FilterCard
                         onClick={() => setSortBy(option.value)}
@@ -98,12 +87,9 @@ export default function FiltersBody({
                   ))}
                </div>
             </FilterContainer>
-            <FilterContainer
-               icon="star"
-               name="Special pokemons"
-               className="row-span-2"
-            >
-               <div className="grid grid-cols-2 grid-rows-1 gap-2 h-full w-full">
+
+            <FilterContainer icon="star" name="Special pokemons" rowSpan={2}>
+               <div className="grid grid-cols-2 grid-rows-1 gap-2 ">
                   {SPECIAL_OPTIONS.map((option, index) => (
                      <FilterCard
                         onClick={() => toggleSpecial(option.value)}

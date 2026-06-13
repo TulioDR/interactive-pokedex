@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
-import { filterPokemon, FilterState } from "../_utils/filterPokemon";
+import { filterPokemon, FilterState } from "@/app/_utils/filterPokemon";
 
 export function useAppliedFilters(globalSearchTerm: string) {
    const searchParams = useSearchParams();

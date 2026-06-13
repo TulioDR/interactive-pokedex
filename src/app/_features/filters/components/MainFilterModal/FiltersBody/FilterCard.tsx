@@ -18,10 +18,10 @@ export default function FilterCard({
    const { themeColor } = useThemeContext();
 
    return (
-      <div
+      <button
          style={{ backgroundColor: isActive ? themeColor : undefined }}
          onClick={onClick}
-         className={`w-full rounded-lg outline outline-outline border-2 hover:bg-slate-600 hover:text-white bg-white border-white flex flex-col items-center justify-center
+         className={`w-full rounded-lg cursor-pointer outline outline-outline border-2 hover:bg-slate-600 hover:text-white bg-white border-white flex flex-col items-center justify-center
          ${fixedHeight ? "h-14" : ""}
          ${isActive ? "text-white" : ""}
       `}
@@ -30,6 +30,6 @@ export default function FilterCard({
          <span className="text-xs xl:text-sm capitalize font-black leading-3">
             {text}
          </span>
-      </div>
+      </button>
    );
 }

@@ -1,17 +1,37 @@
-import { useState, useMemo } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
+import { PokemonCardType } from "@/app/_types/PokemonCardType";
 import { filterPokemon, FilterState } from "@/app/_utils/filterPokemon";
+import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
+import { useRouter, useSearchParams } from "next/navigation";
+import { createContext, useContext, useMemo, useState } from "react";
 
-// interface UseFilterDrawerProps {
-// onClose: () => void; // Callback to close modal/drawer
-// setGlobalSearchInput?: (val: string) => void; // State setter for your main search input
-// }
+interface FiltersContextInterface {
+   isModalOpen: boolean;
+   openModal: () => void;
+   closeModal: () => void;
+   draft: FilterState;
+   hasActiveDraftFilters: boolean;
+   previewPokemonPool: PokemonCardType[];
+   applyFilters: () => void;
+   toggleType: (typeName: string) => void;
+   toggleShape: (shapeValue: string) => void;
+   toggleGeneration: (generation: string) => void;
+   toggleSpecial: (status: "legendary" | "mythical") => void;
+   setSortBy: (sortValue: string) => void;
+   clearAllFilters: () => void;
+   inputValue: string;
+   setInputValue: (val: string) => void;
+}
 
-export default function useFilterDrawer() {
+const FiltersContext = createContext({} as FiltersContextInterface);
+
+export default function useFiltersContext() {
+   return useContext(FiltersContext);
+}
+
+export function FiltersProvider({ children }: { children: React.ReactNode }) {
    const router = useRouter();
    const searchParams = useSearchParams();
-   const { allPokemon } = usePokeDbContext(); // Pull global database pool
+   const { allPokemon } = usePokeDbContext();
 
    // Parse current URL states or default to blank system setups
    const getInitialFilters = (): FilterState => ({
@@ -23,8 +43,12 @@ export default function useFilterDrawer() {
       sortBy: searchParams.get("sortBy") || "id-asc",
    });
 
-   // Local isolated draft state
-   const [draft, setDraft] = useState<FilterState>(getInitialFilters);
+   const [inputValue, setInputValue] = useState("");
+   const [isModalOpen, setIsModalOpen] = useState(false);
+   const [draft, setDraft] = useState<FilterState>(getInitialFilters); // Local isolated draft state
+
+   const openModal = () => setIsModalOpen(true);
+   const closeModal = () => setIsModalOpen(false);
 
    // 🎛️ Click Toggle Action Handlers
    const toggleType = (typeName: string) => {
@@ -108,12 +132,18 @@ export default function useFilterDrawer() {
       //    setGlobalSearchInput("");
       // }
 
+      setInputValue("");
+
       // Update URL routes cleanly and secure closing animations
       router.push(`?${params.toString()}`);
       // onClose();
+      closeModal();
    };
 
-   return {
+   const value: FiltersContextInterface = {
+      isModalOpen,
+      openModal,
+      closeModal,
       draft,
       previewPokemonPool,
       hasActiveDraftFilters,
@@ -124,5 +154,13 @@ export default function useFilterDrawer() {
       toggleSpecial,
       clearAllFilters,
       applyFilters,
+      inputValue,
+      setInputValue,
    };
+
+   return (
+      <FiltersContext.Provider value={value}>
+         {children}
+      </FiltersContext.Provider>
+   );
 }

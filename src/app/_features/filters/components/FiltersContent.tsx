@@ -1,19 +1,17 @@
-import { useState } from "react";
 import FilterButton from "./FilterButton";
 import FilterInput from "./FilterInput";
 import MainFilterModal from "./MainFilterModal";
+import useFiltersContext from "../context/FiltersContext";
 
 type Props = {};
 
 export default function FiltersContent({}: Props) {
-   const [isFilterOpen, setIsFilterOpen] = useState(false);
-   const openFilter = () => setIsFilterOpen(true);
-   const closeFilter = () => setIsFilterOpen(false);
+   const { isModalOpen, openModal, closeModal } = useFiltersContext();
 
    return (
       <div className="w-full h-14 mt-30 flex gap-2">
          <FilterInput />
-         <FilterButton icon="tune" text="Filters" onClick={openFilter} />
+         <FilterButton icon="tune" text="Filters" onClick={openModal} />
          <FilterButton
             icon="favorite"
             text="Favorites"
@@ -21,10 +19,7 @@ export default function FiltersContent({}: Props) {
             favorite
          />
          <FilterButton icon="refresh" square onClick={() => {}} />
-         <MainFilterModal
-            isFilterOpen={isFilterOpen}
-            closeFilter={closeFilter}
-         />
+         <MainFilterModal isFilterOpen={isModalOpen} closeFilter={closeModal} />
       </div>
    );
 }
