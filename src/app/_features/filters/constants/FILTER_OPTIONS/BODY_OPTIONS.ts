@@ -1,4 +1,6 @@
-const POKEMON_SHAPES = [
+import { BaseFilterOptionType } from "../../types/FilterTypes";
+
+export const BODY_OPTIONS: BaseFilterOptionType[] = [
    { value: "ball", label: "Head Only (Ball-shaped)" },
    { value: "squiggle", label: "Serpentine (Squiggle-shaped)" },
    { value: "fish", label: "Fins / Fish-like" },
@@ -8,11 +10,9 @@ const POKEMON_SHAPES = [
    { value: "legs", label: "Head and Legs Only" },
    { value: "quadruped", label: "Quadruped (Four-legged)" },
    { value: "wings", label: "Single Pair of Wings" },
-   { value: "tentacles", label: "Multiple Pairs of Wings" }, // or tentacles/arms
+   { value: "tentacles", label: "Multiple Pairs of Wings / Tentacles" },
    { value: "heads", label: "Multiple Bodies/Heads" },
    { value: "humanoid", label: "Bipedal / Humanoid Shape" },
    { value: "bug-wings", label: "Insectoid / Bug Wings" },
    { value: "armor", label: "Chute/Armor-like" },
 ];
-
-export default POKEMON_SHAPES;

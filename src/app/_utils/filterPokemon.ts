@@ -1,4 +1,8 @@
-import { POKEMON_SHAPES_MAP } from "@/constants/POKEMON_SHAPES_MAP";
+import { POKEMON_SHAPES_MAP } from "../_features/filters/constants/POKEMON_DATA/POKEMON_BODIES";
+import {
+   LEGENDARY_IDS,
+   MYTHICAL_IDS,
+} from "../_features/filters/constants/POKEMON_DATA/SPECIAL_POKEMONS";
 import { PokemonCardType } from "../_types/PokemonCardType";
 // 🎯 Import the hardcoded shape map
 
@@ -21,18 +25,6 @@ const GEN_RANGES: Record<string, { start: number; end: number }> = {
    gen8: { start: 810, end: 898 },
    gen9: { start: 899, end: 1025 },
 };
-
-const LEGENDARY_IDS = [
-   144, 145, 146, 150, 243, 244, 245, 249, 250, 377, 378, 379, 380, 381, 382,
-   383, 384, 480, 481, 482, 483, 484, 485, 486, 487, 488, 638, 639, 640, 641,
-   642, 643, 644, 645, 646, 716, 717, 718, 772, 773, 785, 786, 787, 788, 789,
-   790, 791, 792, 800, 888, 889, 890, 894, 895, 896, 897, 898, 905, 1001, 1002,
-   1003, 1004, 1007, 1008, 1014, 1015, 1016, 1017, 1024,
-];
-const MYTHICAL_IDS = [
-   151, 251, 385, 386, 489, 490, 491, 492, 493, 494, 647, 648, 649, 719, 720,
-   721, 801, 802, 807, 808, 809, 893, 1025,
-];
 
 export function filterPokemon(
    pokemonList: PokemonCardType[],
