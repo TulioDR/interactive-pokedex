@@ -8,6 +8,7 @@ interface FiltersContextInterface {
    isModalOpen: boolean;
    openModal: () => void;
    closeModal: () => void;
+   toggleModal: () => void;
    draft: FilterState;
    hasActiveDraftFilters: boolean;
    previewPokemonPool: PokemonCardType[];
@@ -49,8 +50,8 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
 
    const openModal = () => setIsModalOpen(true);
    const closeModal = () => setIsModalOpen(false);
+   const toggleModal = () => setIsModalOpen((prev) => !prev);
 
-   // 🎛️ Click Toggle Action Handlers
    const toggleType = (typeName: string) => {
       setDraft((prev) => {
          if (prev.types.includes(typeName)) {
@@ -127,16 +128,8 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
          params.set("special", draft.special.join(","));
       params.set("sortBy", draft.sortBy);
 
-      // 🧹 Wipe the main navigation text field clean as requested
-      // if (setGlobalSearchInput) {
-      //    setGlobalSearchInput("");
-      // }
-
       setInputValue("");
-
-      // Update URL routes cleanly and secure closing animations
       router.push(`?${params.toString()}`);
-      // onClose();
       closeModal();
    };
 
@@ -144,6 +137,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
       isModalOpen,
       openModal,
       closeModal,
+      toggleModal,
       draft,
       previewPokemonPool,
       hasActiveDraftFilters,

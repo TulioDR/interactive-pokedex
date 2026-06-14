@@ -1,36 +1,35 @@
 type Props = {
+   children: React.ReactNode;
    icon: string;
    name: string;
-   children: React.ReactNode;
    className?: string;
-   columnSpan?: number;
-   rowSpan?: number;
+   innerClassName?: string;
+   description: string;
 };
 
 export default function FilterContainer({
+   children,
    icon,
    name,
-   children,
-   className,
-   columnSpan = 1,
-   rowSpan = 1,
+   className = "",
+   innerClassName = "",
+   description,
 }: Props) {
    return (
-      <div
-         style={{
-            gridRow: `span ${rowSpan} / span ${rowSpan}`,
-            gridColumn: `span ${columnSpan} / span ${columnSpan}`,
-         }}
-         className="flex flex-col overflow-hidden gap-2 shrink-0"
-      >
-         <div className="flex gap-1 items-center">
-            <span className="material-symbols-rounded">{icon}</span>
-            <div className="font-black uppercase">{name}</div>
+      <div className={`flex flex-col overflow-hidden gap-2  ${className}`}>
+         <div className="flex items-end gap-1">
+            <div className="flex gap-1 items-center">
+               <span className="material-symbols-rounded">{icon}</span>
+               <div className="font-black uppercase">{name}</div>
+            </div>
+
+            <div className="text-xs opacity-70 -translate-y-0.5">
+               ({description})
+            </div>
          </div>
+
          <div
-            className={`flex-1 w-full bg-slate-200/50  border-2 border-outline rounded-lg overflow-hidden p-2 grid
-               ${className ? className : ""}
-            `}
+            className={`flex-1 w-full bg-slate-200/50 border-2 border-outline rounded-lg overflow-hidden p-2 grid gap-2 ${innerClassName}`}
          >
             {children}
          </div>

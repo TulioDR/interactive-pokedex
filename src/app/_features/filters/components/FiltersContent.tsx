@@ -6,7 +6,7 @@ import useFiltersContext from "../context/FiltersContext";
 type Props = {};
 
 export default function FiltersContent({}: Props) {
-   const { isModalOpen, openModal, closeModal } = useFiltersContext();
+   const { openModal } = useFiltersContext();
 
    return (
       <div className="w-full h-14 mt-30 flex gap-2">
@@ -19,7 +19,7 @@ export default function FiltersContent({}: Props) {
             favorite
          />
          <FilterButton icon="refresh" square onClick={() => {}} />
-         <MainFilterModal isFilterOpen={isModalOpen} closeFilter={closeModal} />
+         <MainFilterModal />
       </div>
    );
 }

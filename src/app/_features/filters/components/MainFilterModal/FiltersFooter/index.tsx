@@ -1,16 +1,14 @@
 import useFiltersContext from "../../../context/FiltersContext";
 import ModalButton from "../ModalButton";
 
-type Props = {
-   closeFilter: () => void;
-};
+type Props = {};
 
-export default function FiltersFooter({ closeFilter }: Props) {
-   const { clearAllFilters } = useFiltersContext();
+export default function FiltersFooter({}: Props) {
+   const { clearAllFilters, closeModal } = useFiltersContext();
 
    return (
       <div className="h-12 w-full flex justify-between gap-2">
-         <ModalButton onClick={closeFilter} text="Close" icon="close" />
+         <ModalButton onClick={closeModal} text="Close" icon="close" />
          <div className="flex gap-2">
             <ModalButton
                onClick={clearAllFilters}

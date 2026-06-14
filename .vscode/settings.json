@@ -1,3 +1,9 @@
 {
-   "cSpell.words": ["Pokedex", "Pokemons"]
+   "cSpell.words": ["Pokedex", "Pokemons"],
+   "tailwindCSS.classAttributes": [
+      "class",
+      "className",
+      "innerClassName",
+      "containerClassName"
+   ]
 }
