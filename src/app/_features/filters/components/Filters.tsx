@@ -1,12 +1,12 @@
 import { FiltersProvider } from "../context/FiltersContext";
 import FiltersContent from "./FiltersContent";
 
-type Props = {};
+type Props = { foundedNumber: number };
 
-export default function Filters({}: Props) {
+export default function Filters({ foundedNumber }: Props) {
    return (
       <FiltersProvider>
-         <FiltersContent />
+         <FiltersContent foundedNumber={foundedNumber} />
       </FiltersProvider>
    );
 }

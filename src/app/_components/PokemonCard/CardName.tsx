@@ -4,7 +4,7 @@ type Props = {
 
 export default function CardName({ name }: Props) {
    return (
-      <div className=" font-black text-lg text-white uppercase w-full tracking-wider">
+      <div className="text-base uppercase w-full font-black text-white tracking-tighter italic">
          {name}
       </div>
    );

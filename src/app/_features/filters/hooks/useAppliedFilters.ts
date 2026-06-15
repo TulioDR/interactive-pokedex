@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
-import { filterPokemon, FilterState } from "@/app/_utils/filterPokemon";
+import { filterPokemon, FilterState } from "../utils/filterPokemon";
 
-export function useAppliedFilters(globalSearchTerm: string) {
+export function useAppliedFilters() {
    const searchParams = useSearchParams();
    const { allPokemon } = usePokeDbContext();
 
@@ -20,17 +20,20 @@ export function useAppliedFilters(globalSearchTerm: string) {
 
       // 1. Filter out via URL attributes first
       const baseFilteredPool = filterPokemon(allPokemon, appliedFilters);
+      const urlSearchQuery = searchParams.get("search_query");
 
-      // 2. Secondary refine pass: Execute simple string checks against the remaining pool
-      if (!globalSearchTerm.trim()) return baseFilteredPool;
+      if (!urlSearchQuery || !urlSearchQuery.trim()) {
+         return baseFilteredPool;
+      }
 
-      const normalizedQuery = globalSearchTerm.toLowerCase().trim();
+      // 3. Secondary refine pass: Execute simple string checks against the remaining pool
+      const normalizedQuery = urlSearchQuery.toLowerCase().trim();
       return baseFilteredPool.filter(
          (p) =>
             p.name.toLowerCase().includes(normalizedQuery) ||
             p.id.toString() === normalizedQuery,
       );
-   }, [allPokemon, searchParams, globalSearchTerm]);
+   }, [allPokemon, searchParams]);
 
    return finalDisplayPokemon;
 }

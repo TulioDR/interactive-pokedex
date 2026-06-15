@@ -1,6 +1,5 @@
 import useFiltersContext from "../../../context/FiltersContext";
 import { GENERATION_OPTIONS } from "../../../constants/FILTER_OPTIONS/GENERATION_OPTIONS";
-import { REGION_OPTIONS } from "../../../constants/FILTER_OPTIONS/REGION_OPTIONS";
 import { TYPE_OPTIONS } from "../../../constants/FILTER_OPTIONS/TYPE_OPTIONS";
 import { SPECIAL_OPTIONS } from "../../../constants/FILTER_OPTIONS/SPECIAL_OPTIONS";
 import { SORT_BY_OPTIONS } from "../../../constants/FILTER_OPTIONS/SORT_BY_OPTIONS";
@@ -49,29 +48,19 @@ export default function FiltersBody({}: Props) {
                   draft.generations.includes(item.value)
                }
                onItemClick={toggleGeneration}
-               className="col-span-1"
+               className="col-span-1 row-span-2"
                innerClassName="grid-cols-3"
                description="Can choose multiple"
+               autoHeight
             />
-            <FilterGroup
-               name="Region"
-               icon="map"
-               items={REGION_OPTIONS}
-               getItemIsActive={(item) =>
-                  draft.generations.includes(item.value)
-               }
-               onItemClick={toggleGeneration}
-               className="col-span-1"
-               innerClassName="grid-cols-3"
-               description="Can choose multiple"
-            />
+
             <FilterGroup
                name="Sort by"
                icon="swap_vert"
                items={SORT_BY_OPTIONS}
                getItemIsActive={(item) => draft.sortBy === item.value}
                onItemClick={setSortBy}
-               className="col-span-1"
+               className="col-span-1 "
                innerClassName="grid-cols-2"
                description="Can choose only one"
             />
@@ -85,7 +74,6 @@ export default function FiltersBody({}: Props) {
                }
                className="col-span-1"
                innerClassName="grid-cols-2 "
-               autoHeight
                description="Can choose multiple"
             />
          </div>

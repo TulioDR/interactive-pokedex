@@ -11,7 +11,7 @@ export default function PokemonTypes({ types }: Props) {
             <div
                key={t}
                style={{ backgroundColor: getTypeColor(t) }}
-               className="rounded-md text-white flex items-center justify-center uppercase text-sm font-bold py-4"
+               className="rounded-md text-white flex items-center justify-center uppercase text-xs font-extrabold py-4"
             >
                {t}
             </div>

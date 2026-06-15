@@ -3,9 +3,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import useFiltersContext from "../context/FiltersContext";
 
-type Props = {};
+type Props = {
+   foundedNumber: number;
+};
 
-export default function FilterInput({}: Props) {
+export default function FilterInput({ foundedNumber }: Props) {
    const [isFocused, setIsFocused] = useState(false);
 
    const searchParams = useSearchParams();
@@ -16,20 +18,23 @@ export default function FilterInput({}: Props) {
    const { inputValue, setInputValue } = useFiltersContext();
 
    useEffect(() => {
-      // If the input value matches what's already in the URL, don't do anything
       if (inputValue === currentQuery) return;
-
       const timer = setTimeout(() => {
+         const params = new URLSearchParams(searchParams.toString());
+
          if (inputValue) {
-            // Using router.replace prevents flooding the browser history back-stack
-            router.replace(`/?search_query=${encodeURIComponent(inputValue)}`);
+            params.set("search_query", inputValue);
          } else {
-            router.replace("/"); // Clear parameter if input is empty
+            params.delete("search_query");
          }
+         const queryString = params.toString();
+         const newUrl = queryString ? `/?${queryString}` : "/";
+
+         router.replace(newUrl, { scroll: false });
       }, 300);
 
-      return () => clearTimeout(timer); // Cleanup timer if user types another character before 300ms
-   }, [inputValue, currentQuery, router]);
+      return () => clearTimeout(timer);
+   }, [inputValue, currentQuery, searchParams, router]);
 
    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputValue(e.target.value);
@@ -61,6 +66,11 @@ export default function FilterInput({}: Props) {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
          />
+         <div className="h-full flex items-end">
+            <span className="text-xs opacity-30  italic font-black">
+               {`${foundedNumber} founded`}
+            </span>
+         </div>
       </div>
    );
 }

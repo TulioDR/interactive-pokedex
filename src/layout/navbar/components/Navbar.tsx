@@ -9,7 +9,7 @@ type Props = {};
 export default function Navbar({}: Props) {
    const { themeColor } = useThemeContext();
    return (
-      <div className="fixed top-0 left-0 pt-5 pl-20 pr-20 w-full z-50">
+      <div className="fixed top-0 left-0 pt-5 px-30 w-full z-50">
          <div
             style={{ backgroundColor: themeColor }}
             className=" outline outline-outline border-2 border-white w-full h-20 shadow-xl rounded-4xl flex justify-between px-5 py-3 relative "

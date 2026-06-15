@@ -1,8 +1,9 @@
 import { PokemonCardType } from "@/app/_types/PokemonCardType";
-import { filterPokemon, FilterState } from "@/app/_utils/filterPokemon";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createContext, useContext, useMemo, useState } from "react";
+import { filterPokemon, FilterState } from "../utils/filterPokemon";
+import useFilterDraft from "../hooks/useFilterDraft";
 
 interface FiltersContextInterface {
    isModalOpen: boolean;
@@ -19,6 +20,7 @@ interface FiltersContextInterface {
    toggleSpecial: (status: "legendary" | "mythical") => void;
    setSortBy: (sortValue: string) => void;
    clearAllFilters: () => void;
+   clearAllFiltersAndInput: () => void;
    inputValue: string;
    setInputValue: (val: string) => void;
 }
@@ -34,19 +36,12 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
    const searchParams = useSearchParams();
    const { allPokemon } = usePokeDbContext();
 
-   // Parse current URL states or default to blank system setups
-   const getInitialFilters = (): FilterState => ({
-      types: searchParams.get("types")?.split(",").filter(Boolean) || [],
-      shapes: searchParams.get("shapes")?.split(",").filter(Boolean) || [],
-      generations:
-         searchParams.get("generations")?.split(",").filter(Boolean) || [],
-      special: searchParams.get("special")?.split(",").filter(Boolean) || [],
-      sortBy: searchParams.get("sortBy") || "id-asc",
-   });
+   const [inputValue, setInputValue] = useState(
+      searchParams.get("search_query") || "",
+   );
+   const { draft, setDraft } = useFilterDraft();
 
-   const [inputValue, setInputValue] = useState("");
    const [isModalOpen, setIsModalOpen] = useState(false);
-   const [draft, setDraft] = useState<FilterState>(getInitialFilters); // Local isolated draft state
 
    const openModal = () => setIsModalOpen(true);
    const closeModal = () => setIsModalOpen(false);
@@ -103,6 +98,10 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
          sortBy: "id-asc",
       });
    };
+   const clearAllFiltersAndInput = () => {
+      setInputValue("");
+      clearAllFilters();
+   };
 
    // 📊 Live Sidebar Preview Computation Engine
    const hasActiveDraftFilters =
@@ -147,6 +146,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
       setSortBy,
       toggleSpecial,
       clearAllFilters,
+      clearAllFiltersAndInput,
       applyFilters,
       inputValue,
       setInputValue,

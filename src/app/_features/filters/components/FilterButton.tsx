@@ -1,34 +1,46 @@
+import { useState } from "react";
+
 type Props = {
    icon: string;
    text?: string;
-   isSelected?: boolean;
    favorite?: true;
    square?: true;
    onClick: () => void;
+   isActive?: boolean;
 };
 
 export default function FilterButton({
    icon,
    text,
-   isSelected,
    favorite,
    square,
    onClick,
+   isActive,
 }: Props) {
+   const [isHovered, setIsHovered] = useState(false);
+
+   const isOn = isActive || isHovered;
+
    return (
       <button
          onClick={onClick}
-         className={`h-full rounded-lg flex justify-center items-center relative cursor-pointer bg-white shadow-md outline outline-outline
-            ${
-               favorite
-                  ? "text-[#E60012] hover:bg-[#E60012] hover:text-white active:bg-[#E60012] active:text-white"
-                  : "text-black/60 hover:bg-hover hover:text-white active:bg-hover active:text-white"
-            }   
+         onPointerEnter={() => setIsHovered(true)}
+         onPointerLeave={() => setIsHovered(false)}
+         className={`h-full rounded-lg flex justify-center items-center relative cursor-pointer shadow-md outline outline-outline
             ${square ? "aspect-square" : "px-5 gap-1"}
+            ${
+               isOn
+                  ? favorite
+                     ? "text-white bg-[#E60012]"
+                     : "text-white bg-hover"
+                  : favorite
+                    ? "text-[#E60012] bg-white"
+                    : "text-black/60 bg-white"
+            }
          `}
       >
          <span
-            style={{ fontVariationSettings: `'FILL' ${isSelected ? 1 : 0}` }}
+            style={{ fontVariationSettings: `'FILL' ${isOn ? 1 : 0}` }}
             className="material-symbols-rounded text-3xl!"
          >
             {icon}

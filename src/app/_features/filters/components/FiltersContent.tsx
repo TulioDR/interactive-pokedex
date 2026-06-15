@@ -2,23 +2,39 @@ import FilterButton from "./FilterButton";
 import FilterInput from "./FilterInput";
 import MainFilterModal from "./MainFilterModal";
 import useFiltersContext from "../context/FiltersContext";
+import { useRouter } from "next/navigation";
 
-type Props = {};
+type Props = {
+   foundedNumber: number;
+};
 
-export default function FiltersContent({}: Props) {
-   const { openModal } = useFiltersContext();
+export default function FiltersContent({ foundedNumber }: Props) {
+   const { openModal, clearAllFiltersAndInput, hasActiveDraftFilters } =
+      useFiltersContext();
+
+   const router = useRouter();
+
+   const handleClearAllFilters = () => {
+      router.replace("/", { scroll: false });
+      clearAllFiltersAndInput();
+   };
 
    return (
       <div className="w-full h-14 mt-30 flex gap-2">
-         <FilterInput />
-         <FilterButton icon="tune" text="Filters" onClick={openModal} />
+         <FilterInput foundedNumber={foundedNumber} />
+         <FilterButton
+            icon="tune"
+            text="Filters"
+            onClick={openModal}
+            isActive={hasActiveDraftFilters}
+         />
          <FilterButton
             icon="favorite"
             text="Favorites"
             onClick={() => {}}
             favorite
          />
-         <FilterButton icon="refresh" square onClick={() => {}} />
+         <FilterButton icon="refresh" square onClick={handleClearAllFilters} />
          <MainFilterModal />
       </div>
    );

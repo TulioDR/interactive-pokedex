@@ -4,7 +4,7 @@ import ModalButton from "../ModalButton";
 type Props = {};
 
 export default function FiltersFooter({}: Props) {
-   const { clearAllFilters, closeModal } = useFiltersContext();
+   const { clearAllFilters, closeModal, applyFilters } = useFiltersContext();
 
    return (
       <div className="h-12 w-full flex justify-between gap-2">
@@ -15,7 +15,11 @@ export default function FiltersFooter({}: Props) {
                text="Reset"
                icon="refresh"
             />
-            <ModalButton onClick={() => {}} text="Apply filters" icon="check" />
+            <ModalButton
+               onClick={applyFilters}
+               text="Apply filters"
+               icon="check"
+            />
          </div>
       </div>
    );

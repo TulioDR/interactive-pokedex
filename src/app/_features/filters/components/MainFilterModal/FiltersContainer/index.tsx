@@ -26,17 +26,17 @@ export default function FiltersContainer({ children }: Props) {
          initial={{ x: "100%" }}
          animate={{ x: isModalOpen ? "0%" : "100%" }}
          transition={{ duration: 0.4, ease: "easeInOut" }}
-         className="px-20 pb-5 pt-30 fixed inset-0 z-30"
+         className="px-30 pb-5 pt-30 fixed inset-0 z-30"
       >
          <motion.div
             style={{ backgroundColor: themeColor }}
             initial={false}
             animate={{
-               x: isModalOpen ? "0px" : "-120px",
+               x: isModalOpen ? "0px" : "-180px",
                transition: { duration: 0.4, ease: "easeInOut" },
             }}
             whileHover={{
-               x: isModalOpen ? "0px" : "-152px",
+               x: isModalOpen ? "0px" : "-232px",
                transition: { duration: 0.2, ease: "easeInOut" },
             }}
             className="w-full h-full rounded-4xl p-5 pl-0 flex shadow-xl border-2 border-white outline outline-outline overflow-hidden"

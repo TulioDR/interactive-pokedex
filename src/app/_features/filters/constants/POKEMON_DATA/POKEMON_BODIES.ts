@@ -1,4 +1,4 @@
-export const POKEMON_SHAPES_MAP: Record<string, number[]> = {
+export const POKEMON_BODIES: Record<string, number[]> = {
    ball: [
       43, 44, 45, 92, 93, 100, 101, 102, 114, 137, 151, 175, 176, 187, 188, 189,
       201, 204, 205, 211, 213, 218, 222, 233, 338, 339, 340, 355, 356, 358, 361,

@@ -1,10 +1,10 @@
-import { POKEMON_SHAPES_MAP } from "../_features/filters/constants/POKEMON_DATA/POKEMON_BODIES";
+import { PokemonCardType } from "@/app/_types/PokemonCardType";
+import { POKEMON_BODIES } from "../constants/POKEMON_DATA/POKEMON_BODIES";
+import { GENERATION_RANGES } from "../constants/POKEMON_DATA/GENERATION_RANGES";
 import {
    LEGENDARY_IDS,
    MYTHICAL_IDS,
-} from "../_features/filters/constants/POKEMON_DATA/SPECIAL_POKEMONS";
-import { PokemonCardType } from "../_types/PokemonCardType";
-// 🎯 Import the hardcoded shape map
+} from "../constants/POKEMON_DATA/SPECIAL_POKEMONS";
 
 export interface FilterState {
    types: string[];
@@ -13,18 +13,6 @@ export interface FilterState {
    special: string[];
    sortBy: string;
 }
-
-const GEN_RANGES: Record<string, { start: number; end: number }> = {
-   gen1: { start: 1, end: 151 },
-   gen2: { start: 152, end: 251 },
-   gen3: { start: 252, end: 386 },
-   gen4: { start: 387, end: 493 },
-   gen5: { start: 494, end: 649 },
-   gen6: { start: 650, end: 721 },
-   gen7: { start: 722, end: 809 },
-   gen8: { start: 810, end: 898 },
-   gen9: { start: 899, end: 1025 },
-};
 
 export function filterPokemon(
    pokemonList: PokemonCardType[],
@@ -44,7 +32,7 @@ export function filterPokemon(
       result = result.filter((p) => {
          // Check every selected shape filter (e.g. "ball", "quadruped")
          return filters.shapes.some((shapeKey) => {
-            const allowedIds = POKEMON_SHAPES_MAP[shapeKey];
+            const allowedIds = POKEMON_BODIES[shapeKey];
             // If the current pokemon's ID is found inside that shape's list, keep it!
             return allowedIds ? allowedIds.includes(p.id) : false;
          });
@@ -55,7 +43,7 @@ export function filterPokemon(
    if (filters.generations.length > 0) {
       result = result.filter((p) => {
          return filters.generations.some((genKey) => {
-            const range = GEN_RANGES[genKey];
+            const range = GENERATION_RANGES[genKey];
             return range ? p.id >= range.start && p.id <= range.end : false;
          });
       });

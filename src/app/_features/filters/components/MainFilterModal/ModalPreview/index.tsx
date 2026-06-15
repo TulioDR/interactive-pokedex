@@ -8,7 +8,7 @@ export default function ModalPreview({}: Props) {
    const { previewPokemonPool, hasActiveDraftFilters } = useFiltersContext();
 
    return (
-      <div className="w-96 h-full flex flex-col gap-5 overflow-hidden ">
+      <div className="w-80 h-full flex flex-col gap-5 overflow-hidden ">
          <h3 className="text-2xl font-black text-hover flex items-center">
             Preview
          </h3>
