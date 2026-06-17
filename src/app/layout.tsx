@@ -23,8 +23,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
    children,
+   modal,
 }: Readonly<{
    children: React.ReactNode;
+   modal: React.ReactNode;
 }>) {
    return (
       <html
@@ -46,9 +48,12 @@ export default function RootLayout({
          <ThemeProvider>
             <PokeDbProvider>
                <PokeDbLoader />
-               <body>
-                  <Navbar />
-                  {children}
+               <body className="px-5 lg:px-30">
+                  <main>
+                     <Navbar />
+                     {children}
+                  </main>
+                  {modal}
                </body>
             </PokeDbProvider>
          </ThemeProvider>

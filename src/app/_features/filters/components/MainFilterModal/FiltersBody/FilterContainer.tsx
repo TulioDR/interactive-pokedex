@@ -17,10 +17,12 @@ export default function FilterContainer({
 }: Props) {
    return (
       <div className={`flex flex-col overflow-hidden gap-2  ${className}`}>
-         <div className="flex items-end gap-1">
+         <div className="flex flex-col lg:flex-row items-start lg:items-end gap-1">
             <div className="flex gap-1 items-center">
                <span className="material-symbols-rounded">{icon}</span>
-               <div className="font-black uppercase">{name}</div>
+               <div className="font-black uppercase font-sm lg:font-base">
+                  {name}
+               </div>
             </div>
 
             <div className="text-xs opacity-70 -translate-y-0.5">

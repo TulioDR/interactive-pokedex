@@ -15,57 +15,21 @@ import { useAppliedFilters } from "../_features/filters/hooks/useAppliedFilters"
 type Props = {};
 
 export default function HomePageContent({}: Props) {
-   // const searchParams = useSearchParams();
-
-   // const { allPokemon } = usePokeDbContext();
-   // const [draggedId, setDraggedId] = useState<number | null>(null);
-
-   // const searchQuery = searchParams.get("search_query")?.toLowerCase() || "";
-   // const currentPage = Number(searchParams.get("page")) || 1;
-
-   // const filteredPokemons = searchQuery
-   //    ? allPokemon.filter(
-   //         (pokemon: PokemonCardType) =>
-   //            pokemon.name.toLowerCase().includes(searchQuery) ||
-   //            pokemon.id.toString() === searchQuery,
-   //      )
-   //    : allPokemon;
-
-   // const itemsPerPage = 30;
-   // const totalPages = Math.max(
-   //    Math.ceil(filteredPokemons.length / itemsPerPage),
-   //    1,
-   // );
-
-   // const indexOfLastItem = currentPage * itemsPerPage;
-   // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-   // const displayedPokemons = filteredPokemons.slice(
-   //    indexOfFirstItem,
-   //    indexOfLastItem,
-   // );
-
-   // const filteredPokemon = useAppliedFilters();
-
    const searchParams = useSearchParams();
    const [draggedId, setDraggedId] = useState<number | null>(null);
 
    // 1. Grab the current page from the URL string safely
    const currentPage = Number(searchParams.get("page")) || 1;
-
    // 2. Get the fully filtered pool (takes care of search_query, shapes, types, etc.)
    const allFilteredPokemon = useAppliedFilters();
-
    // 3. Handle Pagination Mathematics based on the hook's output
    const itemsPerPage = 30;
    const totalPages = Math.max(
       Math.ceil(allFilteredPokemon.length / itemsPerPage),
       1,
    );
-
    const indexOfLastItem = currentPage * itemsPerPage;
    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
    // 4. Slice the master list down to only what should display on THIS specific page
    const displayedPokemons = allFilteredPokemon.slice(
       indexOfFirstItem,
@@ -73,7 +37,7 @@ export default function HomePageContent({}: Props) {
    );
 
    return (
-      <div className="w-full flex px-30 gap-5">
+      <div className="w-full flex gap-5 pt-5">
          <Pokedex draggedId={draggedId} />
          <div className="w-full flex flex-col gap-5 pb-5">
             <Filters foundedNumber={allFilteredPokemon.length} />
@@ -86,7 +50,7 @@ export default function HomePageContent({}: Props) {
                   />
                ))}
             </div>
-            <CustomPagination total={totalPages} page={currentPage} />
+            {/* <CustomPagination total={totalPages} page={currentPage} /> */}
          </div>
       </div>
    );

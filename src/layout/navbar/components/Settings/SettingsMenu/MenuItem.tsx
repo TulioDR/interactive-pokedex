@@ -16,7 +16,7 @@ export default function MenuItem({
          onClick={onClick}
          onPointerEnter={onPointerEnter}
          onPointerLeave={onPointerLeave}
-         className="w-full h-14 cursor-pointer bg-white hover:bg-hover hover:text-white text-hover px-2 text-sm rounded-lg overflow-hidden"
+         className="w-full h-14 cursor-pointer bg-white hover:bg-hover hover:text-white text-hover px-2 rounded-lg overflow-hidden"
       >
          {children}
       </button>

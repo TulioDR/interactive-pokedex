@@ -31,7 +31,7 @@ export default function CardContainer({
          }}
          dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
          dragElastic={1}
-         className={`aspect-5/7 rounded-xl cursor-grab active:cursor-grabbing flex flex-col items-center border-2 border-white outline outline-outline shadow-md overflow-hidden ${isDragging ? "z-20" : ""}`}
+         className={`aspect-5/7 rounded-xl relative pointer-events-none xl:pointer-events-auto cursor-grab active:cursor-grabbing flex flex-col items-center border-2 border-white outline outline-outline shadow-md overflow-hidden ${isDragging ? "z-20" : ""}`}
       >
          {children}
       </motion.div>

@@ -35,7 +35,7 @@ export default function SettingsMenu({}: Props) {
    return (
       <div
          onMouseDown={(e) => e.preventDefault()}
-         className="absolute right-0 top-full w-80 bg-white translate-y-1 rounded-lg outline outline-outline p-5 font-bold"
+         className="absolute right-0 top-full w-75 bg-white translate-y-1 text-xs sm:text-sm rounded-lg outline outline-outline p-5 font-bold"
       >
          <motion.div
             transition={{ duration: 0.2, ease: "easeInOut" }}

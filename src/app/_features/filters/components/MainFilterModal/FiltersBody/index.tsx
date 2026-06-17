@@ -19,15 +19,15 @@ export default function FiltersBody({}: Props) {
 
    return (
       <div className="flex-1 w-full overflow-y-scroll overscroll-none py-5 pr-2 border-y-2 border-outline text-slate-500">
-         <div className="grid grid-cols-2 gap-5 min-h-max">
+         <div className="grid 2xl:grid-cols-2 gap-5 min-h-max">
             <FilterGroup
                name="Type"
                icon="category"
                items={TYPE_OPTIONS}
                getItemIsActive={(item) => draft.types.includes(item.value)}
                onItemClick={toggleType}
-               className="col-span-2"
-               innerClassName="grid-cols-6"
+               className="2xl:col-span-2"
+               innerClassName="grid-cols-2 md:grid-cols-3 2xl:grid-cols-6"
                description="Max 2 choices"
             />
             <FilterGroup
@@ -36,8 +36,8 @@ export default function FiltersBody({}: Props) {
                items={BODY_OPTIONS}
                getItemIsActive={(item) => draft.shapes.includes(item.value)}
                onItemClick={toggleShape}
-               className="col-span-2"
-               innerClassName="grid-cols-6"
+               className="2xl:col-span-2"
+               innerClassName="grid-cols-2 md:grid-cols-3 2xl:grid-cols-6"
                description="Can choose multiple"
             />
             <FilterGroup
@@ -49,7 +49,7 @@ export default function FiltersBody({}: Props) {
                }
                onItemClick={toggleGeneration}
                className="col-span-1 row-span-2"
-               innerClassName="grid-cols-3"
+               innerClassName="grid-cols-2 lg:grid-cols-3"
                description="Can choose multiple"
                autoHeight
             />

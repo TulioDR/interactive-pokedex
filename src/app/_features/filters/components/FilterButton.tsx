@@ -4,7 +4,6 @@ type Props = {
    icon: string;
    text?: string;
    favorite?: true;
-   square?: true;
    onClick: () => void;
    isActive?: boolean;
 };
@@ -13,7 +12,6 @@ export default function FilterButton({
    icon,
    text,
    favorite,
-   square,
    onClick,
    isActive,
 }: Props) {
@@ -27,7 +25,7 @@ export default function FilterButton({
          onPointerEnter={() => setIsHovered(true)}
          onPointerLeave={() => setIsHovered(false)}
          className={`h-full rounded-lg flex justify-center items-center relative cursor-pointer shadow-md outline outline-outline
-            ${square ? "aspect-square" : "px-5 gap-1"}
+            ${!text ? "aspect-square" : "px-5 gap-1"}
             ${
                isOn
                   ? favorite
@@ -40,7 +38,7 @@ export default function FilterButton({
          `}
       >
          <span
-            style={{ fontVariationSettings: `'FILL' ${isOn ? 1 : 0}` }}
+            style={{ fontVariationSettings: `'FILL' ${isActive ? 1 : 0}` }}
             className="material-symbols-rounded text-3xl!"
          >
             {icon}

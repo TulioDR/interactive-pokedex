@@ -20,21 +20,21 @@ export default function FiltersContent({ foundedNumber }: Props) {
    };
 
    return (
-      <div className="w-full h-14 mt-30 flex gap-2">
-         <FilterInput foundedNumber={foundedNumber} />
+      <div className="w-full h-14 flex gap-2">
+         {/* <FilterInput foundedNumber={foundedNumber} /> */}
          <FilterButton
             icon="tune"
             text="Filters"
             onClick={openModal}
             isActive={hasActiveDraftFilters}
          />
-         <FilterButton
+         {/* <FilterButton
             icon="favorite"
             text="Favorites"
             onClick={() => {}}
             favorite
-         />
-         <FilterButton icon="refresh" square onClick={handleClearAllFilters} />
+         /> */}
+         <FilterButton icon="refresh" onClick={handleClearAllFilters} />
          <MainFilterModal />
       </div>
    );
