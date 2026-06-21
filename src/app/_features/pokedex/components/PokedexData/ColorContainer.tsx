@@ -10,9 +10,11 @@ export default function ColorContainer({ children, type }: Props) {
    return (
       <motion.div
          style={{ backgroundColor: getTypeColor(type) }}
-         className="absolute inset-0 text-white overflow-hidden flex flex-col p-2"
+         className="absolute inset-0 text-white overflow-hidden"
       >
-         {children}
+         <div className="w-full h-full bg-black/20 p-2 flex flex-col">
+            {children}
+         </div>
       </motion.div>
    );
 }

@@ -8,6 +8,7 @@ import CardImage from "./CardImage";
 import CardNumber from "./CardNumber";
 import CardName from "./CardName";
 import getTypeColor from "@/utils/getTypeColor";
+import Link from "next/link";
 
 type Props = {
    card: PokemonCardType;
@@ -45,7 +46,10 @@ export default function PokemonCard({ card, setDraggedId }: Props) {
          handleUpdate={handleUpdate}
          isDragging={isDragging}
       >
-         <div className="absolute inset-0 z-20 bg-red-600 xl:hidden pointer-events-auto" />
+         <Link
+            href={`/${card.name}`}
+            className="absolute inset-0 z-20 xl:hidden pointer-events-auto"
+         />
 
          <div
             style={{ backgroundColor: getTypeColor(card.types[0]) }}

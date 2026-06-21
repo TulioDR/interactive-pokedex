@@ -1,34 +1,56 @@
 import { useEffect, useState } from "react";
 import { CompletePokemonType } from "../types/CompletePokemonType";
+import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
 
-export default function usePokemonFetch(isPowerOn: boolean) {
-   const [selectedId, setSelectedId] = useState<number | null>(null);
+export default function usePokemonFetch(
+   isPowerOn: boolean,
+   selectedId: number | null | string,
+) {
+   const identifier = selectedId;
+   const { allPokemon, isSyncing } = usePokeDbContext();
    const [pokemon, setPokemon] = useState<CompletePokemonType | null>(null);
    const [loading, setLoading] = useState(false);
    const [error, setError] = useState(false);
 
    useEffect(() => {
-      if (!isPowerOn) {
-         setSelectedId(null);
+      if (!isPowerOn || identifier === null || identifier === undefined) {
          setPokemon(null);
          setError(false);
          return;
       }
 
-      if (!selectedId) {
-         setPokemon(null);
-         return;
+      // 2. If the local database hasn't loaded or synced its chunks yet, wait
+      if (isSyncing || allPokemon.length === 0) return;
+      let targetId: number | null = null;
+
+      // 3. Resolve the target numeric ID depending on what was passed to the hook
+      if (typeof identifier === "number") {
+         targetId = identifier;
+      } else if (typeof identifier === "string") {
+         const localMatch = allPokemon.find(
+            (p) => p.name.toLowerCase() === identifier.toLowerCase(),
+         );
+
+         if (localMatch) {
+            targetId = localMatch.id;
+         } else {
+            // Name doesn't exist in our sync array -> trigger 404 style state
+            setError(true);
+            return;
+         }
       }
+
+      if (!targetId) return;
 
       async function fetchAllPokemonDetails() {
          try {
             setLoading(true);
             setError(false);
 
-            // 1. STEP ONE: Fetch base and species registries in parallel for speed
+            // Fetch detail registries in parallel for maximum performance
             const [baseRes, speciesRes] = await Promise.all([
-               fetch(`https://pokeapi.co/api/v2/pokemon/${selectedId}`),
-               fetch(`https://pokeapi.co/api/v2/pokemon-species/${selectedId}`),
+               fetch(`https://pokeapi.co/api/v2/pokemon/${targetId}`),
+               fetch(`https://pokeapi.co/api/v2/pokemon-species/${targetId}`),
             ]);
 
             if (!baseRes.ok || !speciesRes.ok) {
@@ -38,25 +60,20 @@ export default function usePokemonFetch(isPowerOn: boolean) {
             const base = await baseRes.json();
             const species = await speciesRes.json();
 
-            // 2. STEP TWO: Extract the custom evolution node link map
             const evolutionChainUrl = species.evolution_chain?.url;
             let evolution = null;
 
             if (evolutionChainUrl) {
-               // 3. STEP THREE: Resolve the full structural branching evolution tree
                const evolutionRes = await fetch(evolutionChainUrl);
                if (evolutionRes.ok) {
                   evolution = await evolutionRes.json();
                }
             }
 
-            // 4. STEP FOUR: Commit fully mapped payload to app state
+            // Commit final detail structural block to UI
             setPokemon({ base, species, evolution });
          } catch (err) {
-            console.error(
-               `Error resolving Pokedex profile for ID ${selectedId}:`,
-               err,
-            );
+            console.error(`Error resolving profile for ID ${targetId}:`, err);
             setError(true);
          } finally {
             setLoading(false);
@@ -64,7 +81,7 @@ export default function usePokemonFetch(isPowerOn: boolean) {
       }
 
       fetchAllPokemonDetails();
-   }, [selectedId, isPowerOn]);
+   }, [identifier, isSyncing, isPowerOn]);
 
-   return { selectedId, setSelectedId, pokemon, loading, error };
+   return { pokemon, loading, error };
 }

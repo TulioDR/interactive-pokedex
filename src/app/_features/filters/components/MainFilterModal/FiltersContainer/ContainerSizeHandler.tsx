@@ -23,7 +23,7 @@ export default function ContainerSizeHandler({ children, isModalOpen }: Props) {
                x: isModalOpen ? "0px" : "-232px",
                transition: { duration: 0.2, ease: "easeInOut" },
             }}
-            className="hidden lg:block h-full w-full overflow-hidden"
+            className="hidden lg:block h-full w-full"
          >
             {children}
          </motion.div>

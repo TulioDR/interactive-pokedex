@@ -26,11 +26,10 @@ export default function Stats({ pokemon }: Props) {
    );
 
    return (
-      <div className="flex flex-col gap-2 font-mono text-xs h-full w-full">
+      <div className="flex flex-col gap-1 font-mono text-xs h-full w-full">
          <div className="text-white font-bold uppercase text-xs">
             Base Stat Total: {baseStatTotal}
          </div>
-         <div className="w-full h-px bg-white/10"></div>
 
          {/* Vertical List of Progress Bars */}
          {baseStats.map((stat: any) => (
@@ -39,7 +38,7 @@ export default function Stats({ pokemon }: Props) {
                className="flex items-center gap-3 flex-1 w-full"
             >
                {/* Stat Label Identifier */}
-               <div className="w-14 font-bold opacity-70 text-[10px] text-left shrink-0">
+               <div className="w-14 font-bold opacity-80 text-[10px] text-left shrink-0">
                   {stat.name}
                </div>
 
@@ -49,7 +48,7 @@ export default function Stats({ pokemon }: Props) {
                </div>
 
                {/* The Dynamic Progress Bar Track */}
-               <div className="flex-1 h-full bg-gray-200 rounded-full overflow-hidden border-2 border-gray-200">
+               <div className="flex-1 h-full bg-gray-100 rounded-full overflow-hidden border-2 border-gray-100">
                   <div
                      style={{ width: `${stat.percentage}%` }}
                      className="h-full bg-linear-to-r from-cyan-500 to-blue-500 transition-all duration-500 ease-out"

@@ -52,7 +52,6 @@ export default function Evolution({ pokemon }: Props) {
 
    return (
       <div className="flex flex-col gap-2 font-mono w-full">
-         <div className="w-full h-px bg-white/10"></div>
          <div className="flex w-full text-xs">
             {Array.from({ length: 3 }).map((_, index) => (
                <div
@@ -63,8 +62,6 @@ export default function Evolution({ pokemon }: Props) {
                </div>
             ))}
          </div>
-
-         <div className="w-full h-px bg-white/10"></div>
 
          {/* Layout Track */}
          <div className="grid grid-cols-3 gap-2 w-full min-h-max">
@@ -77,13 +74,13 @@ export default function Evolution({ pokemon }: Props) {
                      return (
                         <div
                            key={node.name}
-                           className={`flex flex-col gap-1 items-center justify-center border rounded-lg p-1 w-full aspect-square shrink-0 text-center ${
+                           className={`flex flex-col gap-1 bg-white items-center justify-center rounded-lg p-1 w-full aspect-square shrink-0 text-center ${
                               isCurrentSelected
-                                 ? "bg-cyan-500/10 border-cyan-400"
-                                 : "bg-white/5 border-white/10"
+                                 ? "border-2 border-cyan-400"
+                                 : ""
                            }`}
                         >
-                           <div className="w-10 h-10 relative flex items-center justify-center">
+                           <div className="aspect-square w-[50%] relative flex items-center justify-center">
                               <Image
                                  src={artworkUrl}
                                  alt={node.name}
@@ -98,8 +95,8 @@ export default function Evolution({ pokemon }: Props) {
                            <div
                               className={`text-[10px] font-black capitalize truncate w-full ${
                                  isCurrentSelected
-                                    ? "text-cyan-300"
-                                    : "text-cyan-100"
+                                    ? "text-cyan-800"
+                                    : "text-black"
                               }`}
                            >
                               {node.name}

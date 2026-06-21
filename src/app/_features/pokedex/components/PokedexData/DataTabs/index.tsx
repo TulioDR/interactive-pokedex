@@ -1,11 +1,10 @@
 import { useState } from "react";
 import PreviewTab from "./PreviewTab";
 import PreviewTabContainer from "./PreviewTabContainer";
-import TabName from "./TabName";
 import Entry from "./Tabs/Entry";
 import Evolution from "./Tabs/Evolution";
-import Profile from "./Tabs/Profile";
 import Stats from "./Tabs/Stats";
+import Profile from "./Tabs/Profile";
 
 type Props = {
    pokemon: any;
@@ -22,24 +21,24 @@ export default function DataTabs({ pokemon }: Props) {
    const [selectedTab, setSelectedTab] = useState(0);
 
    return (
-      <>
+      <div className="flex-1 flex flex-col w-full border-y border-white/50 py-1">
          <div className="flex w-full border-b border-white/50">
             {TABS.map((tab, index) => (
                <PreviewTab
                   isSelected={selectedTab === index}
                   key={tab.text}
                   icon={tab.icon}
+                  text={tab.text}
                   onClick={() => setSelectedTab(index)}
                />
             ))}
          </div>
          <PreviewTabContainer contentKey={TABS[selectedTab].text}>
-            <TabName name={TABS[selectedTab].text} />
             {selectedTab === 0 && <Entry pokemon={pokemon} />}
             {selectedTab === 1 && <Stats pokemon={pokemon} />}
             {selectedTab === 2 && <Evolution pokemon={pokemon} />}
             {selectedTab === 3 && <Profile pokemon={pokemon} />}
          </PreviewTabContainer>
-      </>
+      </div>
    );
 }

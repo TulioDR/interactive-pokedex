@@ -29,15 +29,15 @@ export default function usePokedexContext() {
 }
 
 export function PokedexProvider({ children }: { children: ReactNode }) {
+   const { allPokemon } = usePokeDbContext();
    const [isPowerOn, setIsPowerOn] = useState(true);
    const [activePad, setActivePad] = useState<PadType>(null);
+   const [selectedId, setSelectedId] = useState<number | null>(null);
 
-   const { selectedId, setSelectedId, pokemon, loading, error } =
-      usePokemonFetch(isPowerOn);
+   const { pokemon, loading, error } = usePokemonFetch(isPowerOn, selectedId);
 
    const togglePower = () => setIsPowerOn((prev) => !prev);
 
-   const { allPokemon } = usePokeDbContext();
    const currentIndex = allPokemon.findIndex(
       (p: any) => p.id === pokemon?.base.id,
    );

@@ -7,7 +7,7 @@ type Props = {
 
 export default function PreviewTabContainer({ contentKey, children }: Props) {
    return (
-      <div className="flex-1 w-full overflow-hidden rounded-lg border bg-black/20 border-white/10">
+      <div className="flex-1 w-full overflow-hidden py-2">
          <AnimatePresence mode="wait">
             <motion.div
                key={contentKey}
@@ -15,7 +15,7 @@ export default function PreviewTabContainer({ contentKey, children }: Props) {
                animate={{ opacity: 1 }}
                exit={{ opacity: 0 }}
                transition={{ duration: 0.2 }}
-               className="w-full flex flex-col overflow-y-auto h-full p-4"
+               className="w-full flex flex-col overflow-y-auto h-full"
             >
                {children}
             </motion.div>
