@@ -19,7 +19,7 @@ export default function NavigationButton({
 
    if (!pokemon)
       return (
-         <div className="flex-1 h-full flex items-center justify-center text-center text-xs text-black/50">
+         <div className="h-full flex-1 flex items-center justify-center text-center text-xs text-black/50">
             <span>{`No ${reverse ? "previous" : "next"} pokemon`}</span>
          </div>
       );
@@ -28,13 +28,13 @@ export default function NavigationButton({
          onPointerEnter={() => setActivePad(reverse ? "prev" : "next")}
          onPointerLeave={() => setActivePad(null)}
          onClick={onClick}
-         className={`flex-1 h-full cursor-pointer flex px-2 justify-between items-center text-black/50  
-            ${reverse ? "flex-row-reverse rounded-l-full " : " rounded-r-full"}
+         className={`flex-1 h-full cursor-pointer flex gap-2 px-2 items-center justify-end text-black/50  
+            ${reverse ? "flex-row-reverse " : ""}
             ${isActive ? "bg-hover text-white" : ""}
          `}
       >
          <div
-            className={`flex flex-col  ${reverse ? "items-end" : "items-start"}`}
+            className={`flex flex-col ${reverse ? "items-start" : "items-end"}`}
          >
             <span className="text-xs opacity-70 leading-3">
                {getPokemonId(pokemon.id)}
@@ -44,11 +44,6 @@ export default function NavigationButton({
             </span>
          </div>
          <CircularInstruction color={reverse ? "green" : "yellow"} />
-         {/* <div
-            className={`h-full flex items-center group-hover:text-white ${reverse ? "rotate-180" : ""}`}
-         >
-            <span className="material-symbols-rounded">chevron_right</span>
-         </div> */}
       </button>
    );
 }

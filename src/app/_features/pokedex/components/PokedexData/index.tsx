@@ -2,24 +2,17 @@ import ColorContainer from "./ColorContainer";
 import DataHeader from "./DataHeader";
 import DataTabs from "./DataTabs";
 import DataButtons from "./DataButtons";
-import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
 import usePokedexContext from "../../context/PokedexContext";
 
-type Props = {
-   selectedId: number;
-};
+type Props = {};
 
-export default function PokedexData({ selectedId }: Props) {
+export default function PokedexData({}: Props) {
    const { pokemon } = usePokedexContext();
-   const { allPokemon } = usePokeDbContext();
-
-   const currentPokemon = allPokemon.find((p: any) => p.id === selectedId)!;
-   const type = currentPokemon.types[0];
 
    return (
-      <ColorContainer type={type}>
+      <ColorContainer>
          {pokemon && (
-            <div className="flex-1 w-full flex flex-col gap-2 overflow-hidden">
+            <div className="flex-1 w-full flex flex-col overflow-hidden relative">
                <DataHeader pokemon={pokemon} />
                <DataTabs pokemon={pokemon} />
                <DataButtons />

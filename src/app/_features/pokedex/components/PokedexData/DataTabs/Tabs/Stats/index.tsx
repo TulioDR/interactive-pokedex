@@ -1,3 +1,5 @@
+import BaseStat from "./BaseStat";
+
 type Props = {
    pokemon: any;
 };
@@ -26,35 +28,14 @@ export default function Stats({ pokemon }: Props) {
    );
 
    return (
-      <div className="flex flex-col gap-1 font-mono text-xs h-full w-full">
+      <div className="flex flex-col gap-2 font-mono text-xs h-full w-full">
          <div className="text-white font-bold uppercase text-xs">
             Base Stat Total: {baseStatTotal}
          </div>
 
          {/* Vertical List of Progress Bars */}
-         {baseStats.map((stat: any) => (
-            <div
-               key={stat.name}
-               className="flex items-center gap-3 flex-1 w-full"
-            >
-               {/* Stat Label Identifier */}
-               <div className="w-14 font-bold opacity-80 text-[10px] text-left shrink-0">
-                  {stat.name}
-               </div>
-
-               {/* Exact Numeric Value */}
-               <div className="w-8 text-right font-black tracking-tighter shrink-0 text-cyan-100">
-                  {String(stat.value).padStart(3, "0")}
-               </div>
-
-               {/* The Dynamic Progress Bar Track */}
-               <div className="flex-1 h-full bg-gray-100 rounded-full overflow-hidden border-2 border-gray-100">
-                  <div
-                     style={{ width: `${stat.percentage}%` }}
-                     className="h-full bg-linear-to-r from-cyan-500 to-blue-500 transition-all duration-500 ease-out"
-                  />
-               </div>
-            </div>
+         {baseStats.map((stat: any, index: number) => (
+            <BaseStat key={stat.name} index={index} stat={stat} />
          ))}
       </div>
    );

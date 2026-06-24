@@ -1,7 +1,7 @@
 "use client";
 
-import PokemonPageContent from "@/app/[pokemon]/_components/PokemonPageContent";
 import usePokemonFetch from "@/app/_features/pokedex/hooks/usePokemonFetch";
+import PokemonPageContent from "@/app/pokemon/[pokemon]/_components/PokemonPageContent";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 

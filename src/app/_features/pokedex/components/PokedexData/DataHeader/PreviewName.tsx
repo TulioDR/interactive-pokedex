@@ -4,6 +4,6 @@ type Props = {
 
 export default function PreviewName({ name }: Props) {
    return (
-      <div className=" font-black text-lg text-white uppercase">{name}</div>
+      <div className=" font-medium text-xl text-white uppercase">{name}</div>
    );
 }

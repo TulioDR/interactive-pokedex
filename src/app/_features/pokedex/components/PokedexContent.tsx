@@ -3,7 +3,6 @@ import ScanAnimation from "./ScanAnimation";
 import PreviewMessage from "./PreviewMessage";
 import PokedexData from "./PokedexData";
 import PokedexContainer from "./PokedexContainer";
-import PokedexTop from "./PokedexTop";
 import PokedexControlDeck from "./PokedexControlDeck";
 import PokedexInnerScreen from "./PokedexInnerScreen";
 import LoadingSpinner from "./LoadingSpinner";
@@ -22,7 +21,6 @@ export default function PokedexContent({ draggedId }: Props) {
 
    return (
       <PokedexContainer>
-         <PokedexTop />
          <PokedexInnerScreen>
             <AnimatePresence>
                {isPowerOn && (
@@ -35,12 +33,7 @@ export default function PokedexContent({ draggedId }: Props) {
                         {!pokemon && (
                            <PreviewMessage key="message" error={error} />
                         )}
-                        {selectedId && (
-                           <PokedexData
-                              key={selectedId}
-                              selectedId={selectedId}
-                           />
-                        )}
+                        {selectedId && <PokedexData key={selectedId} />}
                      </AnimatePresence>
                   </CRTAnimation>
                )}

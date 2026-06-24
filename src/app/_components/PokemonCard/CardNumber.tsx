@@ -6,7 +6,7 @@ type Props = {
 
 export default function CardNumber({ id }: Props) {
    return (
-      <div className="z-10 text-white absolute top-full left-4 font-semibold text-xs">
+      <div className="text-white absolute top-full left-4 font-semibold text-xs">
          <div className="">{getPokemonId(id)}</div>
       </div>
    );

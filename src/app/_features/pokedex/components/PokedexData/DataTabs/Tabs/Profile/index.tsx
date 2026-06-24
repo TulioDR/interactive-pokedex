@@ -25,7 +25,7 @@ export default function Profile({ pokemon }: Props) {
          </div>
 
          {/* 🧬 Section 2: Abilities Matrix */}
-         <div className="flex flex-col gap-1">
+         <div className="flex flex-col gap-0.5 bg-black/20 p-2 rounded-lg border border-white/20">
             <span className="uppercase  font-bold tracking-wider mb-0.5 text-xs text-white/80">
                Abilities
             </span>

@@ -47,8 +47,8 @@ export default function PokemonCard({ card, setDraggedId }: Props) {
          isDragging={isDragging}
       >
          <Link
-            href={`/${card.name}`}
-            className="absolute inset-0 z-20 xl:hidden pointer-events-auto"
+            href={`/pokemon/${card.name}`}
+            className="absolute inset-0 z-10 xl:hidden pointer-events-auto"
          />
 
          <div

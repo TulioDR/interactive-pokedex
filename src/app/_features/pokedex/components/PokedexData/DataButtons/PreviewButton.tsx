@@ -6,6 +6,7 @@ type Props = {
    icon: string;
    text: string;
    isActive: boolean;
+   onClick: () => void;
 };
 
 export default function PreviewButton({
@@ -13,14 +14,16 @@ export default function PreviewButton({
    icon,
    text,
    isActive,
+   onClick,
 }: Props) {
    const { setActivePad } = usePokedexContext();
 
    return (
       <button
+         onClick={onClick}
          onPointerEnter={() => setActivePad(favorite ? "favorite" : "open")}
          onPointerLeave={() => setActivePad(null)}
-         className={`flex-1 cursor-pointer rounded-lg flex flex-col items-center justify-center font-medium border-2 border-white
+         className={`flex-1 h-11 cursor-pointer rounded-lg flex flex-col items-center justify-center font-medium border-2 border-white
             ${favorite ? "text-[#E60012]" : "text-black/50"}
             ${isActive ? (favorite ? "bg-[#E60012]" : "bg-hover") : ""}   
             ${isActive ? "text-white" : "bg-white"}

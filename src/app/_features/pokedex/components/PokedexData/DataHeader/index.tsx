@@ -7,7 +7,7 @@ type Props = {
 
 export default function DataHeader({ pokemon }: Props) {
    return (
-      <div className="flex items-end gap-1">
+      <div className="flex items-start gap-2 py-2 px-4">
          <PreviewName name={pokemon.base.name} />
          <PreviewNumber number={pokemon.base.id} />
       </div>

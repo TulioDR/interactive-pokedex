@@ -39,18 +39,20 @@ export default function ActionButtons({}: Props) {
 
    return (
       <div className="flex-3 aspect-square relative">
-         {circularButtons.map(({ pad, position, onClick }, i) => (
-            <ActionButton
-               key={i}
-               position={position}
-               pad={pad}
-               isActive={activePad === pad}
-               onClick={onClick}
-               changeActivePad={setActivePad}
-            />
-         ))}
-         <div className="w-1/3 absolute h-[50%] bg-black left-0 top-0 rotate-45 origin-bottom flex flex-col justify-between" />
-         <div className="w-1/3 absolute h-[50%] bg-black right-0 bottom-0 rotate-45 origin-top flex flex-col justify-between" />
+         <div className="w-full h-full relative">
+            {circularButtons.map(({ pad, position, onClick }, i) => (
+               <ActionButton
+                  key={i}
+                  position={position}
+                  pad={pad}
+                  isActive={activePad === pad}
+                  onClick={onClick}
+                  changeActivePad={setActivePad}
+               />
+            ))}
+            <div className="w-1/3 absolute h-[50%] bg-black left-0 top-0 rotate-45 origin-bottom flex flex-col justify-between" />
+            <div className="w-1/3 absolute h-[50%] bg-black right-0 bottom-0 rotate-45 origin-top flex flex-col justify-between" />
+         </div>
       </div>
    );
 }

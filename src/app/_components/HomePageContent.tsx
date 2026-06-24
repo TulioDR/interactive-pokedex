@@ -50,7 +50,7 @@ export default function HomePageContent({}: Props) {
                   />
                ))}
             </div>
-            {/* <CustomPagination total={totalPages} page={currentPage} /> */}
+            <CustomPagination total={totalPages} page={currentPage} />
          </div>
       </div>
    );

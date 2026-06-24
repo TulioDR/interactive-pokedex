@@ -4,17 +4,8 @@ type Props = {
 
 export default function PokedexInnerScreen({ children }: Props) {
    return (
-      <div className="scan-target-zone flex flex-col w-full flex-1 rounded-bl-[64px] rounded-tr-lg bg-slate-200 p-4 pb-0 relative overflow-hidden border-2 border-white">
-         <div className="bg-gray-900 border-4 relative border-black rounded-lg flex-1 w-full overflow-hidden">
-            {children}
-         </div>
-         <div className="h-16 w-full flex justify-end py-4">
-            <div className="aspect-square h-full flex flex-col justify-between">
-               {Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="w-full h-1 bg-black" />
-               ))}
-            </div>
-         </div>
+      <div className="scan-target-zone w-full flex-1 rounded-2xl bg-gray-900 border-10 border-black relative overflow-hidden">
+         {children}
       </div>
    );
 }

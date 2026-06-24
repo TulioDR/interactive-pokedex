@@ -1,8 +1,8 @@
 "use client";
 
-import PokemonPageContent from "@/app/[pokemon]/_components/PokemonPageContent";
 import usePokemonFetch from "@/app/_features/pokedex/hooks/usePokemonFetch";
 import { useParams } from "next/navigation";
+import PokemonPageContent from "./_components/PokemonPageContent";
 type Props = {};
 
 export default function PokemonPage({}: Props) {
@@ -10,5 +10,10 @@ export default function PokemonPage({}: Props) {
 
    const { pokemon, loading, error } = usePokemonFetch(true, pokemonName);
 
-   return <PokemonPageContent pokemon={pokemon} />;
+   return (
+      <>
+         <span>Class name page special</span>
+         <PokemonPageContent pokemon={pokemon} />;
+      </>
+   );
 }

@@ -21,8 +21,8 @@ export default function DataTabs({ pokemon }: Props) {
    const [selectedTab, setSelectedTab] = useState(0);
 
    return (
-      <div className="flex-1 flex flex-col w-full border-y border-white/50 py-1">
-         <div className="flex w-full border-b border-white/50">
+      <div className="flex-1 flex flex-col w-full overflow-hidden">
+         <div className="flex w-full bg-black/20">
             {TABS.map((tab, index) => (
                <PreviewTab
                   isSelected={selectedTab === index}
@@ -33,7 +33,7 @@ export default function DataTabs({ pokemon }: Props) {
                />
             ))}
          </div>
-         <PreviewTabContainer contentKey={TABS[selectedTab].text}>
+         <PreviewTabContainer>
             {selectedTab === 0 && <Entry pokemon={pokemon} />}
             {selectedTab === 1 && <Stats pokemon={pokemon} />}
             {selectedTab === 2 && <Evolution pokemon={pokemon} />}

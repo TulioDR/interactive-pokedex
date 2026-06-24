@@ -74,10 +74,10 @@ export default function Evolution({ pokemon }: Props) {
                      return (
                         <div
                            key={node.name}
-                           className={`flex flex-col gap-1 bg-white items-center justify-center rounded-lg p-1 w-full aspect-square shrink-0 text-center ${
+                           className={`flex flex-col gap-1 bg-black/20 items-center justify-center rounded-lg p-1 w-full aspect-square shrink-0 text-center ${
                               isCurrentSelected
                                  ? "border-2 border-cyan-400"
-                                 : ""
+                                 : "border-2 border-white/20"
                            }`}
                         >
                            <div className="aspect-square w-[50%] relative flex items-center justify-center">
@@ -95,8 +95,8 @@ export default function Evolution({ pokemon }: Props) {
                            <div
                               className={`text-[10px] font-black capitalize truncate w-full ${
                                  isCurrentSelected
-                                    ? "text-cyan-800"
-                                    : "text-black"
+                                    ? "text-cyan-400"
+                                    : "text-white"
                               }`}
                            >
                               {node.name}
