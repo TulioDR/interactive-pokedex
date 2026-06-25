@@ -38,7 +38,7 @@ export default function ActionButtons({}: Props) {
    ];
 
    return (
-      <div className="flex-3 aspect-square relative">
+      <div className="h-full aspect-square relative">
          <div className="w-full h-full relative">
             {circularButtons.map(({ pad, position, onClick }, i) => (
                <ActionButton

@@ -1,3 +1,4 @@
+import useThemeContext from "@/context/ThemeContext";
 import { motion } from "framer-motion";
 
 type Props = {
@@ -8,6 +9,8 @@ type Props = {
 };
 
 export default function PreviewTab({ icon, isSelected, onClick, text }: Props) {
+   const { themeColor } = useThemeContext();
+
    return (
       <button
          className={`flex-1 flex flex-col items-center justify-center py-2 relative cursor-pointer
@@ -21,9 +24,11 @@ export default function PreviewTab({ icon, isSelected, onClick, text }: Props) {
             <motion.div
                layoutId="underline-preview-tab"
                transition={{ duration: 0.6, type: "spring" }}
-               className="absolute bottom-0 left-0 h-0.5 bg-white w-full"
+               style={{ backgroundColor: themeColor }}
+               className="absolute bottom-0 left-0 h-1 w-full z-10"
             />
          )}
+         <div className="absolute bottom-0 left-0 w-full h-px bg-white/20" />
       </button>
    );
 }

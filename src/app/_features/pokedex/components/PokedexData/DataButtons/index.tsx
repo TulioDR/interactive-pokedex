@@ -22,7 +22,7 @@ export default function DataButtons({}: Props) {
 
    return (
       <>
-         <div className="rounded-full w-full flex gap-2 p-2">
+         <div className="w-full flex gap-2 p-2 border-t border-white/20">
             <PreviewButton
                icon="favorite"
                text="Add to favorite"
@@ -37,7 +37,7 @@ export default function DataButtons({}: Props) {
                onClick={goToPokemon}
             />
          </div>
-         <div className="h-11 bg-white flex justify-between border-t-2 border-white">
+         <div className="h-11 bg-white flex justify-between border-t border-white">
             <NavigationButton
                reverse
                pokemon={prevPokemon}

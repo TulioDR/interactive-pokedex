@@ -8,6 +8,7 @@ import PokedexInnerScreen from "./PokedexInnerScreen";
 import LoadingSpinner from "./LoadingSpinner";
 import CRTAnimation from "./CRTAnimation";
 import usePokedexContext from "../context/PokedexContext";
+import PokedexTop from "./PokedexTop";
 
 type Props = {
    draggedId: number | null;
@@ -21,6 +22,7 @@ export default function PokedexContent({ draggedId }: Props) {
 
    return (
       <PokedexContainer>
+         <PokedexTop />
          <PokedexInnerScreen>
             <AnimatePresence>
                {isPowerOn && (

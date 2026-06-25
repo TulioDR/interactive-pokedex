@@ -18,10 +18,15 @@ type Props = {
 export default function PokemonCard({ card, setDraggedId }: Props) {
    const [isDragging, setIsDragging] = useState(false);
    const startDrag = () => setIsDragging(true);
-   const handleDragEnd = () => setDraggedId(null);
+   const handleDragEnd = () => {
+      setIsScanning(false);
+      setDraggedId(null);
+   };
    const handleUpdate = (e: ResolvedValues) => {
       if (e.x === 0 && e.y === 0) setIsDragging(false);
    };
+
+   const [isScanning, setIsScanning] = useState(false);
 
    const onDrag = (_event: any, info: any) => {
       const scanZone = document.querySelector(".scan-target-zone");
@@ -34,8 +39,13 @@ export default function PokemonCard({ card, setDraggedId }: Props) {
       const isInsideY = mouseY >= rect.top && mouseY <= rect.bottom;
       const isOverScanZone = isInsideX && isInsideY;
 
-      if (isOverScanZone) setDraggedId(card.id);
-      else setDraggedId(null);
+      if (isOverScanZone) {
+         setIsScanning(true);
+         setDraggedId(card.id);
+      } else {
+         setIsScanning(false);
+         setDraggedId(null);
+      }
    };
 
    return (
@@ -45,6 +55,7 @@ export default function PokemonCard({ card, setDraggedId }: Props) {
          onDrag={onDrag}
          handleUpdate={handleUpdate}
          isDragging={isDragging}
+         isScanning={isScanning}
       >
          <Link
             href={`/pokemon/${card.name}`}

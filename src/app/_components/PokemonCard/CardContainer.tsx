@@ -1,3 +1,4 @@
+import useThemeContext from "@/context/ThemeContext";
 import { motion, useAnimate } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -8,6 +9,7 @@ type Props = {
    onDrag: (event: any, info: any) => void;
    handleUpdate: (e: any) => void;
    isDragging: boolean;
+   isScanning: boolean;
 };
 
 export default function CardContainer({
@@ -17,15 +19,19 @@ export default function CardContainer({
    onDrag,
    handleUpdate,
    isDragging,
+   isScanning,
 }: Props) {
    const [scope, animate] = useAnimate();
-   const [turnAround, setTurnAround] = useState(false);
 
    useEffect(() => {
-      if (turnAround) {
+      if (isScanning) {
+         animate(scope.current, { rotateY: 180 }, { duration: 0.2 });
       } else {
+         animate(scope.current, { rotateY: 0 }, { duration: 0.2 });
       }
-   }, [turnAround]);
+   }, [isScanning]);
+
+   const { themeColor } = useThemeContext();
 
    return (
       <motion.div
@@ -42,11 +48,12 @@ export default function CardContainer({
          dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
          dragElastic={1}
          style={{ perspective: 2000 }}
-         className={`aspect-5/7  group relative pointer-events-none xl:pointer-events-auto cursor-grab active:cursor-grabbing ${isDragging ? "z-20" : ""}`}
+         className={`aspect-5/7 relative pointer-events-none xl:pointer-events-auto cursor-grab active:cursor-grabbing ${isDragging ? "z-20" : ""}`}
       >
          <div
             style={{ transformStyle: "preserve-3d" }}
-            className="w-full h-full relative group-hover:rotate-y-180 duration-500 ease-in-out"
+            ref={scope}
+            className="w-full h-full relative"
          >
             <div
                style={{ backfaceVisibility: "hidden" }}
@@ -55,9 +62,19 @@ export default function CardContainer({
                {children}
             </div>
             <motion.div
-               style={{ backfaceVisibility: "hidden", rotateY: "180deg" }}
-               className="absolute inset-0 bg-red-700 border-2 border-white outline outline-outline shadow-md overflow-hidden rounded-xl"
-            ></motion.div>
+               style={{
+                  backfaceVisibility: "hidden",
+                  rotateY: "180deg",
+                  backgroundColor: themeColor,
+               }}
+               className="absolute inset-0 border-2 border-white outline outline-outline shadow-md overflow-hidden rounded-xl flex items-center justify-center"
+            >
+               <div className="w-3/5 aspect-square border-4 border-white rounded-full flex items-center overflow-hidden">
+                  <div className="h-1 flex-2 bg-white" />
+                  <div className="aspect-square flex-3 rounded-full border-4 border-white" />
+                  <div className="h-1 flex-2 bg-white" />
+               </div>
+            </motion.div>
          </div>
       </motion.div>
    );

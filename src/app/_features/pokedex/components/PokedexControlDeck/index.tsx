@@ -7,17 +7,13 @@ type Props = {};
 
 export default function PokedexControlDeck({}: Props) {
    return (
-      <div className="flex w-full justify-center pt-5">
-         <div className="flex w-full items-center gap-2">
+      <div className="w-full pt-5">
+         <div className="flex gap-2 h-28 w-full">
             <ActionButtons />
             <SubScreen />
-            <div className="flex-3 aspect-square relative rounded-2xl">
-               <div className="absolute top-0 left-0 aspect-square w-1/2 flex items-end justify-end">
-                  <CircularLens status={false} />
-               </div>
-               <div className="absolute bottom-0 right-0 aspect-square w-1/2">
-                  <PowerButton />
-               </div>
+            <div className="flex flex-col justify-between">
+               <CircularLens status={false} />
+               <PowerButton />
             </div>
          </div>
       </div>

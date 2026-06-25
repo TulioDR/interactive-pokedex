@@ -10,7 +10,7 @@ export default function SubScreen({}: Props) {
 
    return (
       <div
-         className={`border-4 shrink-0 border-black bg-[#51AD60] duration-200 aspect-square flex-2 relative overflow-hidden ${
+         className={`border-4 border-black bg-[#51AD60] duration-200 py-1 flex-1 h-full relative overflow-hidden ${
             !!pokemon ? "brightness-100" : "brightness-50"
          }`}
       >
