@@ -39,7 +39,7 @@ export default function CRTAnimation({ children }: Props) {
          initial="off"
          animate="on"
          exit="off"
-         className="w-full h-full overflow-hidden"
+         className="w-full h-full overflow-hidden "
       >
          {children}
       </motion.div>

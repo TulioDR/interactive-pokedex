@@ -1,23 +1,16 @@
-import ColorContainer from "./ColorContainer";
 import DataHeader from "./DataHeader";
 import DataTabs from "./DataTabs";
 import DataButtons from "./DataButtons";
-import usePokedexContext from "../../context/PokedexContext";
+import { CompletePokemonType } from "../../types/CompletePokemonType";
 
-type Props = {};
+type Props = { pokemon: CompletePokemonType };
 
-export default function PokedexData({}: Props) {
-   const { pokemon } = usePokedexContext();
-
+export default function PokedexData({ pokemon }: Props) {
    return (
-      <ColorContainer>
-         {pokemon && (
-            <div className="flex-1 w-full flex flex-col overflow-hidden relative">
-               <DataHeader pokemon={pokemon} />
-               <DataTabs pokemon={pokemon} />
-               <DataButtons />
-            </div>
-         )}
-      </ColorContainer>
+      <div className="absolute inset-0 flex flex-col overflow-hidden">
+         <DataHeader pokemon={pokemon} />
+         <DataTabs pokemon={pokemon} />
+         <DataButtons />
+      </div>
    );
 }

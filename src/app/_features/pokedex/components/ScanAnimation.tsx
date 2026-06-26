@@ -18,9 +18,8 @@ export default function ScanAnimation({ draggedId }: Props) {
                onComplete: () => setSelectedId(draggedId),
             },
          }}
-         exit={{ opacity: 0, transition: { duration: 0.2 } }}
          // onAnimationComplete={handleAnimationComplete}
-         className="absolute inset-0 pointer-events-none bg-linear-to-r from-transparent to-white origin-left z-20"
+         className="absolute inset-0 pointer-events-none bg-linear-to-r from-white/50 to-white origin-left z-20"
       />
    );
 }

@@ -1,10 +1,20 @@
-import { CompletePokemonType } from "@/app/_features/pokedex/types/CompletePokemonType";
+"use client";
 
-type Props = {
-   pokemon: CompletePokemonType | null;
-};
+import usePokemonFetch from "@/app/_features/pokedex/hooks/usePokemonFetch";
+import { useParams } from "next/navigation";
+import { useEffect } from "react";
 
-export default function PokemonPageContent({ pokemon }: Props) {
+type Props = {};
+
+export default function PokemonPageContent({}: Props) {
+   const { pokemon: pokemonName } = useParams<{ pokemon: string }>();
+
+   const { pokemon, error } = usePokemonFetch(pokemonName);
+
+   useEffect(() => {
+      console.log("modal");
+      console.log(pokemonName);
+   }, [pokemonName]);
    return (
       <div className="fixed top-0 left-0 h-svh w-full flex items-center justify-center bg-black/50">
          <span className="text-4xl font-black text-white">

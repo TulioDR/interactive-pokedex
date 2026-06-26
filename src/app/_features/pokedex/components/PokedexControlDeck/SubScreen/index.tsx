@@ -1,32 +1,31 @@
 import Image from "next/image";
-import { AnimatePresence } from "framer-motion";
-import SubScreenAnimation from "./SubScreenAnimation";
 import usePokedexContext from "../../../context/PokedexContext";
+import LoadingSpinner from "../../LoadingSpinner";
 
 type Props = {};
 
 export default function SubScreen({}: Props) {
-   const { pokemon } = usePokedexContext();
+   const { pokemon, loading } = usePokedexContext();
 
    return (
       <div
-         className={`border-4 border-black bg-[#51AD60] duration-200 py-1 flex-1 h-full relative overflow-hidden ${
+         className={`border-4 border-black bg-[#51AD60] min-w-24 duration-200 flex items-center justify-center p-1 flex-1 h-full overflow-hidden ${
             !!pokemon ? "brightness-100" : "brightness-50"
          }`}
       >
-         <AnimatePresence>
+         <div className="w-full h-full relative flex items-center justify-center">
+            {loading && <LoadingSpinner />}
             {pokemon && (
-               <SubScreenAnimation key={pokemon.base.id}>
-                  <Image
-                     src={pokemon.base.sprites.front_default}
-                     alt="sprite"
-                     fill
-                     sizes="100%"
-                     className="object-cover"
-                  />
-               </SubScreenAnimation>
+               <Image
+                  key={pokemon.base.id}
+                  src={pokemon.base.sprites.front_default}
+                  alt="sprite"
+                  fill
+                  sizes="100%"
+                  className="object-contain"
+               />
             )}
-         </AnimatePresence>
+         </div>
       </div>
    );
 }
