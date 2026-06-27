@@ -50,7 +50,7 @@ export default function FilterInput({ foundedNumber }: Props) {
          onPointerEnter={() => setIsHovered(true)}
          onPointerLeave={() => setIsHovered(false)}
          style={{ borderColor: isHovered || isFocused ? themeColor : "white" }}
-         className={`flex-1 flex h-full outline outline-outline bg-white rounded-lg shadow-md border-2 px-2`}
+         className={`md:flex-1 flex h-14  outline outline-outline bg-white rounded-lg shadow-md border-2 px-2`}
       >
          <div className="h-full aspect-square flex items-center justify-center">
             <span className="material-symbols-rounded text-3xl! text-black/50">

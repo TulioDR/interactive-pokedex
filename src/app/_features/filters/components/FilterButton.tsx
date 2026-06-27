@@ -25,7 +25,7 @@ export default function FilterButton({
          onPointerEnter={() => setIsHovered(true)}
          onPointerLeave={() => setIsHovered(false)}
          className={`h-full rounded-lg flex justify-center items-center relative cursor-pointer shadow-md outline outline-outline
-            ${!text ? "aspect-square" : "px-5 gap-1"}
+            ${!text ? "aspect-square" : "px-5 gap-1 flex-1 md:flex-auto"}
             ${
                isOn
                   ? favorite

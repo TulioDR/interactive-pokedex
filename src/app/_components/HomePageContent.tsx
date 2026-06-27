@@ -45,6 +45,7 @@ export default function HomePageContent({}: Props) {
                {displayedPokemons.map((card, index) => (
                   <PokemonCard
                      key={card.id + "-" + index}
+                     index={index}
                      card={card}
                      setDraggedId={setDraggedId}
                   />

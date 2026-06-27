@@ -1,6 +1,6 @@
 import useThemeContext from "@/context/ThemeContext";
 import { motion, useAnimate } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 type Props = {
    children: React.ReactNode;
@@ -10,6 +10,7 @@ type Props = {
    handleUpdate: (e: any) => void;
    isDragging: boolean;
    isScanning: boolean;
+   index: number;
 };
 
 export default function CardContainer({
@@ -20,6 +21,7 @@ export default function CardContainer({
    handleUpdate,
    isDragging,
    isScanning,
+   index,
 }: Props) {
    const [scope, animate] = useAnimate();
 
@@ -50,9 +52,14 @@ export default function CardContainer({
          style={{ perspective: 2000 }}
          className={`aspect-5/7 relative pointer-events-none xl:pointer-events-auto cursor-grab active:cursor-grabbing ${isDragging ? "z-20" : ""}`}
       >
-         <div
+         <motion.div
             style={{ transformStyle: "preserve-3d" }}
             ref={scope}
+            initial={{ rotateY: 180 }}
+            animate={{
+               rotateY: 0,
+               transition: { duration: 0.2, delay: 0.02 * index },
+            }}
             className="w-full h-full relative"
          >
             <div
@@ -75,7 +82,7 @@ export default function CardContainer({
                   <div className="h-1 flex-2 bg-white" />
                </div>
             </motion.div>
-         </div>
+         </motion.div>
       </motion.div>
    );
 }

@@ -13,9 +13,10 @@ import Link from "next/link";
 type Props = {
    card: PokemonCardType;
    setDraggedId: React.Dispatch<React.SetStateAction<number | null>>;
+   index: number;
 };
 
-export default function PokemonCard({ card, setDraggedId }: Props) {
+export default function PokemonCard({ card, setDraggedId, index }: Props) {
    const [isDragging, setIsDragging] = useState(false);
    const startDrag = () => setIsDragging(true);
    const handleDragEnd = () => {
@@ -56,6 +57,7 @@ export default function PokemonCard({ card, setDraggedId }: Props) {
          handleUpdate={handleUpdate}
          isDragging={isDragging}
          isScanning={isScanning}
+         index={index}
       >
          <Link
             href={`/pokemon/${card.name}`}
