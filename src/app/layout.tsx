@@ -48,7 +48,7 @@ export default function RootLayout({
          <ThemeProvider>
             <PokeDbProvider>
                <PokeDbLoader />
-               <body className="px-5 lg:px-30">
+               <body className="px-5 lg:px-20">
                   <main>
                      <Navbar />
                      {children}

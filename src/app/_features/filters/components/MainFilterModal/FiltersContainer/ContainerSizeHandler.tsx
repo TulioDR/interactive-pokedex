@@ -16,12 +16,8 @@ export default function ContainerSizeHandler({ children, isModalOpen }: Props) {
          <motion.div
             initial={false}
             animate={{
-               x: isModalOpen ? "0px" : "-180px",
+               x: isModalOpen ? "0px" : "-152px",
                transition: { duration: 0.4, ease: "easeInOut" },
-            }}
-            whileHover={{
-               x: isModalOpen ? "0px" : "-232px",
-               transition: { duration: 0.2, ease: "easeInOut" },
             }}
             className="hidden lg:block h-full w-full"
          >

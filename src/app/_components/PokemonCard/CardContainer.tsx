@@ -22,14 +22,6 @@ export default function CardContainer({
    index,
    scope,
 }: Props) {
-   // useEffect(() => {
-   //    if (isScanning) {
-   //       animate(scope.current, { rotateY: 180 }, { duration: 0.2 });
-   //    } else {
-   //       animate(scope.current, { rotateY: 0 }, { duration: 0.2 });
-   //    }
-   // }, [isScanning]);
-
    const { themeColor } = useThemeContext();
 
    return (
@@ -56,7 +48,7 @@ export default function CardContainer({
             initial={{ rotateY: 180 }}
             animate={{
                rotateY: 0,
-               transition: { duration: 0.2, delay: 0.04 * index },
+               transition: { duration: 0.2, delay: 0.03 * index },
             }}
             className="w-full h-full relative"
          >
