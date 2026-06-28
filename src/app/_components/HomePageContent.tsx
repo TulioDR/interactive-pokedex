@@ -44,7 +44,7 @@ export default function HomePageContent({}: Props) {
             <div className="flex-1 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-2">
                {displayedPokemons.map((card, index) => (
                   <PokemonCard
-                     key={card.id + "-" + index}
+                     key={card.id}
                      index={index}
                      card={card}
                      setDraggedId={setDraggedId}

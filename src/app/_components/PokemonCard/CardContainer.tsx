@@ -1,6 +1,5 @@
 import useThemeContext from "@/context/ThemeContext";
-import { motion, useAnimate } from "framer-motion";
-import { useEffect } from "react";
+import { AnimationScope, motion } from "framer-motion";
 
 type Props = {
    children: React.ReactNode;
@@ -9,8 +8,8 @@ type Props = {
    onDrag: (event: any, info: any) => void;
    handleUpdate: (e: any) => void;
    isDragging: boolean;
-   isScanning: boolean;
    index: number;
+   scope: AnimationScope<any>;
 };
 
 export default function CardContainer({
@@ -20,24 +19,23 @@ export default function CardContainer({
    onDrag,
    handleUpdate,
    isDragging,
-   isScanning,
    index,
+   scope,
 }: Props) {
-   const [scope, animate] = useAnimate();
-
-   useEffect(() => {
-      if (isScanning) {
-         animate(scope.current, { rotateY: 180 }, { duration: 0.2 });
-      } else {
-         animate(scope.current, { rotateY: 0 }, { duration: 0.2 });
-      }
-   }, [isScanning]);
+   // useEffect(() => {
+   //    if (isScanning) {
+   //       animate(scope.current, { rotateY: 180 }, { duration: 0.2 });
+   //    } else {
+   //       animate(scope.current, { rotateY: 0 }, { duration: 0.2 });
+   //    }
+   // }, [isScanning]);
 
    const { themeColor } = useThemeContext();
 
    return (
       <motion.div
          drag
+         layout
          onDragStart={onDragStart}
          onDragEnd={onDragEnd}
          onDrag={onDrag}
@@ -58,7 +56,7 @@ export default function CardContainer({
             initial={{ rotateY: 180 }}
             animate={{
                rotateY: 0,
-               transition: { duration: 0.2, delay: 0.02 * index },
+               transition: { duration: 0.2, delay: 0.04 * index },
             }}
             className="w-full h-full relative"
          >

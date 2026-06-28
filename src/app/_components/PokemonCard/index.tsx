@@ -1,4 +1,4 @@
-import { ResolvedValues } from "framer-motion";
+import { ResolvedValues, useAnimate } from "framer-motion";
 import { useState } from "react";
 import { PokemonCardType } from "@/app/_types/PokemonCardType";
 import CardContainer from "./CardContainer";
@@ -17,17 +17,16 @@ type Props = {
 };
 
 export default function PokemonCard({ card, setDraggedId, index }: Props) {
+   const [scope, animate] = useAnimate();
    const [isDragging, setIsDragging] = useState(false);
    const startDrag = () => setIsDragging(true);
    const handleDragEnd = () => {
-      setIsScanning(false);
+      animate(scope.current, { rotateY: 0 }, { duration: 0.2 });
       setDraggedId(null);
    };
    const handleUpdate = (e: ResolvedValues) => {
       if (e.x === 0 && e.y === 0) setIsDragging(false);
    };
-
-   const [isScanning, setIsScanning] = useState(false);
 
    const onDrag = (_event: any, info: any) => {
       const scanZone = document.querySelector(".scan-target-zone");
@@ -41,10 +40,10 @@ export default function PokemonCard({ card, setDraggedId, index }: Props) {
       const isOverScanZone = isInsideX && isInsideY;
 
       if (isOverScanZone) {
-         setIsScanning(true);
+         animate(scope.current, { rotateY: 180 }, { duration: 0.2 });
          setDraggedId(card.id);
       } else {
-         setIsScanning(false);
+         animate(scope.current, { rotateY: 0 }, { duration: 0.2 });
          setDraggedId(null);
       }
    };
@@ -56,8 +55,8 @@ export default function PokemonCard({ card, setDraggedId, index }: Props) {
          onDrag={onDrag}
          handleUpdate={handleUpdate}
          isDragging={isDragging}
-         isScanning={isScanning}
          index={index}
+         scope={scope}
       >
          <Link
             href={`/pokemon/${card.name}`}
