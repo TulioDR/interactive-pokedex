@@ -10,13 +10,17 @@ export default function PokemonAbilities({ pokemon }: Props) {
    return (
       <SectionContainer className="">
          <SectionTitle icon="star" title="Abilities" />
-         <div className="opacity-85 font-semibold flex flex-col gap-2 h-full text-sm">
-            <div className="flex-1 w-full bg-slate-50 outline outline-outline rounded-lg flex items-center justify-between capitalize px-5">
-               Pressure
-            </div>
-            <div className="flex-1 w-full bg-slate-50 outline outline-outline rounded-lg flex items-center justify-between capitalize px-5">
-               Overgrow
-            </div>
+         <div className="font-semibold flex flex-col gap-2 h-full text-sm">
+            {pokemon.base.abilities.map((item: any) => (
+               <div className="py-4 w-full bg-slate-50 outline outline-outline rounded-lg flex items-center justify-between capitalize px-5">
+                  <span> {item.ability.name.replace("-", " ")}</span>
+                  {item.is_hidden && (
+                     <span className="text-[10px] ml-1 opacity-60">
+                        (HIDDEN)
+                     </span>
+                  )}
+               </div>
+            ))}
          </div>
       </SectionContainer>
    );

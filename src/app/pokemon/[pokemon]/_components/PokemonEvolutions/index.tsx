@@ -46,7 +46,9 @@ export default function PokemonEvolutions({ pokemon }: Props) {
    return (
       <SectionContainer>
          <SectionTitle icon="hub" title="Evolutions">
-            <div>3 stages</div>
+            <div className="font-bold uppercase text-xs">
+               {stages.length} stages
+            </div>
          </SectionTitle>
          <div className="grid grid-cols-3 gap-2 w-full min-h-max">
             {Array.from({ length: 3 }).map((_, index) => (

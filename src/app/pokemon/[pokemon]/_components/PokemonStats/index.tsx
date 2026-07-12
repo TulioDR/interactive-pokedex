@@ -33,7 +33,7 @@ export default function PokemonStats({ pokemon }: Props) {
       <SectionContainer className="col-span-2">
          <SectionTitle icon="monitoring" title="Base Stats">
             <div className="font-bold uppercase text-xs">
-               Base Stat Total: {baseStatTotal}
+               BST : {baseStatTotal}
             </div>
          </SectionTitle>
          <div className="flex flex-col gap-5 w-full">
