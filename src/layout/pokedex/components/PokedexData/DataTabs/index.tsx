@@ -12,10 +12,10 @@ type Props = {
 
 export default function DataTabs({ pokemon }: Props) {
    const TABS = [
-      { text: "Dex entry", icon: "auto_stories" },
+      { text: "Profile", icon: "fingerprint" },
       { text: "Stats", icon: "bar_chart" },
       { text: "Evolutions", icon: "account_tree" },
-      { text: "Profile", icon: "fingerprint" },
+      { text: "dex", icon: "close" },
    ];
 
    const [selectedTab, setSelectedTab] = useState(0);

@@ -54,7 +54,7 @@ export default function usePokemonFetch(selectedId: number | null | string) {
       }
 
       fetchAllPokemonDetails();
-   }, [identifier, isSyncing]);
+   }, [identifier, isSyncing, allPokemon]);
 
    return { pokemon, error, setPokemon };
 }

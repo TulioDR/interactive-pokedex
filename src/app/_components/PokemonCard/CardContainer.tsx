@@ -27,7 +27,7 @@ export default function CardContainer({
    return (
       <motion.div
          drag
-         layout
+         // layout="position"
          onDragStart={onDragStart}
          onDragEnd={onDragEnd}
          onDrag={onDrag}
@@ -39,6 +39,7 @@ export default function CardContainer({
          }}
          dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
          dragElastic={1}
+         // layoutId={`pokemon-card-${index}`}
          style={{ perspective: 2000 }}
          className={`aspect-5/7 relative pointer-events-none xl:pointer-events-auto cursor-grab active:cursor-grabbing ${isDragging ? "z-20" : ""}`}
       >

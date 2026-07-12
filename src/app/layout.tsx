@@ -5,6 +5,8 @@ import Navbar from "@/layout/navbar/components/Navbar";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { PokeDbProvider } from "@/layout/poke-db/context/PokeDbContext";
 import PokeDbLoader from "@/layout/poke-db/components/PokeDbLoader";
+import Pokedex from "@/layout/pokedex/components/Pokedex";
+import { PokedexProvider } from "@/layout/pokedex/context/PokedexContext";
 
 const geistSans = Geist({
    variable: "--font-geist-sans",
@@ -23,10 +25,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
    children,
-   modal,
 }: Readonly<{
    children: React.ReactNode;
-   modal: React.ReactNode;
 }>) {
    return (
       <html
@@ -48,12 +48,16 @@ export default function RootLayout({
          <ThemeProvider>
             <PokeDbProvider>
                <PokeDbLoader />
-               <body className="px-5 lg:px-20">
-                  <main>
+               <body>
+                  <main className="px-5 lg:px-20">
                      <Navbar />
-                     {children}
+                     <PokedexProvider>
+                        <div className="w-full flex gap-5 pt-5">
+                           <Pokedex />
+                           {children}
+                        </div>
+                     </PokedexProvider>
                   </main>
-                  {modal}
                </body>
             </PokeDbProvider>
          </ThemeProvider>

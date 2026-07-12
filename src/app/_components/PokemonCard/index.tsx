@@ -9,17 +9,20 @@ import CardNumber from "./CardNumber";
 import CardName from "./CardName";
 import getTypeColor from "@/utils/getTypeColor";
 import Link from "next/link";
+import usePokedexContext from "@/layout/pokedex/context/PokedexContext";
 
 type Props = {
    card: PokemonCardType;
-   setDraggedId: React.Dispatch<React.SetStateAction<number | null>>;
    index: number;
 };
 
-export default function PokemonCard({ card, setDraggedId, index }: Props) {
+export default function PokemonCard({ card, index }: Props) {
    const [scope, animate] = useAnimate();
    const [isDragging, setIsDragging] = useState(false);
    const startDrag = () => setIsDragging(true);
+
+   const { setDraggedId } = usePokedexContext();
+
    const handleDragEnd = () => {
       animate(scope.current, { rotateY: 0 }, { duration: 0.2 });
       setDraggedId(null);

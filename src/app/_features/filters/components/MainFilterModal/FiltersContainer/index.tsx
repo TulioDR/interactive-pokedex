@@ -27,7 +27,7 @@ export default function FiltersContainer({ children }: Props) {
          initial={{ x: "100%" }}
          animate={{ x: isModalOpen ? "0%" : "100%" }}
          transition={{ duration: 0.4, ease: "easeInOut" }}
-         className="px-5 lg:px-20 py-5 fixed inset-0 z-30"
+         className="px-5 lg:px-20 py-5 fixed inset-0 z-20"
       >
          <ContainerSizeHandler isModalOpen={isModalOpen}>
             <div

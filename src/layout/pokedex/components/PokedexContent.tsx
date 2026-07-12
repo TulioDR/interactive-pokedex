@@ -8,12 +8,11 @@ import usePokedexContext from "../context/PokedexContext";
 import PokedexTop from "./PokedexTop";
 import LoadingSpinner from "./LoadingSpinner";
 
-type Props = {
-   draggedId: number | null;
-};
+type Props = {};
 
-export default function PokedexContent({ draggedId }: Props) {
-   const { selectedId, pokemon, error, loading } = usePokedexContext();
+export default function PokedexContent({}: Props) {
+   const { selectedId, pokemon, error, loading, draggedId } =
+      usePokedexContext();
 
    const showScan = !!draggedId && draggedId !== selectedId;
    const showMessage = !pokemon && !loading;

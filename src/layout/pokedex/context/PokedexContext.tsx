@@ -27,6 +27,8 @@ interface PokedexContextInterface {
    setActivePad: React.Dispatch<React.SetStateAction<PadType>>;
    prevPokemon: PokemonCardType | null;
    nextPokemon: PokemonCardType | null;
+   draggedId: number | null;
+   setDraggedId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 const PokedexContext = createContext({} as PokedexContextInterface);
@@ -39,6 +41,8 @@ export function PokedexProvider({ children }: { children: ReactNode }) {
    const [isPowerOn, setIsPowerOn] = useState(true);
    const [activePad, setActivePad] = useState<PadType>(null);
    const [selectedId, setSelectedId] = useState<number | null>(null);
+
+   const [draggedId, setDraggedId] = useState<number | null>(null);
 
    const { pokemon, error, setPokemon } = usePokemonFetch(selectedId);
 
@@ -86,6 +90,8 @@ export function PokedexProvider({ children }: { children: ReactNode }) {
       nextPokemon,
       getNextPokemon,
       getPrevPokemon,
+      draggedId,
+      setDraggedId,
    };
 
    return (
