@@ -50,11 +50,11 @@ export default function PokemonEvolutions({ pokemon }: Props) {
                {stages.length} stages
             </div>
          </SectionTitle>
-         <div className="grid grid-cols-3 gap-2 w-full min-h-max">
+         <div className="grid grid-cols-3 gap-1 sm:gap-2 w-full min-h-max">
             {Array.from({ length: 3 }).map((_, index) => (
                <div
                   key={index}
-                  className="flex-1 flex items-center justify-center text-light-text font-medium tracking-wider text-sm pb-5"
+                  className="flex-1 flex items-center justify-center text-light-text font-medium tracking-wider text-xs sm:text-sm pb-5"
                >
                   Stage {index + 1}
                </div>
@@ -62,7 +62,7 @@ export default function PokemonEvolutions({ pokemon }: Props) {
             {stages.map((stageNodes, stageIndex) => (
                <div
                   key={stageIndex}
-                  className="flex flex-col justify-center gap-2"
+                  className="flex flex-col justify-center gap-1 sm:gap-2"
                >
                   {stageNodes.map((node) => (
                      <Evolution key={node.name} node={node} pokemon={pokemon} />

@@ -44,7 +44,7 @@ export default function PokemonCard({ card, index }: Props) {
 
       if (isOverScanZone) {
          animate(scope.current, { rotateY: 180 }, { duration: 0.2 });
-         setDraggedId(card.id);
+         setDraggedId(card.name);
       } else {
          animate(scope.current, { rotateY: 0 }, { duration: 0.2 });
          setDraggedId(null);

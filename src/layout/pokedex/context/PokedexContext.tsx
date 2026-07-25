@@ -7,19 +7,18 @@ import {
    ReactNode,
    useEffect,
 } from "react";
-import { CompletePokemonType } from "../types/CompletePokemonType";
 import usePokemonFetch from "../hooks/usePokemonFetch";
 import { PadType } from "../types/PadType";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
 import { PokemonCardType } from "@/app/_types/PokemonCardType";
+import { useSearchParams, useRouter } from "next/navigation";
+import usePokedexFetch from "../hooks/usePokedexFetch";
 
 interface PokedexContextInterface {
-   selectedId: number | null;
-   pokemon: CompletePokemonType | null;
+   pokemon: any | null;
    loading: boolean;
    error: boolean;
    isPowerOn: boolean;
-   setSelectedId: React.Dispatch<React.SetStateAction<number | null>>;
    togglePower: () => void;
    getPrevPokemon: () => void;
    getNextPokemon: () => void;
@@ -27,8 +26,8 @@ interface PokedexContextInterface {
    setActivePad: React.Dispatch<React.SetStateAction<PadType>>;
    prevPokemon: PokemonCardType | null;
    nextPokemon: PokemonCardType | null;
-   draggedId: number | null;
-   setDraggedId: React.Dispatch<React.SetStateAction<number | null>>;
+   draggedId: string | null;
+   setDraggedId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const PokedexContext = createContext({} as PokedexContextInterface);
@@ -40,24 +39,25 @@ export function PokedexProvider({ children }: { children: ReactNode }) {
    const { allPokemon } = usePokeDbContext();
    const [isPowerOn, setIsPowerOn] = useState(true);
    const [activePad, setActivePad] = useState<PadType>(null);
-   const [selectedId, setSelectedId] = useState<number | null>(null);
 
-   const [draggedId, setDraggedId] = useState<number | null>(null);
+   const [draggedId, setDraggedId] = useState<string | null>(null);
 
-   const { pokemon, error, setPokemon } = usePokemonFetch(selectedId);
+   const searchParams = useSearchParams();
+   const router = useRouter();
+   const scannedId = searchParams.get("scanned");
+
+   const { pokemon, error, setPokemon } = usePokedexFetch();
 
    useEffect(() => {
       if (!isPowerOn) {
          setPokemon(null);
-         setSelectedId(null);
+         // setSelectedId(null);
       }
    }, [isPowerOn]);
 
    const togglePower = () => setIsPowerOn((prev) => !prev);
 
-   const currentIndex = allPokemon.findIndex(
-      (p: any) => p.id === pokemon?.base.id,
-   );
+   const currentIndex = allPokemon.findIndex((p: any) => p.id === pokemon?.id);
 
    const prevPokemon = currentIndex > 0 ? allPokemon[currentIndex - 1] : null;
    const nextPokemon =
@@ -66,23 +66,21 @@ export function PokedexProvider({ children }: { children: ReactNode }) {
          : null;
 
    const getNextPokemon = () => {
-      if (!selectedId) return;
-      setSelectedId(nextPokemon?.id || null);
+      if (!scannedId) return;
+      // router.replace(nextPokemon?.id as string);
    };
    const getPrevPokemon = () => {
-      if (!selectedId) return;
-      setSelectedId(prevPokemon?.id || null);
+      if (!scannedId) return;
+      // router.replace(prevPokemon?.id as string);
    };
 
-   const loading = !pokemon && !!selectedId;
+   const loading = !pokemon && !!scannedId;
 
    const value: PokedexContextInterface = {
-      selectedId,
       pokemon,
       loading,
       error,
       isPowerOn,
-      setSelectedId,
       togglePower,
       activePad,
       setActivePad,

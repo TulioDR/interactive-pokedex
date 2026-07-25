@@ -17,7 +17,7 @@ export default function DataButtons({}: Props) {
 
    const router = useRouter();
    const goToPokemon = () => {
-      router.push(`/pokemon/${pokemon?.base.name}`);
+      router.push(`/pokemon/${pokemon?.name}`);
    };
 
    return (

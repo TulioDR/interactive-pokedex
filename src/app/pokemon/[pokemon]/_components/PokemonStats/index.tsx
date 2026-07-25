@@ -30,7 +30,7 @@ export default function PokemonStats({ pokemon }: Props) {
    );
 
    return (
-      <SectionContainer className="col-span-2">
+      <SectionContainer className="sm:col-span-2">
          <SectionTitle icon="monitoring" title="Base Stats">
             <div className="font-bold uppercase text-xs">
                BST : {baseStatTotal}

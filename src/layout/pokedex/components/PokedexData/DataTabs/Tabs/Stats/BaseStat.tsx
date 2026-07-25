@@ -7,7 +7,7 @@ type Props = {
 
 export default function BaseStat({ stat, index }: Props) {
    return (
-      <div className="flex flex-col items-center w-full">
+      <div className="flex flex-col items-center w-full font-semibold tracking-wider">
          <div className="flex justify-between w-full text-xs">
             <span className="">{stat.name}</span>
             <span

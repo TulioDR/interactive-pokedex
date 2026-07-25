@@ -1,5 +1,6 @@
 import useThemeContext from "@/context/ThemeContext";
 import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
    node: any;
@@ -12,11 +13,12 @@ export default function Evolution({ node, pokemon }: Props) {
 
    const { themeColor } = useThemeContext();
    return (
-      <button
+      <Link
+         href={`/pokemon/${node.name}`}
          style={{
             backgroundColor: isCurrentSelected ? themeColor : undefined,
          }}
-         className={`flex items-center p-1 gap-1 outline outline-outline bg-slate-50 rounded-lg w-full shrink-0 
+         className={`flex flex-col sm:flex-row items-center p-1 gap-1 outline outline-outline bg-slate-50 rounded-lg w-full shrink-0 
             ${isCurrentSelected ? "text-white pointer-events-none" : "text-hover hover:bg-hover active:bg-hover active:text-white hover:text-white cursor-pointer"}
          `}
       >
@@ -35,6 +37,6 @@ export default function Evolution({ node, pokemon }: Props) {
          <div className="text-xs capitalize truncate font-medium tracking-wider">
             {node.name}
          </div>
-      </button>
+      </Link>
    );
 }

@@ -11,10 +11,10 @@ import LoadingSpinner from "./LoadingSpinner";
 type Props = {};
 
 export default function PokedexContent({}: Props) {
-   const { selectedId, pokemon, error, loading, draggedId } =
-      usePokedexContext();
+   const { pokemon, error, loading, draggedId } = usePokedexContext();
 
-   const showScan = !!draggedId && draggedId !== selectedId;
+   const showScan = !!draggedId;
+   // const showScan = !!draggedId && draggedId !== selectedId;
    const showMessage = !pokemon && !loading;
 
    return (

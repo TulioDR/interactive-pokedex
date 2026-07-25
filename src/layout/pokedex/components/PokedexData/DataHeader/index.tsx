@@ -7,9 +7,9 @@ type Props = {
 
 export default function DataHeader({ pokemon }: Props) {
    return (
-      <div className="flex items-start gap-2 py-2 px-4">
-         <PreviewName name={pokemon.base.name} />
-         <PreviewNumber number={pokemon.base.id} />
+      <div className="flex flex-col">
+         <PreviewName name={pokemon.name} />
+         <PreviewNumber number={pokemon.id} />
       </div>
    );
 }

@@ -1,11 +1,15 @@
 import { motion } from "framer-motion";
-import usePokedexContext from "../context/PokedexContext";
+import { useRouter } from "next/navigation";
 type Props = {
-   draggedId: number;
+   draggedId: string;
 };
 
 export default function ScanAnimation({ draggedId }: Props) {
-   const { setSelectedId } = usePokedexContext();
+   const router = useRouter();
+
+   const onAnimationComplete = () => {
+      router.replace(`?scanned=${draggedId}`);
+   };
 
    return (
       <motion.div
@@ -15,7 +19,7 @@ export default function ScanAnimation({ draggedId }: Props) {
             transition: {
                duration: 1,
                ease: "easeOut",
-               onComplete: () => setSelectedId(draggedId),
+               onComplete: onAnimationComplete,
             },
          }}
          // onAnimationComplete={handleAnimationComplete}

@@ -5,7 +5,8 @@ import LoadingSpinner from "../../LoadingSpinner";
 type Props = {};
 
 export default function SubScreen({}: Props) {
-   const { pokemon, loading, selectedId } = usePokedexContext();
+   const { pokemon, loading } = usePokedexContext();
+   const selectedId = true;
 
    return (
       <div
@@ -17,8 +18,8 @@ export default function SubScreen({}: Props) {
             {loading && <LoadingSpinner />}
             {pokemon && (
                <Image
-                  key={pokemon.base.id}
-                  src={pokemon.base.sprites.front_default}
+                  key={pokemon.id}
+                  src={pokemon.sprites.front_default}
                   alt="sprite"
                   fill
                   sizes="100%"

@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
       "192.168.1.5",
       "192.168.0.101",
       "192.168.1.3",
+      "192.168.0.106",
    ],
    images: {
       remotePatterns: [

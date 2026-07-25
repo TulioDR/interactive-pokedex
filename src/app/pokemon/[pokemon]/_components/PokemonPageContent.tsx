@@ -28,13 +28,13 @@ export default function PokemonPageContent({}: Props) {
          {/* <PokemonInfoOne pokemon={pokemon} /> */}
          {/* <MainPokemonImage pokemon={pokemon} /> */}
          <TopSection pokemon={pokemon} />
-         <div className="grid grid-cols-3 gap-5">
+         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
             <BiologicalProfile pokemon={pokemon} />
             <PokemonTypes pokemon={pokemon} />
             <PokemonAbilities pokemon={pokemon} />
 
-            <PokemonStats pokemon={pokemon} />
             <PokedexLog pokemon={pokemon} />
+            <PokemonStats pokemon={pokemon} />
          </div>
          <PokemonEvolutions pokemon={pokemon} />
       </div>

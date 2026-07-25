@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { CompletePokemonType } from "../types/CompletePokemonType";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
 
-export default function usePokemonFetch(selectedId: number | null | string) {
-   const identifier = selectedId;
+export default function usePokemonFetch(scannedId: null | string) {
+   const identifier = scannedId;
    const { allPokemon, isSyncing } = usePokeDbContext();
    const [pokemon, setPokemon] = useState<CompletePokemonType | null>(null);
    const [error, setError] = useState(false);
@@ -12,15 +12,12 @@ export default function usePokemonFetch(selectedId: number | null | string) {
       setPokemon(null);
       setError(false);
 
-      if (selectedId === null || selectedId === undefined) return;
+      if (scannedId === null || scannedId === undefined) return;
       if (isSyncing || allPokemon.length === 0) return;
 
-      const targetId =
-         typeof selectedId === "number"
-            ? selectedId
-            : allPokemon.find(
-                 (p) => p.name.toLowerCase() === selectedId.toLowerCase(),
-              )?.id;
+      const targetId = allPokemon.find(
+         (p) => p.name.toLowerCase() === scannedId.toLowerCase(),
+      )?.id;
 
       if (!targetId) {
          setError(true);
@@ -38,6 +35,8 @@ export default function usePokemonFetch(selectedId: number | null | string) {
                throw new Error("Registry fetch error");
 
             const base = await baseRes.json();
+
+            console.log(base);
             const species = await speciesRes.json();
             let evolution = null;
 
