@@ -7,6 +7,7 @@ import PokedexInnerScreen from "./PokedexInnerScreen";
 import usePokedexContext from "../context/PokedexContext";
 import PokedexTop from "./PokedexTop";
 import LoadingSpinner from "./LoadingSpinner";
+import { useEffect } from "react";
 
 type Props = {};
 
@@ -16,6 +17,11 @@ export default function PokedexContent({}: Props) {
    const showScan = !!draggedId;
    // const showScan = !!draggedId && draggedId !== selectedId;
    const showMessage = !pokemon && !loading;
+
+
+   useEffect(() => {
+      console.log("test")
+   }, []);
 
    return (
       <PokedexContainer>

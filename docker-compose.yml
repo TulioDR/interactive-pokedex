@@ -1,0 +1,10 @@
+services:
+  pokedex-app:
+    image: node:20-alpine
+    volumes:
+      - .:/app
+      - /app/node_modules
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run dev"

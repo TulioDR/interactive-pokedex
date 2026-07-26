@@ -1,18 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-   /* config options here */
    reactCompiler: true,
    allowedDevOrigins: [
-      "192.168.0.100",
+      "172.18.0.2",
+      '192.168.0.104',
       "192.168.0.102",
-      "192.168.0.103",
-      "192.168.0.104",
-      "192.168.0.105",
-      "192.168.1.5",
-      "192.168.0.101",
-      "192.168.1.3",
-      "192.168.0.106",
+      "172.29.240.1",
+      "192.168.1.4",
    ],
    images: {
       remotePatterns: [
