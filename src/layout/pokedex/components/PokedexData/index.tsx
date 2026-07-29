@@ -17,7 +17,7 @@ export default function PokedexData({ pokemon }: Props) {
       <div className="w-full flex-1 px-4 py-2 flex flex-col">
         <DataHeader pokemon={pokemon} />
         <div className="flex-1 overflow-hidden w-full flex flex-col gap-2 items-center justify-center">
-          <div className="flex 2xl:flex-col w-full">
+          <div className="flex 2xl:flex-col w-full items-center">
             <DataImage pokemon={pokemon} />
             <DataTypes pokemon={pokemon} />
           </div>

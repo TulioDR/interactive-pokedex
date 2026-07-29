@@ -19,7 +19,11 @@ export default function NavigationButton({
 
   if (!pokemon)
     return (
-      <div className="h-full flex-1 flex items-center justify-center text-center text-[10px] 2xl:text-xs text-black/50">
+      <div
+        className={`h-full flex-1 px-2 flex items-center text-center text-[10px] 2xl:text-xs text-black/50 
+        ${reverse ? "" : "justify-end"}
+      `}
+      >
         <span>{`No ${reverse ? "previous" : "next"}`}</span>
       </div>
     );

@@ -8,7 +8,7 @@ export default function PokedexContainer({ children }: Props) {
   const { themeColor } = useThemeContext();
 
   return (
-    <div className="h-svh pt-26 2xl:pt-30 pb-5 -mt-30 sticky top-0 hidden xl:block">
+    <div className="h-svh pt-30 pb-5 -mt-30 sticky top-0 hidden xl:block">
       <div
         style={{ backgroundColor: themeColor }}
         className="aspect-1/2 h-full p-3 2xl:p-5 rounded-4xl border-2 border-white outline outline-outline flex flex-col shadow-xl overflow-hidden"

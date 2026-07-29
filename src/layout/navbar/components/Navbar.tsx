@@ -12,7 +12,7 @@ export default function Navbar({}: Props) {
     <div className="sticky top-0 left-0 pt-5 w-full z-30">
       <div
         style={{ backgroundColor: themeColor }}
-        className=" outline outline-outline border-2 border-white w-full h-16 2xl:h-20 shadow-xl rounded-4xl flex justify-between px-5 py-3 relative "
+        className=" outline outline-outline border-2 border-white w-full h-20 shadow-xl rounded-4xl flex justify-between px-5 py-3 relative "
       >
         <div className="flex gap-5 items-center">
           <CircularLens />
