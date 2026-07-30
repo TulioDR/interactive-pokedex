@@ -7,6 +7,7 @@ import FilterInnerScreen from "./FilterInnerScreen";
 import useFiltersContext from "../../../context/FiltersContext";
 import ContainerSizeHandler from "./ContainerSizeHandler";
 import useThemeContext from "@/context/ThemeContext";
+import { ToggleButton } from "@/layout/pokedex/components/PokedexControlDeck/ToggleButton";
 
 type Props = {
   children: React.ReactNode;
@@ -18,7 +19,7 @@ export default function FiltersContainer({ children }: Props) {
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => setIsMounted(true), []);
 
-  const { isModalOpen, openModal } = useFiltersContext();
+  const { isModalOpen, toggleModal } = useFiltersContext();
 
   if (!isMounted) return <></>;
   return createPortal(
@@ -31,13 +32,13 @@ export default function FiltersContainer({ children }: Props) {
       <ContainerSizeHandler isModalOpen={isModalOpen}>
         <div
           style={{ backgroundColor: themeColor }}
-          onClick={isModalOpen ? undefined : openModal}
-          className={`w-full h-full rounded-4xl p-2 lg:p-5 lg:pl-0 flex shadow-xl border-2 border-white outline outline-outline overflow-hidden
-                  ${isModalOpen ? "" : "hover:brightness-110"}   
-               `}
+          className="w-full h-full rounded-4xl p-2 lg:p-5 lg:pl-0 flex shadow-xl border-2 border-white outline outline-outline overflow-hidden"
         >
           <div className="flex-col items-center w-19 h-full gap-4 justify-between hidden lg:flex">
-            <div className="bg-white aspect-square w-12 rounded-full"></div>
+            <ToggleButton
+              icon={isModalOpen ? "close" : "tune"}
+              onClick={toggleModal}
+            />
             <div className="flex flex-col gap-2 items-center">
               <FilterTitle />
               <CircularLens status={false} />
