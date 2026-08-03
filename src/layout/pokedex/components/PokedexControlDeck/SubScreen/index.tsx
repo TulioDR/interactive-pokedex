@@ -1,21 +1,20 @@
 import Image from "next/image";
-import usePokedexContext from "../../../context/PokedexContext";
 import LoadingSpinner from "../../LoadingSpinner";
 
-type Props = {};
+type Props = {
+  pokemon: any;
+  isLoading: boolean;
+};
 
-export default function SubScreen({}: Props) {
-  const { pokemon, loading, isPowerOn } = usePokedexContext();
-
+export default function SubScreen({ pokemon, isLoading }: Props) {
   return (
     <div
       className={`border-4 border-black bg-[#51AD60] duration-200 items-center justify-center hidden 2xl:flex flex-1 overflow-hidden ${
-        !!pokemon ? "brightness-100" : "brightness-50"
+        !pokemon ? "brightness-50" : "brightness-100"
       }`}
     >
-      {/* {isPowerOn} */}
       <div className="w-full h-full relative flex items-center justify-center">
-        {loading && <LoadingSpinner />}
+        {isLoading && <LoadingSpinner />}
         {pokemon && (
           <Image
             key={pokemon.id}

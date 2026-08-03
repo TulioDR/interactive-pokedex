@@ -1,14 +1,12 @@
 import { AnimatePresence } from "framer-motion";
-import usePokedexContext from "../../context/PokedexContext";
 import CRTAnimation from "./CRTAnimation";
 
 type Props = {
   children: React.ReactNode;
+  isPowerOn: boolean;
 };
 
-export default function PokedexInnerScreen({ children }: Props) {
-  const { isPowerOn } = usePokedexContext();
-
+export default function PokedexInnerScreen({ children, isPowerOn }: Props) {
   return (
     <div className="w-full flex-1 rounded-2xl bg-gray-900 border-5 2xl:border-10 border-black relative overflow-hidden">
       <AnimatePresence>

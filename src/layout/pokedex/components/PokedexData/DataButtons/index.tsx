@@ -1,23 +1,32 @@
 import { useRouter } from "next/navigation";
-import usePokedexContext from "../../../context/PokedexContext";
 import NavigationButton from "./NavigationButton";
 import PreviewButton from "./PreviewButton";
+import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
+import { PadType } from "@/layout/pokedex/types/PadType";
 
-type Props = {};
+type Props = {
+  activePad: PadType;
+  pokemon: any;
+};
 
-export default function DataButtons({}: Props) {
-  const {
-    activePad,
-    nextPokemon,
-    prevPokemon,
-    getNextPokemon,
-    getPrevPokemon,
-    pokemon,
-  } = usePokedexContext();
-
+export default function DataButtons({ pokemon, activePad }: Props) {
   const router = useRouter();
   const goToPokemon = () => {
     router.push(`/pokemon/${pokemon?.name}`);
+  };
+
+  const { allPokemon } = usePokeDbContext();
+  const currentIndex = allPokemon.findIndex((p: any) => p.id === pokemon?.id);
+
+  const prevPokemon = currentIndex > 0 ? allPokemon[currentIndex - 1] : null;
+  const nextPokemon =
+    currentIndex < allPokemon.length - 1 ? allPokemon[currentIndex + 1] : null;
+
+  const getNextPokemon = () => {
+    // router.replace(nextPokemon?.id as string);
+  };
+  const getPrevPokemon = () => {
+    // router.replace(prevPokemon?.id as string);
   };
 
   return (

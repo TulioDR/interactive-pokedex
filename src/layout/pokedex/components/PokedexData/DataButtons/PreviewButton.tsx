@@ -1,4 +1,3 @@
-import usePokedexContext from "../../../context/PokedexContext";
 import CircularInstruction from "./CircularInstruction";
 
 type Props = {
@@ -16,13 +15,9 @@ export default function PreviewButton({
   isActive,
   onClick,
 }: Props) {
-  const { setActivePad } = usePokedexContext();
-
   return (
     <button
       onClick={onClick}
-      onPointerEnter={() => setActivePad(favorite ? "favorite" : "open")}
-      onPointerLeave={() => setActivePad(null)}
       className={`flex-1 h-9 2xl:h-11 cursor-pointer rounded-lg flex flex-col items-center justify-center font-medium border border-white
             ${favorite ? "text-[#E60012]" : "text-black/50"}
             ${isActive ? (favorite ? "bg-[#E60012]" : "bg-hover") : ""}   

@@ -1,14 +1,38 @@
 "use client";
 
-import { PokedexProvider } from "../context/PokedexContext";
-import PokedexContent from "./PokedexContent";
+import ScanAnimation from "./ScanAnimation";
+import PreviewMessage from "./PreviewMessage";
+import PokedexData from "./PokedexData";
+import PokedexContainer from "./PokedexContainer";
+import PokedexControlDeck from "./PokedexControlDeck";
+import PokedexInnerScreen from "./PokedexInnerScreen";
+import PokedexTop from "./PokedexTop";
+import LoadingSpinner from "./LoadingSpinner";
+import { useScanEvent } from "../hooks/useScanEvent";
+import usePokedexInteraction from "../hooks/usePokedexInteraction";
+import usePokedexFetch from "../hooks/usePokedexFetch";
 
-type Props = {};
+export default function Pokedex() {
+  const { pokemon, error, isLoading } = usePokedexFetch();
+  const { isPowerOn, activePad, setActivePad, togglePower } =
+    usePokedexInteraction();
+  const { scannedPokemon } = useScanEvent();
 
-export default function Pokedex({}: Props) {
   return (
-    <PokedexProvider>
-      <PokedexContent />
-    </PokedexProvider>
+    <PokedexContainer>
+      <PokedexTop />
+      <PokedexInnerScreen isPowerOn={isPowerOn}>
+        {isLoading && <LoadingSpinner />}
+        {pokemon && <PokedexData pokemon={pokemon} activePad={activePad} />}
+        {!pokemon && <PreviewMessage error={error} />}
+        {!!scannedPokemon && <ScanAnimation scanningPokemon={scannedPokemon} />}
+      </PokedexInnerScreen>
+      <PokedexControlDeck
+        isLoading={isLoading}
+        pokemon={pokemon}
+        togglePower={togglePower}
+        setActivePad={setActivePad}
+      />
+    </PokedexContainer>
   );
 }

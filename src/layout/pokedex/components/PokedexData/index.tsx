@@ -3,10 +3,14 @@ import DataButtons from "./DataButtons";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
 import DataImage from "./DataImage";
 import DataTypes from "./DataTypes";
+import { PadType } from "../../types/PadType";
 
-type Props = { pokemon: any };
+type Props = {
+  pokemon: any;
+  activePad: PadType;
+};
 
-export default function PokedexData({ pokemon }: Props) {
+export default function PokedexData({ pokemon, activePad }: Props) {
   const { allPokemon } = usePokeDbContext();
 
   const foundPokemon = allPokemon.find((item) => item.id === pokemon.id);
@@ -26,7 +30,7 @@ export default function PokedexData({ pokemon }: Props) {
           </div>
         </div>
       </div>
-      <DataButtons />
+      <DataButtons pokemon={pokemon} activePad={activePad} />
     </div>
   );
 }

@@ -16,7 +16,7 @@ export default function usePokedexFetch() {
   const [pokemon, setPokemon] = useState<any>(null);
   const [error, setError] = useState(false);
 
-  const isLoading = rawIdentifier && !pokemon;
+  const isLoading = !!rawIdentifier && !pokemon;
 
   useEffect(() => {
     setPokemon(null);

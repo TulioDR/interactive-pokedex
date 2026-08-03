@@ -1,10 +1,11 @@
-import usePokedexContext from "../../../context/PokedexContext";
 import { PadType } from "../../../types/PadType";
 import ActionButton from "./ActionButton";
 
-type Props = {};
+type Props = {
+  setActivePad: React.Dispatch<React.SetStateAction<PadType>>;
+};
 
-export default function ActionButtons({}: Props) {
+export default function ActionButtons({ setActivePad }: Props) {
   type CircularButtonProps = {
     position: "top" | "right" | "bottom" | "left";
     pad: PadType;
@@ -14,8 +15,6 @@ export default function ActionButtons({}: Props) {
   // This button work the following way:
   // When you click a button it will fid the id of the button in the screen
   // And it will click it. That is it
-
-  const { setActivePad, activePad } = usePokedexContext();
 
   const circularButtons: CircularButtonProps[] = [
     {
@@ -48,7 +47,6 @@ export default function ActionButtons({}: Props) {
             key={i}
             position={position}
             pad={pad}
-            isActive={activePad === pad}
             onClick={onClick}
             changeActivePad={setActivePad}
           />
