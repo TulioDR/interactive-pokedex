@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { PadType } from "../types/PadType";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function usePokedexInteraction() {
+  const router = useRouter();
+  const pathName = usePathname();
+
   const [activePad, setActivePad] = useState<PadType>(null);
 
   const [isPowerOn, setIsPowerOn] = useState(true);
@@ -9,7 +13,7 @@ export default function usePokedexInteraction() {
 
   useEffect(() => {
     if (!isPowerOn) {
-      // here i need to use router to eliminate the scanned pokmon link
+      router.replace(pathName, { scroll: false });
     }
   }, [isPowerOn]);
   return { isPowerOn, activePad, setActivePad, togglePower };
