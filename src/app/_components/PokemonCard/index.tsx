@@ -9,77 +9,78 @@ import CardNumber from "./CardNumber";
 import CardName from "./CardName";
 import getTypeColor from "@/utils/getTypeColor";
 import Link from "next/link";
-import usePokedexContext from "@/layout/pokedex/context/PokedexContext";
 
 type Props = {
-   card: PokemonCardType;
-   index: number;
+  card: PokemonCardType;
+  index: number;
 };
 
 export default function PokemonCard({ card, index }: Props) {
-   const [scope, animate] = useAnimate();
-   const [isDragging, setIsDragging] = useState(false);
-   const startDrag = () => setIsDragging(true);
+  const [scope, animate] = useAnimate();
+  const [isDragging, setIsDragging] = useState(false);
+  const startDrag = () => setIsDragging(true);
 
-   const { setDraggedId } = usePokedexContext();
+  const handleDragEnd = () => {
+    animate(scope.current, { rotateY: 0 }, { duration: 0.2 });
+    window.dispatchEvent(new CustomEvent("pokemon-scanned", { detail: null }));
+  };
+  const handleUpdate = (e: ResolvedValues) => {
+    if (e.x === 0 && e.y === 0) setIsDragging(false);
+  };
 
-   const handleDragEnd = () => {
+  const onDrag = (_event: any, info: any) => {
+    const scanZone = document.querySelector(".scan-target-zone");
+    if (!scanZone) return;
+
+    const rect = scanZone.getBoundingClientRect();
+    const mouseX = info.point.x - window.scrollX;
+    const mouseY = info.point.y - window.scrollY;
+    const isInsideX = mouseX >= rect.left && mouseX <= rect.right;
+    const isInsideY = mouseY >= rect.top && mouseY <= rect.bottom;
+    const isOverScanZone = isInsideX && isInsideY;
+
+    if (isOverScanZone) {
+      animate(scope.current, { rotateY: 180 }, { duration: 0.2 });
+      window.dispatchEvent(
+        new CustomEvent("pokemon-scanned", { detail: card.name }),
+      );
+    } else {
       animate(scope.current, { rotateY: 0 }, { duration: 0.2 });
-      setDraggedId(null);
-   };
-   const handleUpdate = (e: ResolvedValues) => {
-      if (e.x === 0 && e.y === 0) setIsDragging(false);
-   };
+      window.dispatchEvent(
+        new CustomEvent("pokemon-scanned", { detail: null }),
+      );
+    }
+  };
 
-   const onDrag = (_event: any, info: any) => {
-      const scanZone = document.querySelector(".scan-target-zone");
-      if (!scanZone) return;
+  return (
+    <CardContainer
+      onDragStart={startDrag}
+      onDragEnd={handleDragEnd}
+      onDrag={onDrag}
+      handleUpdate={handleUpdate}
+      isDragging={isDragging}
+      index={index}
+      scope={scope}
+    >
+      <Link
+        href={`/pokemon/${card.name}`}
+        className="absolute inset-0 z-10 xl:hidden pointer-events-auto"
+      />
 
-      const rect = scanZone.getBoundingClientRect();
-      const mouseX = info.point.x - window.scrollX;
-      const mouseY = info.point.y - window.scrollY;
-      const isInsideX = mouseX >= rect.left && mouseX <= rect.right;
-      const isInsideY = mouseY >= rect.top && mouseY <= rect.bottom;
-      const isOverScanZone = isInsideX && isInsideY;
-
-      if (isOverScanZone) {
-         animate(scope.current, { rotateY: 180 }, { duration: 0.2 });
-         setDraggedId(card.name);
-      } else {
-         animate(scope.current, { rotateY: 0 }, { duration: 0.2 });
-         setDraggedId(null);
-      }
-   };
-
-   return (
-      <CardContainer
-         onDragStart={startDrag}
-         onDragEnd={handleDragEnd}
-         onDrag={onDrag}
-         handleUpdate={handleUpdate}
-         isDragging={isDragging}
-         index={index}
-         scope={scope}
+      <div
+        style={{ backgroundColor: getTypeColor(card.types[0]) }}
+        className="w-full flex-1 flex flex-col"
       >
-         <Link
-            href={`/pokemon/${card.name}`}
-            className="absolute inset-0 z-10 xl:hidden pointer-events-auto"
-         />
-
-         <div
-            style={{ backgroundColor: getTypeColor(card.types[0]) }}
-            className="w-full flex-1 flex flex-col"
-         >
-            <div className="flex flex-col w-full pl-4 pt-3 relative">
-               <CardName name={card.name} />
-               <CardNumber id={card.id} />
-            </div>
-            <CardImage alt={card.name} src={card.image} />
-         </div>
-         <div className="flex flex-col justify-end w-full bg-white rounded-t-4xl -mt-20 relative">
-            <PokemonTypes types={card.types} />
-            <JapaneseName name={card.original_name} />
-         </div>
-      </CardContainer>
-   );
+        <div className="flex flex-col w-full pl-4 pt-3 relative">
+          <CardName name={card.name} />
+          <CardNumber id={card.id} />
+        </div>
+        <CardImage alt={card.name} src={card.image} />
+      </div>
+      <div className="flex flex-col justify-end w-full bg-white rounded-t-4xl -mt-20 relative">
+        <PokemonTypes types={card.types} />
+        <JapaneseName name={card.original_name} />
+      </div>
+    </CardContainer>
+  );
 }

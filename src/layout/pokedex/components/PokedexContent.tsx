@@ -7,24 +7,22 @@ import PokedexInnerScreen from "./PokedexInnerScreen";
 import usePokedexContext from "../context/PokedexContext";
 import PokedexTop from "./PokedexTop";
 import LoadingSpinner from "./LoadingSpinner";
+import { useScanEvent } from "../hooks/useScanEvent";
 
 type Props = {};
 
 export default function PokedexContent({}: Props) {
-  const { pokemon, error, loading, draggedId } = usePokedexContext();
-
-  const showScan = !!draggedId;
-  // const showScan = !!draggedId && draggedId !== selectedId;
-  const showMessage = !pokemon && !loading;
+  const { pokemon, error } = usePokedexContext();
+  const { scannedPokemon } = useScanEvent();
 
   return (
     <PokedexContainer>
       <PokedexTop />
       <PokedexInnerScreen>
-        {loading && <LoadingSpinner />}
+        {!pokemon && <LoadingSpinner />}
         {pokemon && <PokedexData pokemon={pokemon} />}
-        {showMessage && <PreviewMessage error={error} />}
-        {showScan && <ScanAnimation draggedId={draggedId} />}
+        {!pokemon && <PreviewMessage error={error} />}
+        {!!scannedPokemon && <ScanAnimation scanningPokemon={scannedPokemon} />}
       </PokedexInnerScreen>
       <PokedexControlDeck />
     </PokedexContainer>

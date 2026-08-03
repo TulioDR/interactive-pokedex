@@ -11,8 +11,11 @@ export default function ActionButtons({}: Props) {
     onClick: () => void;
   };
 
-  const { getNextPokemon, getPrevPokemon, setActivePad, activePad } =
-    usePokedexContext();
+  // This button work the following way:
+  // When you click a button it will fid the id of the button in the screen
+  // And it will click it. That is it
+
+  const { setActivePad, activePad } = usePokedexContext();
 
   const circularButtons: CircularButtonProps[] = [
     {
@@ -23,7 +26,7 @@ export default function ActionButtons({}: Props) {
     {
       position: "right",
       pad: "next",
-      onClick: getNextPokemon,
+      onClick: () => {},
     },
     {
       position: "left",
@@ -33,7 +36,7 @@ export default function ActionButtons({}: Props) {
     {
       position: "bottom",
       pad: "prev",
-      onClick: getPrevPokemon,
+      onClick: () => {},
     },
   ];
 
