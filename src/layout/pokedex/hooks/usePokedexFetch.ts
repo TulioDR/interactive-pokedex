@@ -11,7 +11,7 @@ export default function usePokedexFetch() {
   const searchParams = useSearchParams();
   const queryParam = searchParams.get("scanned");
 
-  const rawIdentifier = routeParam || queryParam;
+  const rawIdentifier = queryParam || routeParam;
 
   const [pokemon, setPokemon] = useState<any>(null);
   const [error, setError] = useState(false);

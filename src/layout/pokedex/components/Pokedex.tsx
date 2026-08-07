@@ -13,10 +13,10 @@ import usePokedexInteraction from "../hooks/usePokedexInteraction";
 import usePokedexFetch from "../hooks/usePokedexFetch";
 
 export default function Pokedex() {
+  const { scannedPokemon } = useScanEvent();
   const { pokemon, error, isLoading } = usePokedexFetch();
   const { isPowerOn, activePad, setActivePad, togglePower } =
     usePokedexInteraction();
-  const { scannedPokemon } = useScanEvent();
 
   return (
     <PokedexContainer>

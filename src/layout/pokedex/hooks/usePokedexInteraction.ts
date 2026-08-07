@@ -16,5 +16,6 @@ export default function usePokedexInteraction() {
       router.replace(pathName, { scroll: false });
     }
   }, [isPowerOn]);
+
   return { isPowerOn, activePad, setActivePad, togglePower };
 }
