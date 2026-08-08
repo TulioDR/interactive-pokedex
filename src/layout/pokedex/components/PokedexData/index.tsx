@@ -8,9 +8,14 @@ import { PadType } from "../../types/PadType";
 type Props = {
   pokemon: any;
   activePad: PadType;
+  changePokemon: (pokemonName: string) => void;
 };
 
-export default function PokedexData({ pokemon, activePad }: Props) {
+export default function PokedexData({
+  pokemon,
+  activePad,
+  changePokemon,
+}: Props) {
   const { allPokemon } = usePokeDbContext();
 
   const foundPokemon = allPokemon.find((item) => item.id === pokemon.id);
@@ -30,7 +35,11 @@ export default function PokedexData({ pokemon, activePad }: Props) {
           </div>
         </div>
       </div>
-      <DataButtons pokemon={pokemon} activePad={activePad} />
+      <DataButtons
+        pokemon={pokemon}
+        activePad={activePad}
+        changePokemon={changePokemon}
+      />
     </div>
   );
 }

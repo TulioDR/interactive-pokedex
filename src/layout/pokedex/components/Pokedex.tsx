@@ -15,7 +15,7 @@ import usePokedexFetch from "../hooks/usePokedexFetch";
 export default function Pokedex() {
   const { scannedPokemon } = useScanEvent();
   const { pokemon, error, isLoading } = usePokedexFetch();
-  const { isPowerOn, activePad, setActivePad, togglePower } =
+  const { isPowerOn, activePad, setActivePad, togglePower, changePokemon } =
     usePokedexInteraction();
 
   return (
@@ -23,9 +23,17 @@ export default function Pokedex() {
       <PokedexTop />
       <PokedexInnerScreen isPowerOn={isPowerOn}>
         {isLoading && <LoadingSpinner />}
-        {pokemon && <PokedexData pokemon={pokemon} activePad={activePad} />}
+        {pokemon && (
+          <PokedexData
+            pokemon={pokemon}
+            activePad={activePad}
+            changePokemon={changePokemon}
+          />
+        )}
         {!pokemon && <PreviewMessage error={error} />}
-        {!!scannedPokemon && <ScanAnimation scanningPokemon={scannedPokemon} />}
+        {!!scannedPokemon && (
+          <ScanAnimation onComplete={() => changePokemon(scannedPokemon)} />
+        )}
       </PokedexInnerScreen>
       <PokedexControlDeck
         isLoading={isLoading}

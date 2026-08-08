@@ -2,6 +2,7 @@ import { usePagination } from "@mantine/hooks";
 import PaginationButton from "./PaginationButton";
 import PaginationDots from "./PaginationDots";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 type Props = {
   total: number;
@@ -16,8 +17,21 @@ export default function CustomPagination({ total, page }: Props) {
   const onChange = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", page.toString());
-    router.replace(`${pathname}?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
+
+  useEffect(() => {
+    const page = searchParams.get("page");
+    const parsedPage = Number(page);
+    const isValidPage =
+      page !== null && Number.isInteger(parsedPage) && parsedPage > 0;
+
+    if (!isValidPage) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("page", "1");
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }
+  }, [searchParams]);
 
   const pagination = usePagination({
     total,

@@ -1,16 +1,9 @@
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 type Props = {
-  scanningPokemon: string;
+  onComplete: () => void;
 };
 
-export default function ScanAnimation({ scanningPokemon }: Props) {
-  const router = useRouter();
-
-  const onAnimationComplete = () => {
-    router.replace(`?scanned=${scanningPokemon}`);
-  };
-
+export default function ScanAnimation({ onComplete }: Props) {
   return (
     <motion.div
       initial={{ scaleX: 0 }}
@@ -19,7 +12,7 @@ export default function ScanAnimation({ scanningPokemon }: Props) {
         transition: {
           duration: 1,
           ease: "easeOut",
-          onComplete: onAnimationComplete,
+          onComplete: onComplete,
         },
       }}
       // onAnimationComplete={handleAnimationComplete}

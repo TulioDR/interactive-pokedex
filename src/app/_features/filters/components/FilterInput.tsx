@@ -1,5 +1,5 @@
 import useThemeContext from "@/context/ThemeContext";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import useFiltersContext from "../context/FiltersContext";
 
@@ -10,6 +10,7 @@ type Props = {
 export default function FilterInput({ foundedNumber }: Props) {
   const [isFocused, setIsFocused] = useState(false);
 
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentQuery = searchParams.get("search_query") || "";
 
@@ -27,10 +28,8 @@ export default function FilterInput({ foundedNumber }: Props) {
       } else {
         params.delete("search_query");
       }
-      const queryString = params.toString();
-      const newUrl = `/?${queryString}`;
 
-      router.replace(newUrl, { scroll: false });
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     }, 300);
 
     return () => clearTimeout(timer);

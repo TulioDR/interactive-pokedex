@@ -1,6 +1,6 @@
 import { PokemonCardType } from "@/app/_types/PokemonCardType";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createContext, useContext, useMemo, useState } from "react";
 import { filterPokemon, FilterState } from "../utils/filterPokemon";
 import useFilterDraft from "../hooks/useFilterDraft";
@@ -33,6 +33,7 @@ export default function useFiltersContext() {
 
 export function FiltersProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathName = usePathname();
   const searchParams = useSearchParams();
   const { allPokemon } = usePokeDbContext();
 
@@ -118,7 +119,13 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
   // 🚀 Commit changes to application architecture
   const applyFilters = () => {
     // ACASO TENGO QUE AGREGAR PAGINA AQUI EN LOS PARAMS A 1?
+
+    // Aqui es necesario el crear un nuevo URLSearchParams
+    // Debido que entonces se quedaran los viejos params que no quiero
+    // Tengo que solvertar la cuestion con el numero de pagina y scanned
+
     const params = new URLSearchParams();
+    // params.set("page", "1");
 
     if (draft.types.length > 0) params.set("types", draft.types.join(","));
     if (draft.shapes.length > 0) params.set("shapes", draft.shapes.join(","));
@@ -129,7 +136,9 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
     params.set("sortBy", draft.sortBy);
 
     setInputValue("");
-    router.replace(`?${params.toString()}`);
+
+    // Aqui tengo que agregar el pathname
+    router.replace(`${pathName}?${params.toString()}`);
     closeModal();
   };
 

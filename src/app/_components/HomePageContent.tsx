@@ -2,36 +2,19 @@
 
 import PokemonCard from "./PokemonCard";
 
-import { useSearchParams } from "next/navigation";
 import CustomPagination from "./CustomPagination";
 
 import Filters from "../_features/filters/components/Filters";
 import { useAppliedFilters } from "../_features/filters/hooks/useAppliedFilters";
-// import Pokedex from "./Pokedex";
-// import { PokedexProvider } from "../_context/PokedexContext";
+import useCurrentPage from "../_features/filters/hooks/useCurrentPage";
 
 type Props = {};
 
 export default function HomePageContent({}: Props) {
-  const searchParams = useSearchParams();
-
-  // 1. Grab the current page from the URL string safely
-  const currentPage = Number(searchParams.get("page")) || 1;
-  // 2. Get the fully filtered pool (takes care of search_query, shapes, types, etc.)
   const allFilteredPokemon = useAppliedFilters();
-  // 3. Handle Pagination Mathematics based on the hook's output
-  const itemsPerPage = 30;
-  const totalPages = Math.max(
-    Math.ceil(allFilteredPokemon.length / itemsPerPage),
-    1,
-  );
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // 4. Slice the master list down to only what should display on THIS specific page
-  const displayedPokemons = allFilteredPokemon.slice(
-    indexOfFirstItem,
-    indexOfLastItem,
-  );
+
+  const { totalPages, displayedPokemons, currentPage } =
+    useCurrentPage(allFilteredPokemon);
 
   return (
     <div className="w-full flex flex-col gap-5 pb-5">
