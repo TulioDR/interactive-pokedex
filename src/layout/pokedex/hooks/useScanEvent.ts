@@ -4,10 +4,6 @@ export const useScanEvent = () => {
   const [scannedPokemon, setScannedPokemon] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("Pokemon escaneado:", scannedPokemon);
-  }, [scannedPokemon]);
-
-  useEffect(() => {
     const handleScannedChange = (e: Event) => {
       const customEvent = e as CustomEvent<string | null>;
       setScannedPokemon(customEvent.detail);

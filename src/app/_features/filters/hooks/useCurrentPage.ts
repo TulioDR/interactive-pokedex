@@ -2,7 +2,11 @@ import { useSearchParams } from "next/navigation";
 
 export default function useCurrentPage(filteredPokemons: any[]) {
   const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get("page")) || 1;
+
+  const rawPage = searchParams.get("page");
+  const parsedPage = Number(rawPage);
+  const currentPage =
+    rawPage && Number.isInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1;
 
   const itemsPerPage = 30;
   const totalPages = Math.max(

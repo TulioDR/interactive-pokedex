@@ -41,13 +41,13 @@ export default function RootLayout({
         />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
         />
       </head>
-      <ThemeProvider>
-        <PokeDbProvider>
-          <PokeDbLoader />
-          <body>
+      <body>
+        <ThemeProvider>
+          <PokeDbProvider>
+            <PokeDbLoader />
             <main className="px-5 lg:px-20">
               <Navbar />
               <div className="w-full flex gap-5 pt-5">
@@ -55,9 +55,9 @@ export default function RootLayout({
                 {children}
               </div>
             </main>
-          </body>
-        </PokeDbProvider>
-      </ThemeProvider>
+          </PokeDbProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

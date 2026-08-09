@@ -19,21 +19,25 @@ export default function FilterInput({ foundedNumber }: Props) {
   const [isFocused, setIsFocused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
+  const [prevQuery, setPrevQuery] = useState(currentQuery);
+  if (currentQuery !== prevQuery) {
+    setPrevQuery(currentQuery);
+    setInputValue(currentQuery);
+  }
+
   useEffect(() => {
     if (inputValue === currentQuery) return;
+
     const timer = setTimeout(() => {
       const params = getParams();
       params.set("page", "1");
-      if (inputValue) {
-        params.set("search_query", inputValue);
-      } else {
-        params.delete("search_query");
-      }
+      if (inputValue.trim()) params.set("search_query", inputValue.trim());
+      else params.delete("search_query");
       routerReplace(params);
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [inputValue, currentQuery, routerReplace, getParams]);
+  }, [inputValue, currentQuery]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);

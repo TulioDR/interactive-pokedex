@@ -4,9 +4,7 @@ import CircularLens from "@/components/CircularLens";
 import useThemeContext from "@/context/ThemeContext";
 import Settings from "./Settings";
 
-type Props = {};
-
-export default function Navbar({}: Props) {
+export default function Navbar() {
   const { themeColor } = useThemeContext();
   return (
     <div className="sticky top-0 left-0 pt-5 w-full z-30">

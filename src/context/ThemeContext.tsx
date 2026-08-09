@@ -1,40 +1,51 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useSyncExternalStore } from "react";
 
 interface ThemeContextInterface {
-   themeColor: string;
-   changeThemeColor: (newColor: string) => void;
+  themeColor: string;
+  changeThemeColor: (newColor: string) => void;
+}
+
+const DEFAULT_COLOR = "#D31027";
+
+// Helper para suscribirse a cambios de localStorage
+function subscribe(callback: () => void) {
+  window.addEventListener("storage", callback);
+  return () => window.removeEventListener("storage", callback);
+}
+
+// Helper para leer del cliente
+function getSnapshot() {
+  return localStorage.getItem("theme_color") || DEFAULT_COLOR;
+}
+
+// Helper para el Servidor (SSR)
+function getServerSnapshot() {
+  return DEFAULT_COLOR;
 }
 
 const ThemeContext = createContext({} as ThemeContextInterface);
+
 export default function useThemeContext() {
-   return useContext(ThemeContext);
+  return useContext(ThemeContext);
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-   const [themeColor, setThemeColor] = useState<string>("#D31027");
-   // #E60012
-   // 🔄 Read from localStorage when the app boots up on the client
-   useEffect(() => {
-      const savedColor = localStorage.getItem("theme_color");
-      if (savedColor) {
-         setThemeColor(savedColor);
-      }
-   }, []);
+  const themeColor = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot,
+  );
 
-   // 💾 Custom setter that updates both our app state AND local storage
-   const changeThemeColor = (newColor: string) => {
-      setThemeColor(newColor);
-      localStorage.setItem("theme_color", newColor);
-   };
+  const changeThemeColor = (newColor: string) => {
+    localStorage.setItem("theme_color", newColor);
+    window.dispatchEvent(new Event("storage"));
+  };
 
-   const value: ThemeContextInterface = {
-      themeColor,
-      changeThemeColor,
-   };
-
-   return (
-      <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
-   );
+  return (
+    <ThemeContext.Provider value={{ themeColor, changeThemeColor }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 }

@@ -1,7 +1,5 @@
 "use client";
 
-import { useParams } from "next/navigation";
-import { useEffect } from "react";
 import PokemonEvolutions from "./PokemonEvolutions";
 import BiologicalProfile from "./BiologicalProfile";
 import PokedexLog from "./PokedexLog";
@@ -11,16 +9,14 @@ import PokemonStats from "./PokemonStats";
 import TopSection from "./TopSection";
 import usePokemonFetch from "../hooks/usePokemonFetch";
 
-type Props = {};
+interface Props {
+  pokemonName: string;
+}
 
-export default function PokemonPageContent({}: Props) {
-  const { pokemon: pokemonName } = useParams<{ pokemon: string }>();
-
+export default function PokemonPageContent({ pokemonName }: Props) {
   const { pokemon, error } = usePokemonFetch(pokemonName);
 
-  useEffect(() => {
-    console.log(pokemon);
-  }, [pokemon]);
+  console.log(pokemon);
 
   if (!pokemon) return <></>;
   return (

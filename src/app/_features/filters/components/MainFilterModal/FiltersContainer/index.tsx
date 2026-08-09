@@ -1,6 +1,6 @@
 import CircularLens from "@/components/CircularLens";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import FilterTitle from "./FilterTitle";
 import FilterInnerScreen from "./FilterInnerScreen";
@@ -13,11 +13,16 @@ type Props = {
   children: React.ReactNode;
 };
 
+const emptySubscribe = () => () => {};
+
 export default function FiltersContainer({ children }: Props) {
   const { themeColor } = useThemeContext();
 
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => setIsMounted(true), []);
+  const isMounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
 
   const { isModalOpen, toggleModal } = useFiltersContext();
 

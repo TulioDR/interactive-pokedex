@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { PadType } from "../types/PadType";
 import useQueryParams from "@/hooks/useQueryParams";
 
@@ -7,21 +7,19 @@ export default function usePokedexInteraction() {
 
   const [activePad, setActivePad] = useState<PadType>(null);
   const [isPowerOn, setIsPowerOn] = useState(true);
-  const togglePower = () => setIsPowerOn((prev) => !prev);
 
-  const changePokemon = useCallback(
-    (pokemonName?: string) => {
-      const params = getParams();
-      if (pokemonName) params.set("scanned", pokemonName);
-      else params.delete("scanned");
-      routerReplace(params);
-    },
-    [routerReplace, getParams],
-  );
+  const changePokemon = (pokemonName?: string) => {
+    const params = getParams();
+    if (pokemonName) params.set("scanned", pokemonName);
+    else params.delete("scanned");
+    routerReplace(params);
+  };
 
-  useEffect(() => {
-    if (!isPowerOn) changePokemon();
-  }, [isPowerOn, changePokemon]);
+  const togglePower = () => {
+    const nextPowerState = !isPowerOn;
+    setIsPowerOn(nextPowerState);
+    if (!nextPowerState) changePokemon();
+  };
 
   return { isPowerOn, activePad, setActivePad, togglePower, changePokemon };
 }

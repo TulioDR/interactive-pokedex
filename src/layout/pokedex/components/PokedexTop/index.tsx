@@ -1,6 +1,4 @@
-type Props = {};
-
-export default function PokedexTop({}: Props) {
+export default function PokedexTop() {
   return (
     <div className="flex items-center justify-between mb-2 2xl:mb-4 px-2 z-20">
       <div className="flex gap-2 2xl:gap-4">

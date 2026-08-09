@@ -3,57 +3,64 @@ import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
 import { CompletePokemonType } from "../types/CompletePokemonType";
 
 export default function usePokemonFetch(scannedId: null | string) {
-  const identifier = scannedId;
   const { allPokemon, isSyncing } = usePokeDbContext();
   const [pokemon, setPokemon] = useState<CompletePokemonType | null>(null);
-  const [error, setError] = useState(false);
+  const [fetchError, setFetchError] = useState(false);
+
+  const targetId =
+    scannedId && allPokemon.length > 0
+      ? allPokemon.find((p) => p.name.toLowerCase() === scannedId.toLowerCase())
+          ?.id
+      : null;
+
+  const isNotFound = Boolean(
+    scannedId && !isSyncing && allPokemon.length > 0 && !targetId,
+  );
+  const error = fetchError || isNotFound;
 
   useEffect(() => {
-    setPokemon(null);
-    setError(false);
+    if (!targetId) return;
 
-    if (scannedId === null || scannedId === undefined) return;
-    if (isSyncing || allPokemon.length === 0) return;
-
-    const targetId = allPokemon.find(
-      (p) => p.name.toLowerCase() === scannedId.toLowerCase(),
-    )?.id;
-
-    if (!targetId) {
-      setError(true);
-      return;
-    }
+    const controller = new AbortController();
+    const { signal } = controller;
 
     async function fetchAllPokemonDetails() {
       try {
+        setFetchError(false);
+
         const [baseRes, speciesRes] = await Promise.all([
-          fetch(`https://pokeapi.co/api/v2/pokemon/${targetId}`),
-          fetch(`https://pokeapi.co/api/v2/pokemon-species/${targetId}`),
+          fetch(`https://pokeapi.co/api/v2/pokemon/${targetId}`, { signal }),
+          fetch(`https://pokeapi.co/api/v2/pokemon-species/${targetId}`, {
+            signal,
+          }),
         ]);
 
-        if (!baseRes.ok || !speciesRes.ok)
-          throw new Error("Registry fetch error");
+        if (!baseRes.ok || !speciesRes.ok) throw new Error("Fetch error");
 
         const base = await baseRes.json();
-
-        console.log(base);
         const species = await speciesRes.json();
         let evolution = null;
 
         if (species.evolution_chain?.url) {
-          const evolutionRes = await fetch(species.evolution_chain.url);
+          const evolutionRes = await fetch(species.evolution_chain.url, {
+            signal,
+          });
           if (evolutionRes.ok) evolution = await evolutionRes.json();
         }
 
         setPokemon({ base, species, evolution });
-      } catch (err) {
-        console.error(`Error resolving profile for ID ${targetId}:`, err);
-        setError(true);
+      } catch (err: any) {
+        if (err.name === "AbortError") return;
+        setFetchError(true);
       }
     }
 
     fetchAllPokemonDetails();
-  }, [identifier, isSyncing, allPokemon]);
+
+    return () => {
+      controller.abort();
+    };
+  }, [targetId]); // 👈 ¡Mira qué limpio! Solo depende de targetId
 
   return { pokemon, error, setPokemon };
 }

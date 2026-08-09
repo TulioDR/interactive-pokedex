@@ -1,6 +1,9 @@
-import PokemonPageContent from "./_components/PokemonPageContent";
-type Props = {};
+"use client";
 
-export default function PokemonPage({}: Props) {
-   return <PokemonPageContent />;
+import { useParams } from "next/navigation";
+import PokemonPageContent from "./_components/PokemonPageContent";
+
+export default function PokemonPage() {
+  const { pokemon: pokemonName } = useParams<{ pokemon: string }>();
+  return <PokemonPageContent key={pokemonName} pokemonName={pokemonName} />;
 }

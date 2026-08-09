@@ -8,9 +8,7 @@ import Filters from "../_features/filters/components/Filters";
 import { useAppliedFilters } from "../_features/filters/hooks/useAppliedFilters";
 import useCurrentPage from "../_features/filters/hooks/useCurrentPage";
 
-type Props = {};
-
-export default function HomePageContent({}: Props) {
+export default function HomePageContent() {
   const allFilteredPokemon = useAppliedFilters();
 
   const { totalPages, displayedPokemons, currentPage } =
