@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PadType } from "../types/PadType";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -12,20 +12,20 @@ export default function usePokedexInteraction() {
   const [isPowerOn, setIsPowerOn] = useState(true);
   const togglePower = () => setIsPowerOn((prev) => !prev);
 
-  useEffect(() => {
-    if (!isPowerOn) {
+  const changePokemon = useCallback(
+    (pokemonName?: string) => {
       const params = new URLSearchParams(searchParams.toString());
-      params.delete("scanned");
-      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-    }
-  }, [isPowerOn, searchParams]);
+      if (pokemonName) params.set("scanned", pokemonName);
+      else params.delete("scanned");
 
-  // It is used on pokemon scan, or when pressing next or prev pokemon
-  const changePokemon = (pokemonName: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("scanned", pokemonName);
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  };
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    },
+    [router, pathname, searchParams],
+  );
+
+  useEffect(() => {
+    if (!isPowerOn) changePokemon();
+  }, [isPowerOn, searchParams, changePokemon]);
 
   return { isPowerOn, activePad, setActivePad, togglePower, changePokemon };
 }

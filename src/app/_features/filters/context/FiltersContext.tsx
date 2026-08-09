@@ -102,14 +102,13 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
   const clearAllFiltersAndInput = () => {
     setInputValue("");
     clearAllFilters();
-    const currentScanned = searchParams.get("scanned");
-    const newParams = new URLSearchParams();
-    newParams.set("page", "1");
+    const params = new URLSearchParams();
 
-    if (currentScanned) {
-      newParams.set("scanned", currentScanned);
-    }
-    router.replace(`${pathname}?${newParams.toString()}`, { scroll: false });
+    params.set("page", "1");
+    const currentScanned = searchParams.get("scanned");
+    if (currentScanned) params.set("scanned", currentScanned);
+
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   // 📊 Live Sidebar Preview Computation Engine
@@ -126,14 +125,14 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
 
   // 🚀 Commit changes to application architecture
   const applyFilters = () => {
-    // ACASO TENGO QUE AGREGAR PAGINA AQUI EN LOS PARAMS A 1?
-
     // Aqui es necesario el crear un nuevo URLSearchParams
     // Debido que entonces se quedaran los viejos params que no quiero
     // Tengo que solvertar la cuestion con el numero de pagina y scanned
 
     const params = new URLSearchParams();
-    // params.set("page", "1");
+    params.set("page", "1");
+    const currentScanned = searchParams.get("scanned");
+    if (currentScanned) params.set("scanned", currentScanned);
 
     if (draft.types.length > 0) params.set("types", draft.types.join(","));
     if (draft.shapes.length > 0) params.set("shapes", draft.shapes.join(","));
