@@ -1,9 +1,10 @@
 import { PokemonCardType } from "@/app/_types/PokemonCardType";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { createContext, useContext, useMemo, useState } from "react";
 import { filterPokemon, FilterState } from "../utils/filterPokemon";
 import useFilterDraft from "../hooks/useFilterDraft";
+import useQueryParams from "@/hooks/useQueryParams";
 
 interface FiltersContextInterface {
   isModalOpen: boolean;
@@ -32,10 +33,10 @@ export default function useFiltersContext() {
 }
 
 export function FiltersProvider({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const { allPokemon } = usePokeDbContext();
+
+  const { routerReplace, getParams } = useQueryParams();
 
   const [inputValue, setInputValue] = useState(
     searchParams.get("search_query") || "",
@@ -102,13 +103,14 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
   const clearAllFiltersAndInput = () => {
     setInputValue("");
     clearAllFilters();
-    const params = new URLSearchParams();
+
+    const params = getParams("new");
 
     params.set("page", "1");
     const currentScanned = searchParams.get("scanned");
     if (currentScanned) params.set("scanned", currentScanned);
 
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    routerReplace(params);
   };
 
   // 📊 Live Sidebar Preview Computation Engine
@@ -129,7 +131,8 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
     // Debido que entonces se quedaran los viejos params que no quiero
     // Tengo que solvertar la cuestion con el numero de pagina y scanned
 
-    const params = new URLSearchParams();
+    const params = getParams("new");
+
     params.set("page", "1");
     const currentScanned = searchParams.get("scanned");
     if (currentScanned) params.set("scanned", currentScanned);
@@ -144,8 +147,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
 
     setInputValue("");
 
-    // Aqui tengo que agregar el pathname
-    router.replace(`${pathname}?${params.toString()}`, { scroll: true });
+    routerReplace(params);
     closeModal();
   };
 

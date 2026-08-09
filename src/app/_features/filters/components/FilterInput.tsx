@@ -1,48 +1,44 @@
 import useThemeContext from "@/context/ThemeContext";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import useFiltersContext from "../context/FiltersContext";
+import useQueryParams from "@/hooks/useQueryParams";
 
 type Props = {
   foundedNumber: number;
 };
 
 export default function FilterInput({ foundedNumber }: Props) {
-  const [isFocused, setIsFocused] = useState(false);
-
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentQuery = searchParams.get("search_query") || "";
 
-  const router = useRouter();
-
+  const { themeColor } = useThemeContext();
+  const { routerReplace, getParams } = useQueryParams();
   const { inputValue, setInputValue } = useFiltersContext();
+
+  const [isFocused, setIsFocused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     if (inputValue === currentQuery) return;
     const timer = setTimeout(() => {
-      const params = new URLSearchParams(searchParams.toString());
+      const params = getParams();
       params.set("page", "1");
       if (inputValue) {
         params.set("search_query", inputValue);
       } else {
         params.delete("search_query");
       }
-
-      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+      routerReplace(params);
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [inputValue, currentQuery, searchParams, router]);
+  }, [inputValue, currentQuery, routerReplace, getParams]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     window.scrollTo({ top: 0, behavior: "instant" });
   };
-
-  const { themeColor } = useThemeContext();
-
-  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div

@@ -1,8 +1,9 @@
 import { usePagination } from "@mantine/hooks";
 import PaginationButton from "./PaginationButton";
 import PaginationDots from "./PaginationDots";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect } from "react";
+import useQueryParams from "@/hooks/useQueryParams";
 
 type Props = {
   total: number;
@@ -10,17 +11,18 @@ type Props = {
 };
 
 export default function CustomPagination({ total, page }: Props) {
-  const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { getParams, routerReplace } = useQueryParams();
 
   const onChange = useCallback(
     (page: number) => {
-      const params = new URLSearchParams(searchParams.toString());
+      // const params = new URLSearchParams(searchParams.toString());
+      const params = getParams();
       params.set("page", page.toString());
-      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+
+      routerReplace(params);
     },
-    [router, pathname, searchParams],
+    [routerReplace],
   );
 
   useEffect(() => {
