@@ -33,7 +33,7 @@ export default function useFiltersContext() {
 
 export function FiltersProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const pathName = usePathname();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const { allPokemon } = usePokeDbContext();
 
@@ -102,6 +102,14 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
   const clearAllFiltersAndInput = () => {
     setInputValue("");
     clearAllFilters();
+    const currentScanned = searchParams.get("scanned");
+    const newParams = new URLSearchParams();
+    newParams.set("page", "1");
+
+    if (currentScanned) {
+      newParams.set("scanned", currentScanned);
+    }
+    router.replace(`${pathname}?${newParams.toString()}`, { scroll: false });
   };
 
   // 📊 Live Sidebar Preview Computation Engine
@@ -138,7 +146,7 @@ export function FiltersProvider({ children }: { children: React.ReactNode }) {
     setInputValue("");
 
     // Aqui tengo que agregar el pathname
-    router.replace(`${pathName}?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: true });
     closeModal();
   };
 

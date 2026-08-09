@@ -1,3 +1,9 @@
+import {
+  FAVORITE_BUTTON_ID,
+  FULL_PAGE_BUTTON_ID,
+  NEXT_BUTTON_ID,
+  PREV_BUTTON_ID,
+} from "@/layout/pokedex/constants/BUTTONS_IDS";
 import { PadType } from "../../../types/PadType";
 import ActionButton from "./ActionButton";
 
@@ -9,7 +15,7 @@ export default function ActionButtons({ setActivePad }: Props) {
   type CircularButtonProps = {
     position: "top" | "right" | "bottom" | "left";
     pad: PadType;
-    onClick: () => void;
+    id: string;
   };
 
   // This button work the following way:
@@ -20,34 +26,34 @@ export default function ActionButtons({ setActivePad }: Props) {
     {
       position: "top",
       pad: "open",
-      onClick: () => {},
+      id: FULL_PAGE_BUTTON_ID,
     },
     {
       position: "right",
       pad: "next",
-      onClick: () => {},
+      id: NEXT_BUTTON_ID,
     },
     {
       position: "left",
       pad: "favorite",
-      onClick: () => {},
+      id: FAVORITE_BUTTON_ID,
     },
     {
       position: "bottom",
       pad: "prev",
-      onClick: () => {},
+      id: PREV_BUTTON_ID,
     },
   ];
 
   return (
     <div className="h-full aspect-square relative hidden 2xl:block">
       <div className="w-full h-full relative">
-        {circularButtons.map(({ pad, position, onClick }, i) => (
+        {circularButtons.map(({ pad, position, id }, i) => (
           <ActionButton
             key={i}
             position={position}
             pad={pad}
-            onClick={onClick}
+            id={id}
             changeActivePad={setActivePad}
           />
         ))}

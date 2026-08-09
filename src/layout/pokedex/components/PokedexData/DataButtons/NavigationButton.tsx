@@ -6,10 +6,12 @@ type Props = {
   pokemon: { name: string; id: number } | null;
   isActive: boolean;
   onClick: () => void;
+  id: string;
 };
 
 export default function NavigationButton({
   reverse,
+  id,
   pokemon,
   isActive,
   onClick,
@@ -27,10 +29,11 @@ export default function NavigationButton({
   return (
     <button
       onClick={onClick}
-      className={`flex-1 h-full cursor-pointer flex gap-2 px-2 items-center justify-end text-black/50  
-            ${reverse ? "flex-row-reverse " : ""}
-            ${isActive ? "bg-hover text-white" : ""}
-         `}
+      id={id}
+      className={`flex-1 h-full cursor-pointer flex gap-2 px-2 items-center justify-end text-black/50 hover:bg-hover hover:text-white active:bg-hover active:text-white
+        ${reverse ? "flex-row-reverse " : ""}
+        ${isActive ? "bg-hover text-white" : ""}
+      `}
     >
       <div
         className={`flex flex-col text-[10px] 2xl:text-xs ${reverse ? "items-start" : "items-end"}`}

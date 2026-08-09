@@ -3,6 +3,12 @@ import NavigationButton from "./NavigationButton";
 import PreviewButton from "./PreviewButton";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
 import { PadType } from "@/layout/pokedex/types/PadType";
+import {
+  FAVORITE_BUTTON_ID,
+  FULL_PAGE_BUTTON_ID,
+  NEXT_BUTTON_ID,
+  PREV_BUTTON_ID,
+} from "@/layout/pokedex/constants/BUTTONS_IDS";
 
 type Props = {
   activePad: PadType;
@@ -41,6 +47,7 @@ export default function DataButtons({
     <>
       <div className="w-full flex gap-2 p-2 border-t border-white/20">
         <PreviewButton
+          id={FAVORITE_BUTTON_ID}
           icon="favorite"
           text="Add to favorite"
           favorite
@@ -48,6 +55,7 @@ export default function DataButtons({
           onClick={() => {}}
         />
         <PreviewButton
+          id={FULL_PAGE_BUTTON_ID}
           icon="arrow_outward"
           text="Full page"
           isActive={activePad === "open"}
@@ -56,12 +64,14 @@ export default function DataButtons({
       </div>
       <div className="h-9 2xl:h-11 bg-white flex justify-between border-t border-white">
         <NavigationButton
+          id={PREV_BUTTON_ID}
           reverse
           pokemon={prevPokemon}
           isActive={activePad === "prev"}
           onClick={getPrevPokemon}
         />
         <NavigationButton
+          id={NEXT_BUTTON_ID}
           pokemon={nextPokemon}
           isActive={activePad === "next"}
           onClick={getNextPokemon}
