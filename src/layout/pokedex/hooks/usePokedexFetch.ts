@@ -1,39 +1,26 @@
 import { useEffect, useState } from "react";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
-import { useParams, useSearchParams } from "next/navigation";
 
-export default function usePokedexFetch() {
+export default function usePokedexFetch(pokemonName: string) {
   const { allPokemon, isSyncing } = usePokeDbContext();
 
-  const params = useParams();
-  const routeParam = params?.pokemon as string | undefined;
-
-  const searchParams = useSearchParams();
-  const queryParam = searchParams.get("scanned");
-
-  const rawIdentifier = queryParam || routeParam;
+  const rawIdentifier = pokemonName;
 
   const [pokemon, setPokemon] = useState<any>(null);
   const [error, setError] = useState(false);
 
   const isLoading = !!rawIdentifier && !pokemon;
 
-  useEffect(() => {
-    setPokemon(null);
-    setError(false);
+  const cleanIdentifier = decodeURIComponent(rawIdentifier).toLowerCase();
+  const targetPokemon = allPokemon.find(
+    (p) => p.name.toLowerCase() === cleanIdentifier,
+  );
 
+  useEffect(() => {
+    if (!targetPokemon) return;
     if (!rawIdentifier) return;
     if (isSyncing || allPokemon.length === 0) return;
 
-    const cleanIdentifier = decodeURIComponent(rawIdentifier).toLowerCase();
-    const targetPokemon = allPokemon.find(
-      (p) => p.name.toLowerCase() === cleanIdentifier,
-    );
-
-    if (!targetPokemon) {
-      setError(true);
-      return;
-    }
     const targetId = targetPokemon.id;
     async function fetchPokedexInfo() {
       try {
@@ -48,7 +35,7 @@ export default function usePokedexFetch() {
       }
     }
     fetchPokedexInfo();
-  }, [rawIdentifier, isSyncing, allPokemon]);
+  }, [rawIdentifier, isSyncing, allPokemon, targetPokemon]);
 
   return { pokemon, error, isLoading };
 }

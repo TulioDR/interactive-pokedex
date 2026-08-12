@@ -1,5 +1,6 @@
 import Image from "next/image";
 import LoadingSpinner from "../../LoadingSpinner";
+import { useEffect } from "react";
 
 type Props = {
   pokemon: any;
@@ -7,6 +8,12 @@ type Props = {
 };
 
 export default function SubScreen({ pokemon, isLoading }: Props) {
+  useEffect(() => {
+    if (pokemon) {
+      console.log(pokemon.sprites);
+      console.log(pokemon.sprites.front_default);
+    }
+  }, [pokemon]);
   return (
     <div
       className={`border-4 border-black bg-[#51AD60] duration-200 items-center justify-center hidden 2xl:flex flex-1 overflow-hidden ${

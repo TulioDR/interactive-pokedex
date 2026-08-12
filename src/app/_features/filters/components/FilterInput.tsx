@@ -37,7 +37,7 @@ export default function FilterInput({ foundedNumber }: Props) {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [inputValue, currentQuery]);
+  }, [inputValue, currentQuery, getParams, routerReplace]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
