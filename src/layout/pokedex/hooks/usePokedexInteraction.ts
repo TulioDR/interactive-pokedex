@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { PadType } from "../types/PadType";
 import useQueryParams from "@/hooks/useQueryParams";
 
 export default function usePokedexInteraction() {
   const { routerReplace, getParams } = useQueryParams();
 
-  const [activePad, setActivePad] = useState<PadType>(null);
   const [isPowerOn, setIsPowerOn] = useState(true);
 
   const changePokemon = (pokemonName?: string) => {
@@ -21,5 +19,5 @@ export default function usePokedexInteraction() {
     if (!nextPowerState) changePokemon();
   };
 
-  return { isPowerOn, activePad, setActivePad, togglePower, changePokemon };
+  return { isPowerOn, togglePower, changePokemon };
 }
