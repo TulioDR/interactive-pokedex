@@ -1,9 +1,9 @@
 import DataHeader from "./DataHeader";
 import DataButtons from "./DataButtons";
-import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
+import usePokeDbContext from "@/features/poke-db/context/PokeDbContext";
 import DataImage from "./DataImage";
 import DataTypes from "./DataTypes";
-import { PadType } from "@/layout/pokedex/types/PadType";
+import { PadType } from "@/features/pokedex/types/PadType";
 
 type Props = {
   pokemon: any;

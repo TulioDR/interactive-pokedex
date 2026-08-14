@@ -1,14 +1,14 @@
 import { useRouter } from "next/navigation";
 import NavigationButton from "./NavigationButton";
 import PreviewButton from "./PreviewButton";
-import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
-import { PadType } from "@/layout/pokedex/types/PadType";
+import usePokeDbContext from "@/features/poke-db/context/PokeDbContext";
+import { PadType } from "@/features/pokedex/types/PadType";
 import {
   FAVORITE_BUTTON_ID,
   FULL_PAGE_BUTTON_ID,
   NEXT_BUTTON_ID,
   PREV_BUTTON_ID,
-} from "@/layout/pokedex/constants/BUTTONS_IDS";
+} from "@/features/pokedex/constants/BUTTONS_IDS";
 
 type Props = {
   activePad: PadType;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
+import usePokeDbContext from "@/features/poke-db/context/PokeDbContext";
 
 export default function usePokedexFetch(rawIdentifier: string | undefined) {
   const { allPokemon, isSyncing } = usePokeDbContext();

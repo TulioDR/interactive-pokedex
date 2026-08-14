@@ -7,7 +7,7 @@ import FilterInnerScreen from "./FilterInnerScreen";
 import useFiltersContext from "../../../context/FiltersContext";
 import ContainerSizeHandler from "./ContainerSizeHandler";
 import useThemeContext from "@/context/ThemeContext";
-import { ToggleButton } from "@/layout/pokedex/components/PokedexControlDeck/ToggleButton";
+import { ToggleButton } from "@/features/pokedex/components/PokedexControlDeck/ToggleButton";
 
 type Props = {
   children: React.ReactNode;

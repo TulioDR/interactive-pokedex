@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
+import usePokeDbContext from "@/features/poke-db/context/PokeDbContext";
 import { CompletePokemonType } from "../types/CompletePokemonType";
 import { ErrorType } from "../types/ErrorType";
 

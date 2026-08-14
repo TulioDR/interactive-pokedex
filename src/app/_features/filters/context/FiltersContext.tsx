@@ -1,5 +1,5 @@
 import { PokemonCardType } from "@/app/_types/PokemonCardType";
-import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
+import usePokeDbContext from "@/features/poke-db/context/PokeDbContext";
 import { useSearchParams } from "next/navigation";
 import { createContext, useContext, useMemo, useState } from "react";
 import { filterPokemon, FilterState } from "../utils/filterPokemon";

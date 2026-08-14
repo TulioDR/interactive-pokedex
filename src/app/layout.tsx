@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/layout/navbar/components/Navbar";
+import Navbar from "@/features/navbar/components/Navbar";
 import { ThemeProvider } from "@/context/ThemeContext";
-import { PokeDbProvider } from "@/layout/poke-db/context/PokeDbContext";
-import PokeDbLoader from "@/layout/poke-db/components/PokeDbLoader";
-import Pokedex from "@/layout/pokedex/components/Pokedex";
+import { PokeDbProvider } from "@/features/poke-db/context/PokeDbContext";
+import PokeDbLoader from "@/features/poke-db/components/PokeDbLoader";
+import Pokedex from "@/features/pokedex/components/Pokedex";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

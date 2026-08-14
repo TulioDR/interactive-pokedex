@@ -3,7 +3,7 @@ import {
   FULL_PAGE_BUTTON_ID,
   NEXT_BUTTON_ID,
   PREV_BUTTON_ID,
-} from "@/layout/pokedex/constants/BUTTONS_IDS";
+} from "@/features/pokedex/constants/BUTTONS_IDS";
 import { PadType } from "../../../types/PadType";
 import ActionButton from "./ActionButton";
 

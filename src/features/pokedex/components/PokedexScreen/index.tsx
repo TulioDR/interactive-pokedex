@@ -1,5 +1,5 @@
-import usePokedexFetch from "@/layout/pokedex/hooks/usePokedexFetch";
-import { useScanEvent } from "@/layout/pokedex/hooks/useScanEvent";
+import usePokedexFetch from "@/features/pokedex/hooks/usePokedexFetch";
+import { useScanEvent } from "@/features/pokedex/hooks/useScanEvent";
 import ScanAnimation from "./ScanAnimation";
 import PreviewMessage from "./PreviewMessage";
 import LoadingSpinner from "./LoadingSpinner";
