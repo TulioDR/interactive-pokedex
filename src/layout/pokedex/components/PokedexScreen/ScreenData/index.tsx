@@ -17,6 +17,8 @@ function ScreenData({ rawIdentifier, activePad, changePokemon }: Props) {
   const { pokemon, error } = usePokedexFetch(rawIdentifier);
 
   const isLoading = !!rawIdentifier && !pokemon && !error;
+  const showScan = !!scannedPokemon && scannedPokemon !== pokemon?.name;
+
   return (
     <div className="relative overflow-hidden w-full h-full">
       {isLoading && <LoadingSpinner />}
@@ -28,7 +30,7 @@ function ScreenData({ rawIdentifier, activePad, changePokemon }: Props) {
         />
       )}
       {!pokemon && !isLoading && <PreviewMessage error={error} />}
-      {!!scannedPokemon && (
+      {showScan && (
         <ScanAnimation onComplete={() => changePokemon(scannedPokemon)} />
       )}
     </div>
