@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import usePokeDbContext from "@/layout/poke-db/context/PokeDbContext";
 import { CompletePokemonType } from "../types/CompletePokemonType";
+import { ErrorType } from "../types/ErrorType";
 
 export default function usePokemonFetch(scannedId: null | string) {
   const { allPokemon, isSyncing } = usePokeDbContext();
   const [pokemon, setPokemon] = useState<CompletePokemonType | null>(null);
-  const [fetchError, setFetchError] = useState(false);
+  const [error, setError] = useState<ErrorType>(null);
 
   const targetId =
     scannedId && allPokemon.length > 0
@@ -16,7 +17,10 @@ export default function usePokemonFetch(scannedId: null | string) {
   const isNotFound = Boolean(
     scannedId && !isSyncing && allPokemon.length > 0 && !targetId,
   );
-  const error = fetchError || isNotFound;
+
+  if (isNotFound) {
+    setError("not-found");
+  }
 
   useEffect(() => {
     if (!targetId) return;
@@ -26,8 +30,6 @@ export default function usePokemonFetch(scannedId: null | string) {
 
     async function fetchAllPokemonDetails() {
       try {
-        setFetchError(false);
-
         const [baseRes, speciesRes] = await Promise.all([
           fetch(`https://pokeapi.co/api/v2/pokemon/${targetId}`, { signal }),
           fetch(`https://pokeapi.co/api/v2/pokemon-species/${targetId}`, {
@@ -51,7 +53,7 @@ export default function usePokemonFetch(scannedId: null | string) {
         setPokemon({ base, species, evolution });
       } catch (err: any) {
         if (err.name === "AbortError") return;
-        setFetchError(true);
+        setError("unknown-error");
       }
     }
 
@@ -60,7 +62,7 @@ export default function usePokemonFetch(scannedId: null | string) {
     return () => {
       controller.abort();
     };
-  }, [targetId]); // 👈 ¡Mira qué limpio! Solo depende de targetId
+  }, [targetId]);
 
   return { pokemon, error, setPokemon };
 }

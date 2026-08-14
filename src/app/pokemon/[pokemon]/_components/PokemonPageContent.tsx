@@ -18,8 +18,16 @@ export default function PokemonPageContent({ pokemonName }: Props) {
   const { pokemon, error } = usePokemonFetch(pokemonName);
 
   console.log(pokemon);
+  const isLoading = !pokemon && !error;
 
-  if (!pokemon) return <></>;
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error || !pokemon) {
+    return <div>Error fetching Pokémon data.</div>;
+  }
+
   return (
     <div className="w-full gap-5 pb-5 flex flex-col">
       <div className="grid grid-cols-2 gap-5">
