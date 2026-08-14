@@ -6,7 +6,7 @@ import PokedexTop from "./PokedexTop";
 import { useState } from "react";
 import { PadType } from "../types/PadType";
 import { AnimatePresence } from "framer-motion";
-import ScreenData from "./PokedexScreen/ScreenData";
+import PokedexScreen from "./PokedexScreen";
 import CRTAnimation from "./CRTAnimation";
 import usePokedexInteraction from "../hooks/usePokedexInteraction";
 import { useParams, useSearchParams } from "next/navigation";
@@ -31,7 +31,7 @@ export default function Pokedex() {
         <AnimatePresence>
           {isPowerOn && (
             <CRTAnimation>
-              <ScreenData
+              <PokedexScreen
                 key={rawIdentifier}
                 rawIdentifier={rawIdentifier}
                 activePad={activePad}

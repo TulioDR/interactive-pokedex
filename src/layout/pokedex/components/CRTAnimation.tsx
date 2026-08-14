@@ -41,7 +41,7 @@ export default function CRTAnimation({ children }: Props) {
       exit="off"
       className="w-full h-full overflow-hidden "
     >
-      <div className="scan-target-zone relative w-full h-full flex flex-col z-10 overflow-hidden text-white from-[#0E5542] bg-radial to-[#0F3A22] ">
+      <div className="relative w-full h-full flex flex-col z-10 overflow-hidden text-white from-[#0E5542] bg-radial to-[#0F3A22] ">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -50,7 +50,6 @@ export default function CRTAnimation({ children }: Props) {
             backgroundSize: "100% 4px, 6px 100%",
           }}
         />
-
         {children}
       </div>
     </motion.div>

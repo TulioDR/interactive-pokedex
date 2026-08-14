@@ -1,10 +1,10 @@
 import usePokedexFetch from "@/layout/pokedex/hooks/usePokedexFetch";
 import { useScanEvent } from "@/layout/pokedex/hooks/useScanEvent";
-import ScanAnimation from "../ScanAnimation";
-import PreviewMessage from "../PreviewMessage";
-import LoadingSpinner from "../LoadingSpinner";
+import ScanAnimation from "./ScanAnimation";
+import PreviewMessage from "./PreviewMessage";
+import LoadingSpinner from "./LoadingSpinner";
 import PokedexData from "./PokedexData";
-import { PadType } from "../../../types/PadType";
+import { PadType } from "../../types/PadType";
 
 interface Props {
   rawIdentifier: string | undefined;
@@ -12,7 +12,7 @@ interface Props {
   changePokemon: (pokemonName: string) => void;
 }
 
-function ScreenData({ rawIdentifier, activePad, changePokemon }: Props) {
+function PokedexScreen({ rawIdentifier, activePad, changePokemon }: Props) {
   const { scannedPokemon } = useScanEvent();
   const { pokemon, error } = usePokedexFetch(rawIdentifier);
 
@@ -20,7 +20,7 @@ function ScreenData({ rawIdentifier, activePad, changePokemon }: Props) {
   const showScan = !!scannedPokemon && scannedPokemon !== pokemon?.name;
 
   return (
-    <div className="relative overflow-hidden w-full h-full">
+    <div className="relative overflow-hidden w-full h-full scan-target-zone">
       {isLoading && <LoadingSpinner />}
       {pokemon && (
         <PokedexData
@@ -37,4 +37,4 @@ function ScreenData({ rawIdentifier, activePad, changePokemon }: Props) {
   );
 }
 
-export default ScreenData;
+export default PokedexScreen;

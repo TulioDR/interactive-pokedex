@@ -1,4 +1,4 @@
-import BaseStat from "@/layout/pokedex/components/PokedexScreen/ScreenData/PokedexData/DataTabs/Tabs/Stats/BaseStat";
+import BaseStat from "@/layout/pokedex/components/PokedexScreen/PokedexData/DataTabs/Tabs/Stats/BaseStat";
 import { CompletePokemonType } from "../../types/CompletePokemonType";
 import SectionContainer from "../SectionContainer";
 import SectionTitle from "../SectionContainer/SectionTitle";
