@@ -26,7 +26,7 @@ export default function Pokedex() {
 
   return (
     <PokedexContainer>
-      <PokedexTop />
+      <PokedexTop isPowerOn={isPowerOn} />
       <div className="w-full flex-1 rounded-2xl bg-gray-900 border-5 2xl:border-10 border-black relative overflow-hidden">
         <AnimatePresence>
           {isPowerOn && (
@@ -43,6 +43,7 @@ export default function Pokedex() {
       </div>
 
       <PokedexControlDeck
+        isPowerOn={isPowerOn}
         togglePower={togglePower}
         setActivePad={setActivePad}
       />

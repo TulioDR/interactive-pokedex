@@ -17,7 +17,7 @@ function PokedexScreen({ rawIdentifier, activePad, changePokemon }: Props) {
   const { pokemon, error } = usePokedexFetch(rawIdentifier);
 
   const isLoading = !!rawIdentifier && !pokemon && !error;
-  const showScan = !!scannedPokemon && scannedPokemon !== pokemon?.name;
+  const showScan = !!scannedPokemon && scannedPokemon !== rawIdentifier;
 
   return (
     <div className="relative overflow-hidden w-full h-full scan-target-zone">

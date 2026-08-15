@@ -23,21 +23,29 @@ export default function usePokeDbContext() {
 export function PokeDbProvider({ children }: { children: ReactNode }) {
   const [allPokemon, setAllPokemon] = useState<PokemonCardType[]>([]);
   const [syncProgress, setSyncProgress] = useState(0);
-  const [isSyncing, setIsSyncing] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(true);
 
   useEffect(() => {
     async function initializeDatabase() {
-      // 1. Check for cached data to ensure instant "Time to Interactive"
       const cached = localStorage.getItem("poke_sandbox_db");
+
+      // 2. Si existe en caché, simulamos el llenado suave de la barra en 1 segundo
       if (cached) {
-        setAllPokemon(JSON.parse(cached));
+        const data = JSON.parse(cached);
+        setAllPokemon(data);
+
+        // Llenamos la barra rápidamente
+        setSyncProgress(100);
+
+        // Esperamos 1 segundo para que la animación/barra se complete visualmente
+        setTimeout(() => {
+          setIsSyncing(false);
+        }, 2000);
         return;
       }
 
-      // 2. Initial Sync Logic
-      setIsSyncing(true);
+      // 3. Si no hay nada en caché, realizamos la descarga por bloques
       try {
-        // Fetch total count up to Gen 9
         const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=1025");
         const masterList = await res.json();
 
@@ -82,7 +90,6 @@ export function PokeDbProvider({ children }: { children: ReactNode }) {
           setSyncProgress(progress);
         }
 
-        // 3. Persist and Update State
         localStorage.setItem("poke_sandbox_db", JSON.stringify(fullDatabase));
         setAllPokemon(fullDatabase);
       } catch (error) {
