@@ -75,7 +75,7 @@ export default function TopSection({ pokemon }: Props) {
   const regionName = getPokemonRegion(pokemon);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-5 ">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 ">
       <SquareSection icon="fingerprint" name="Class" data={classification} />
       <SquareSection icon="timeline" name="Generation" data={genDataString} />
       <SquareSection icon="map" name="Region" data={regionName} />

@@ -13,7 +13,7 @@ function PokemonImage({ pokemon }: Props) {
   return (
     <SectionContainer className="flex flex-col uppercase">
       <SectionTitle icon="" title={pokemon.base.name} />
-      <div className="flex items-center justify-center flex-1">
+      <div className="flex items-center justify-center flex-1 min-h-60 lg:min-h-auto">
         <div className="h-full aspect-square relative">
           <Image
             src={pokemon.base.sprites.other["official-artwork"].front_default}

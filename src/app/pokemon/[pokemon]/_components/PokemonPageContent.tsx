@@ -9,6 +9,8 @@ import PokemonStats from "./PokemonStats";
 import TopSection from "./TopSection";
 import usePokemonFetch from "../hooks/usePokemonFetch";
 import PokemonImage from "./PokemonImage";
+import PokemonSkeleton from "./PokemonSkeleton";
+import PokemonErrorMessage from "./PokemonErrorMessage";
 
 interface Props {
   pokemonName: string;
@@ -17,20 +19,14 @@ interface Props {
 export default function PokemonPageContent({ pokemonName }: Props) {
   const { pokemon, error } = usePokemonFetch(pokemonName);
 
-  console.log(pokemon);
   const isLoading = !pokemon && !error;
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error || !pokemon) {
-    return <div>Error fetching Pokémon data.</div>;
-  }
-
+  if (isLoading) return <PokemonSkeleton />;
+  if (error) return <PokemonErrorMessage error={error} />;
+  if (!pokemon) return <></>;
   return (
     <div className="w-full gap-5 pb-5 flex flex-col">
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid lg:grid-cols-2 gap-5">
         <PokemonImage pokemon={pokemon} />
         <TopSection pokemon={pokemon} />
       </div>
