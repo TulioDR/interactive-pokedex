@@ -11,6 +11,7 @@ import usePokemonFetch from "../hooks/usePokemonFetch";
 import PokemonImage from "./PokemonImage";
 import PokemonSkeleton from "./PokemonSkeleton";
 import PokemonErrorMessage from "./PokemonErrorMessage";
+import BackButton from "./BackButton";
 
 interface Props {
   pokemonName: string;
@@ -39,6 +40,9 @@ export default function PokemonPageContent({ pokemonName }: Props) {
         <PokemonStats pokemon={pokemon} />
       </div>
       <PokemonEvolutions pokemon={pokemon} />
+      <div className="flex justify-end sticky bottom-5">
+        <BackButton />
+      </div>
     </div>
   );
 }
