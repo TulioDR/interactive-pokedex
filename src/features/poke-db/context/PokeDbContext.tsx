@@ -9,10 +9,15 @@ import {
   ReactNode,
 } from "react";
 
+const FAVORITES_KEY = "poke_sandbox_favorites";
+
 interface PokeContextType {
   allPokemon: PokemonCardType[];
   syncProgress: number;
   isSyncing: boolean;
+  favorites: number[];
+  toggleFavorite: (id: number) => void;
+  isFavorite: (id: number) => boolean;
 }
 
 const PokeDbContext = createContext({} as PokeContextType);
@@ -24,8 +29,20 @@ export function PokeDbProvider({ children }: { children: ReactNode }) {
   const [allPokemon, setAllPokemon] = useState<PokemonCardType[]>([]);
   const [syncProgress, setSyncProgress] = useState(0);
   const [isSyncing, setIsSyncing] = useState(true);
+  const [favorites, setFavorites] = useState<number[]>([]);
 
   useEffect(() => {
+    // Cargar Favoritos
+    const storedFavs = localStorage.getItem(FAVORITES_KEY);
+    if (storedFavs) {
+      try {
+        setFavorites(JSON.parse(storedFavs));
+      } catch (e) {
+        console.error("Error reading favorites", e);
+      }
+    }
+
+    // Cargar Pokédex DB
     async function initializeDatabase() {
       const cached = localStorage.getItem("poke_sandbox_db");
 
@@ -102,10 +119,27 @@ export function PokeDbProvider({ children }: { children: ReactNode }) {
     initializeDatabase();
   }, []);
 
+  // Función para agregar / quitar de favoritos
+  const toggleFavorite = (id: number) => {
+    setFavorites((prev) => {
+      const updated = prev.includes(id)
+        ? prev.filter((favId) => favId !== id)
+        : [...prev, id];
+
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const isFavorite = (id: number) => favorites.includes(id);
+
   const value: PokeContextType = {
     allPokemon,
     syncProgress,
     isSyncing,
+    favorites,
+    toggleFavorite,
+    isFavorite,
   };
 
   return (

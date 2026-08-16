@@ -23,7 +23,7 @@ export default function DataButtons({
 }: Props) {
   const router = useRouter();
 
-  const { allPokemon } = usePokeDbContext();
+  const { allPokemon, isFavorite, toggleFavorite } = usePokeDbContext();
   const currentIndex = allPokemon.findIndex((p: any) => p.id === pokemon.id);
 
   const prevPokemon = currentIndex > 0 ? allPokemon[currentIndex - 1] : null;
@@ -43,16 +43,19 @@ export default function DataButtons({
     changePokemon(prevPokemon.name);
   };
 
+  const isFavoriteValue = isFavorite(pokemon.id);
+
   return (
     <>
       <div className="w-full flex gap-2 p-2 border-t border-white/20">
         <PreviewButton
           id={FAVORITE_BUTTON_ID}
           icon="favorite"
-          text="Add to favorite"
+          isFilled={isFavoriteValue}
+          text={isFavoriteValue ? `Remove from favorite` : `Add to favorite`}
           favorite
           isActive={activePad === "favorite"}
-          onClick={() => {}}
+          onClick={() => toggleFavorite(pokemon.id)}
         />
         <PreviewButton
           id={FULL_PAGE_BUTTON_ID}

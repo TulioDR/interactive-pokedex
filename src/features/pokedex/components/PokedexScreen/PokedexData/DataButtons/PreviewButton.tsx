@@ -7,6 +7,7 @@ type Props = {
   isActive: boolean;
   onClick: () => void;
   id: string;
+  isFilled?: boolean;
 };
 
 export default function PreviewButton({
@@ -16,12 +17,13 @@ export default function PreviewButton({
   text,
   isActive,
   onClick,
+  isFilled,
 }: Props) {
   return (
     <button
       onClick={onClick}
       id={id}
-      className={`flex-1 h-9 2xl:h-11 cursor-pointer rounded-lg flex flex-col items-center justify-center font-medium border border-white hover:text-white active:text-white
+      className={`flex-1 h-9 2xl:h-11 cursor-pointer rounded-lg flex flex-col items-center justify-center font-medium hover:text-white active:text-white
             ${
               favorite
                 ? "text-[#E60012] hover:bg-[#E60012] active:bg-[#E60012]"
@@ -35,7 +37,12 @@ export default function PreviewButton({
         className={`w-full flex gap-1 items-center justify-center ${favorite ? "" : "flex-row-reverse"}`}
       >
         <CircularInstruction color={favorite ? "red" : "blue"} />
-        <span className="material-symbols-rounded">{icon}</span>
+        <span
+          style={{ fontVariationSettings: `'FILL' ${isFilled ? 1 : 0}` }}
+          className="material-symbols-rounded"
+        >
+          {icon}
+        </span>
       </div>
       <span className="text-xs leading-2.5 hidden 2xl:block">{text}</span>
     </button>
