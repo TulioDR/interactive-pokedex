@@ -29,39 +29,35 @@ export function PokeDbProvider({ children }: { children: ReactNode }) {
   const [allPokemon, setAllPokemon] = useState<PokemonCardType[]>([]);
   const [syncProgress, setSyncProgress] = useState(0);
   const [isSyncing, setIsSyncing] = useState(true);
-  const [favorites, setFavorites] = useState<number[]>([]);
+
+  const [favorites, setFavorites] = useState<number[]>(() => {
+    if (typeof window === "undefined") return [];
+
+    try {
+      const storedFavs = localStorage.getItem(FAVORITES_KEY);
+      return storedFavs ? JSON.parse(storedFavs) : [];
+    } catch (e) {
+      console.error("Error reading favorites from localStorage", e);
+      return [];
+    }
+  });
 
   useEffect(() => {
-    // Cargar Favoritos
-    const storedFavs = localStorage.getItem(FAVORITES_KEY);
-    if (storedFavs) {
-      try {
-        setFavorites(JSON.parse(storedFavs));
-      } catch (e) {
-        console.error("Error reading favorites", e);
-      }
-    }
-
-    // Cargar Pokédex DB
     async function initializeDatabase() {
       const cached = localStorage.getItem("poke_sandbox_db");
 
-      // 2. Si existe en caché, simulamos el llenado suave de la barra en 1 segundo
       if (cached) {
         const data = JSON.parse(cached);
         setAllPokemon(data);
 
-        // Llenamos la barra rápidamente
         setSyncProgress(100);
 
-        // Esperamos 1 segundo para que la animación/barra se complete visualmente
         setTimeout(() => {
           setIsSyncing(false);
         }, 2000);
         return;
       }
 
-      // 3. Si no hay nada en caché, realizamos la descarga por bloques
       try {
         const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=1025");
         const masterList = await res.json();

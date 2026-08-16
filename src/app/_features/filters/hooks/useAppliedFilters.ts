@@ -38,7 +38,7 @@ export function useAppliedFilters(showFavorites: boolean) {
         p.name.toLowerCase().includes(normalizedQuery) ||
         p.id.toString() === normalizedQuery,
     );
-  }, [allPokemon, searchParams, favoritesArray]);
+  }, [allPokemon, searchParams, favoritesArray, showFavorites]);
 
   return finalDisplayPokemon;
 }
