@@ -3,9 +3,11 @@ import { useSearchParams } from "next/navigation";
 import usePokeDbContext from "@/features/poke-db/context/PokeDbContext";
 import { filterPokemon, FilterState } from "../utils/filterPokemon";
 
-export function useAppliedFilters() {
+export function useAppliedFilters(showFavorites: boolean) {
   const searchParams = useSearchParams();
-  const { allPokemon } = usePokeDbContext();
+  const { allPokemon, favorites } = usePokeDbContext();
+
+  const favoritesArray = allPokemon.filter((p) => favorites.includes(p.id));
 
   // Compute applied dataset directly out of the Next URL state layer
   const finalDisplayPokemon = useMemo(() => {
@@ -19,7 +21,10 @@ export function useAppliedFilters() {
     };
 
     // 1. Filter out via URL attributes first
-    const baseFilteredPool = filterPokemon(allPokemon, appliedFilters);
+    const baseFilteredPool = filterPokemon(
+      showFavorites ? favoritesArray : allPokemon,
+      appliedFilters,
+    );
     const urlSearchQuery = searchParams.get("search_query");
 
     if (!urlSearchQuery || !urlSearchQuery.trim()) {
@@ -33,7 +38,7 @@ export function useAppliedFilters() {
         p.name.toLowerCase().includes(normalizedQuery) ||
         p.id.toString() === normalizedQuery,
     );
-  }, [allPokemon, searchParams]);
+  }, [allPokemon, searchParams, favoritesArray]);
 
   return finalDisplayPokemon;
 }

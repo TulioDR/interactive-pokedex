@@ -5,9 +5,15 @@ import useFiltersContext from "../context/FiltersContext";
 
 type Props = {
   foundedNumber: number;
+  showFavorites: boolean;
+  toggleFavorites: () => void;
 };
 
-export default function FiltersContent({ foundedNumber }: Props) {
+export default function FiltersContent({
+  foundedNumber,
+  showFavorites,
+  toggleFavorites,
+}: Props) {
   const { openModal, clearAllFiltersAndInput, hasActiveDraftFilters } =
     useFiltersContext();
 
@@ -24,7 +30,8 @@ export default function FiltersContent({ foundedNumber }: Props) {
         <FilterButton
           icon="favorite"
           text="Favorites"
-          onClick={() => {}}
+          onClick={toggleFavorites}
+          isActive={showFavorites}
           favorite
         />
         <FilterButton icon="refresh" onClick={clearAllFiltersAndInput} />
