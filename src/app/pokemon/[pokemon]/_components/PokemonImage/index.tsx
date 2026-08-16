@@ -2,6 +2,7 @@ import SectionContainer from "../SectionContainer";
 import SectionTitle from "../SectionContainer/SectionTitle";
 import { CompletePokemonType } from "../../types/CompletePokemonType";
 import Image from "next/image";
+import getPokemonId from "@/utils/getPokemonId";
 interface Props {
   pokemon: CompletePokemonType;
 }
@@ -13,6 +14,7 @@ function PokemonImage({ pokemon }: Props) {
   return (
     <SectionContainer className="flex flex-col uppercase">
       <SectionTitle icon="" title={pokemon.base.name} />
+      <span className="text-xs">{getPokemonId(pokemon.base.id)}</span>
       <div className="flex items-center justify-center flex-1 min-h-60 lg:min-h-auto">
         <div className="h-full aspect-square relative">
           <Image
