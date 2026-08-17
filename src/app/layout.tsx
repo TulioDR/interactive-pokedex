@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import { PokeDbProvider } from "@/features/poke-db/context/PokeDbContext";
 import PokeDbLoader from "@/features/poke-db/components/PokeDbLoader";
 import Pokedex from "@/features/pokedex/components/Pokedex";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -49,9 +50,13 @@ export default function RootLayout({
           <PokeDbProvider>
             <PokeDbLoader />
             <main className="px-5 lg:px-20">
-              <Navbar />
+              <Suspense fallback={null}>
+                <Navbar />
+              </Suspense>
               <div className="w-full flex gap-5 pt-5">
-                <Pokedex />
+                <Suspense fallback={null}>
+                  <Pokedex />
+                </Suspense>
                 {children}
               </div>
             </main>
